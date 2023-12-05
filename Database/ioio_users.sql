@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: sys
+-- Host: 127.0.0.1    Database: ioio
 -- ------------------------------------------------------
 -- Server version	8.2.0
 
@@ -16,29 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `sys_config`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `sys_config`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sys_config` (
-  `variable` varchar(128) NOT NULL,
-  `value` varchar(128) DEFAULT NULL,
-  `set_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `set_by` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`variable`)
+CREATE TABLE `users` (
+  `id` int NOT NULL,
+  `type` enum('student','employer') NOT NULL,
+  `login` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `login_UNIQUE` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `sys_config`
+-- Dumping data for table `users`
 --
 
-LOCK TABLES `sys_config` WRITE;
-/*!40000 ALTER TABLE `sys_config` DISABLE KEYS */;
-INSERT INTO `sys_config` VALUES ('diagnostics.allow_i_s_tables','OFF','2023-12-05 14:30:41',NULL),('diagnostics.include_raw','OFF','2023-12-05 14:30:41',NULL),('ps_thread_trx_info.max_length','65535','2023-12-05 14:30:41',NULL),('statement_performance_analyzer.limit','100','2023-12-05 14:30:41',NULL),('statement_performance_analyzer.view',NULL,'2023-12-05 14:30:41',NULL),('statement_truncate_len','64','2023-12-05 14:30:41',NULL);
-/*!40000 ALTER TABLE `sys_config` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'student','test','test');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-05 16:01:20
+-- Dump completed on 2023-12-05 17:52:02
