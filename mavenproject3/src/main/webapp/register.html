@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Register</title>
+        <script type="text/javascript" src="js/js.js"></script>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<form id="userTypeForm" onsubmit="return register()" action="index.html">
+            <input type="radio" id="reader" name="userType" value="reader">
+            <label for="reader">Student</label><br>
+
+            <input type="radio" id="owner" name="userType" value="owner">
+            <label for="owner">Employer</label><br><br>
+			
+			<div id="loginField">
+                <label for="password">Login:</label>
+                <input type="text" id="password"><br><br>
+            </div>
+            <div id="passwordField">
+                <label for="password">Password:</label>
+                <input type="password" id="password"><br><br>
+            </div>
+			<div id="passwordFieldRepeat">
+                <label for="password">Repeat password:</label>
+                <input type="password" id="password"><br><br>
+            </div>
+
+            <input type="submit" value="Register">
+        </form>
+	</body>
+</html>
