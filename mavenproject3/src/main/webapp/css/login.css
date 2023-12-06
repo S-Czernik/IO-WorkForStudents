@@ -4,16 +4,17 @@
     Author     : Jagoda Więcek
 */
 body{
-    background-color: #E66A50    
+    background-color: #E66A50; 
+    font-family: 'Arial', cursive;
 }
 
 
 .container {
     
     max-width: 500px;
-    width: 100%;
-    hight: 100%;
-    margin: 200px auto;
+    width: 60%;
+    hight: 80%;
+    margin: 125px auto;
     text-align: justify;
     background-color: white;
     padding: 80px;
@@ -31,4 +32,32 @@ h1 {
     border: none; 
     border-radius: 5px; 
     font: serif;
+    height: 40px;
+    width: 300px;
+}
+.register_button{
+    background-color: white;
+    color: gray;
+    font-size: 16px; 
+    border: none; 
+    border-radius: 5px; 
+    font-family: 'Arial', cursive;
+    height: 40px;
+    width: 300px;
+    position: relative;
+    top: -22px;
+}
+.input_styling{
+    width: 300px; /* Możesz dostosować szerokość */
+    height: 40px; /* Możesz dostosować wysokość */
+    padding: 10px; /* Dodaj wewnętrzne odstępy dla lepszego wyglądu */
+    box-sizing: border-box; /* Zachowaj łączną szerokość, uwzględniając padding */
+    border: 1px solid #ccc; /* Dodaj obramowanie dla efektu */
+    border-radius: 5px; /* Zaokrąglenie narożników */
+    color: gray;
+}
+h2{
+    text-align: center;
+    font-size: 40px;
+    color: #1F1F1F;
 }
