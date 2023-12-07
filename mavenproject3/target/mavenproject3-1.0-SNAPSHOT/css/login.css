@@ -24,16 +24,20 @@ body{
 h1 {
     text-align: center;
 }
-.button-styling {
+.button-styling{
     background-color: #E66A50; 
     color: white; 
     font-size: 20px; 
     padding: 5px 20px; 
     border: none; 
     border-radius: 5px; 
-    font: serif;
     height: 40px;
     width: 300px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.button-styling:hover{
+    background-color: white;  
 }
 .register_button{
     background-color: white;
@@ -60,4 +64,8 @@ h2{
     text-align: center;
     font-size: 40px;
     color: #1F1F1F;
+}
+
+.top-bar {
+
 }
