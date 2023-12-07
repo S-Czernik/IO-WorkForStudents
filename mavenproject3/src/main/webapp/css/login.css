@@ -13,8 +13,8 @@ body{
     
     max-width: 500px;
     width: 60%;
-    hight: 80%;
-    margin: 125px auto;
+    height: 80%;
+    margin: 100px auto;
     text-align: justify;
     background-color: white;
     padding: 80px;
@@ -25,20 +25,25 @@ h1 {
     text-align: center;
 }
 .button-styling{
+    display: flex;
     background-color: #E66A50; 
     color: white; 
     font-size: 20px; 
-    padding: 5px 20px; 
-    border: none; 
     border-radius: 5px; 
     height: 40px;
-    width: 300px;
-    cursor: pointer;
+    width: 60%;
+    margin: auto;
+    border: #E66A50 1px solid;
     transition: background-color 0.3s;
 }
+
 .button-styling:hover{
     background-color: white;  
+    color: #E66A50;
+    border-radius: 3px; 
+    cursor: pointer;
 }
+
 .register_button{
     background-color: white;
     color: gray;
@@ -46,18 +51,18 @@ h1 {
     border: none; 
     border-radius: 5px; 
     font-family: 'Arial', cursive;
-    height: 40px;
-    width: 300px;
     position: relative;
     top: -22px;
+    cursor: pointer;
 }
-.input_styling{
-    width: 300px; /* Możesz dostosować szerokość */
-    height: 40px; /* Możesz dostosować wysokość */
-    padding: 10px; /* Dodaj wewnętrzne odstępy dla lepszego wyglądu */
-    box-sizing: border-box; /* Zachowaj łączną szerokość, uwzględniając padding */
-    border: 1px solid #ccc; /* Dodaj obramowanie dla efektu */
-    border-radius: 5px; /* Zaokrąglenie narożników */
+
+.input_styling{    
+    width: 60%;
+    height: 40px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     color: gray;
 }
 h2{
@@ -68,4 +73,19 @@ h2{
 
 .top-bar {
 
+}
+
+a{
+    background-color: white;
+    color: gray;
+    font-size: 16px; 
+    border: none; 
+    border-radius: 5px; 
+    font-family: 'Arial', cursive;
+    position: relative;
+    top: -22px;
+    cursor: pointer;
+  text-decoration: none;
+  font-weight: 100;
+    
 }

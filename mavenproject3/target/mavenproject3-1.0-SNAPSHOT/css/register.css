@@ -1,16 +1,16 @@
 
 /* 
-    Created on : 6 gru 2023, 17:22:09
-    Author     : Jagoda Więcek
+    Created on : 7 gru 2023, 19:00
+    Author     : Paweł Gołąbek
 */
 body{
     background-color: #E66A50; 
     font-family: 'Arial', cursive;
+    box-sizing: border-box;
 }
 
 
 .container {
-    
     max-width: 500px;
     width: 60%;
     height: 80%;
@@ -22,8 +22,14 @@ body{
     
 }
 h1 {
+    color: #1F1F1F;
     text-align: center;
 }
+h2{
+    text-align: center;
+    font-size: 40px;
+}
+
 .button-styling{
     display: flex;
     background-color: #E66A50; 
@@ -31,7 +37,7 @@ h1 {
     font-size: 20px; 
     border-radius: 5px; 
     height: 40px;
-    width: 60%;
+    width: 70%;
     margin: auto;
     border: #E66A50 1px solid;
     transition: background-color 0.3s;
@@ -43,38 +49,43 @@ h1 {
     border-radius: 3px; 
     cursor: pointer;
 }
-
-.register_button{
-    background-color: white;
-    color: gray;
-    font-size: 16px; 
-    border: none; 
-    border-radius: 5px; 
-    font-family: 'Arial', cursive;
-    position: relative;
-    top: -22px;
-    cursor: pointer;
+.radioDiv{
+    width: 100%;
+    margin-bottom: 40px;
+    display:inline-flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+}
+.radioDiv > *  {
+    display: flex;
+    flex-basis: 40%;
+    padding: 5px;
 }
 
-.input_styling{    
-    width: 60%;
-    height: 40px;
-    padding: 10px;
-    box-sizing: border-box;
+.inputsDiv{
+    color: gray;
+    width: 100%;
+    margin-bottom: 20px;
+    display:inline-flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.inputsDiv > *{
+    display: flex;
+    flex-basis: 100%;
+    margin: 4px;
+}
+
+.input_styling{
+    width: 300px;
+    padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
     color: gray;
 }
-h2{
-    text-align: center;
-    font-size: 40px;
-    color: #1F1F1F;
-}
-
-.top-bar {
-
-}
-
 a{
     background-color: white;
     color: gray;
@@ -88,4 +99,8 @@ a{
   text-decoration: none;
   font-weight: 100;
     
+}
+
+.top-bar {
+
 }
