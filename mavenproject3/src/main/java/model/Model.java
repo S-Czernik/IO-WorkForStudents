@@ -22,15 +22,6 @@ public class Model {
         }
 
         connect();
-
-        try {
-            ResultSet rs = statement.executeQuery("SELECT * FROM USERS");
-            while (rs.next()) {
-                System.out.println(rs.getInt(1));
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
 
     public void connect() {
@@ -39,6 +30,33 @@ public class Model {
             statement = connection.createStatement();
         } catch (SQLException e) {
             System.out.println(e);
+        }
+    }
+
+    public boolean checkLogin(String arg1, String arg2) {
+        try {
+            String query = "SELECT * FROM USERS";
+            ResultSet results = statement.executeQuery(query);
+
+            while (results.next()) {
+                String login = results.getString("LOGIN");
+
+                if (login.equals(arg1)) {
+                    String password = results.getString("PASSWORD");
+
+                    if (password.equals(arg2)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+
+            return false;
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
         }
     }
 }
