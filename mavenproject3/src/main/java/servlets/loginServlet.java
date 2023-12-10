@@ -14,12 +14,12 @@ public class LoginServlet extends HttpServlet {
     Model model;
 
     public LoginServlet() {
-        model = new Model();
+        model = Model.getModel();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/plaintext;charset=UTF-8");
 
         String arg1 = request.getParameter("arg1");
         String arg2 = request.getParameter("arg2");
