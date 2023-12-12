@@ -7,6 +7,12 @@ function validateRegister(arg1, arg2, arg3, arg4, result) {
             var correct = this.responseText;
 
             if (correct === "true") {
+                document.getElementById("loginInput").value = "";
+                document.getElementById("emailInput").value = "";
+                document.getElementById("passwordInput").value = "";
+                document.getElementById("passwordRepeatInput").value = "";
+                resultElem.innerHTML = "";
+                
                 document.getElementById("registerPage").action = "mainPage.html";
                 document.getElementById("registerPage").submit();
             } else {
@@ -45,6 +51,10 @@ function validateLogin(arg1, arg2, result) {
             var found = this.responseText;
 
             if (found === "true") {
+                document.getElementById("arg1").value = "";
+                document.getElementById("arg2").value = "";
+                resultElem.innerHTML = "";
+                
                 document.getElementById("loginPage").action = "mainPage.html";
                 document.getElementById("loginPage").submit();
             } else {
