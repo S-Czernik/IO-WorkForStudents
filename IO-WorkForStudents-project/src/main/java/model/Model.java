@@ -30,7 +30,7 @@ public class Model {
 
     public void connect() {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ioio?useSSL=false", "root", "1234");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ioio?useSSL=false", "root", "root");
             statement = connection.createStatement();
         } catch (SQLException e) {
             System.out.println(e);
