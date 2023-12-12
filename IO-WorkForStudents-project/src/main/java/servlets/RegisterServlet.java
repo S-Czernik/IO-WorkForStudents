@@ -11,44 +11,42 @@ import model.Model;
 
 @WebServlet(name = "RegisterServlet", urlPatterns = {"/registerServlet"})
 public class RegisterServlet extends HttpServlet {
+    Model model;
 
-	Model model;
+    public RegisterServlet() {
+        model = Model.getModel();
+    }
 
-	public RegisterServlet() {
-		model = Model.getModel();
-	}
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/plaintext;charset=UTF-8");
 
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setContentType("text/plaintext;charset=UTF-8");
+        String type = request.getParameter("arg1");
+        String login = request.getParameter("arg2");
+        String passwd = request.getParameter("arg3");
+        String email = request.getParameter("arg4");
 
-		String login = request.getParameter("arg1");
-		String passwd = request.getParameter("arg2");
-		String email = request.getParameter("arg3");
-		String type = request.getParameter("arg4");
+        boolean registered = model.register(login, passwd, email, type);
 
-		boolean registered = model.register(login, passwd, email, type);
+        PrintWriter out = response.getWriter();
+        out.print(registered);
+        out.close();
+    }
 
-		PrintWriter out = response.getWriter();
-		out.print(registered);
-		out.close();
-	}
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		processRequest(request, response);
-	}
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		processRequest(request, response);
-	}
-
-	@Override
-	public String getServletInfo() {
-		return "Short description";
-	}// </editor-fold>
-
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }
 }

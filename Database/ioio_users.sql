@@ -27,6 +27,7 @@ CREATE TABLE `users` (
   `type` enum('student','employer') NOT NULL,
   `login` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `login_UNIQUE` (`login`)
@@ -39,7 +40,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'student','test','test');
+INSERT INTO `users` VALUES (0,'student','test1','haslo1','test1@gmail.com'),(1,'employer','test2','haslo2','test2@gmail.com'),(2,'student','Test3','haslo3','test3@gmail.com');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-05 17:52:02
+-- Dump completed on 2023-12-12 12:05:41

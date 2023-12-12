@@ -17,15 +17,15 @@ public class LoginServlet extends HttpServlet {
         model = Model.getModel();
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) 
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/plaintext;charset=UTF-8");
 
         String arg1 = request.getParameter("arg1");
         String arg2 = request.getParameter("arg2");
-        
+
         boolean found = model.checkLogin(arg1, arg2);
-        
+
         PrintWriter out = response.getWriter();
         out.print(found);
         out.close();
