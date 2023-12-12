@@ -7,6 +7,12 @@ function validateRegister(arg1, arg2, arg3, arg4, result) {
             var correct = this.responseText;
 
             if (correct === "true") {
+                document.getElementById("loginInput").value = "";
+                document.getElementById("emailInput").value = "";
+                document.getElementById("passwordInput").value = "";
+                document.getElementById("passwordRepeatInput").value = "";
+                resultElem.innerHTML = "";
+                
                 document.getElementById("registerPage").action = "mainPage.html";
                 document.getElementById("registerPage").submit();
             } else {
