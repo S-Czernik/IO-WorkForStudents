@@ -100,7 +100,7 @@ public class Model {
 	}
 
 	public String loadStudentCalendarFromDatabase(String userLogin) {
-		Kalyndarz ret;
+		Kalyndarz ret = null;
 		try {
 			String query = "SELECT * FROM hours";
 		}
@@ -113,9 +113,9 @@ public class Model {
 		}
 		return ret.getCSV();
 	}
-	
+
 	public String loadOfferCalendarFromDatabase(int offerID) {
-		Kalyndarz ret;
+		Kalyndarz ret = null;
 		try {
 			String query = "SELECT * FROM hours";
 		}
