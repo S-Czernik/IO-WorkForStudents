@@ -16,32 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `users`
+-- Table structure for table `student_ratings`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `student_ratings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
-  `id_user` int NOT NULL,
-  `type` enum('student','employer') NOT NULL,
-  `login` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_user`),
-  UNIQUE KEY `id_UNIQUE` (`id_user`),
-  UNIQUE KEY `login_UNIQUE` (`login`)
+CREATE TABLE `student_ratings` (
+  `id_stud_rating` int NOT NULL,
+  `number` float NOT NULL,
+  `comment` varchar(45) NOT NULL,
+  PRIMARY KEY (`id_stud_rating`),
+  UNIQUE KEY `id_rating_UNIQUE` (`id_stud_rating`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `student_ratings`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (0,'student','Test','Test123456789!','test@gmail.com'),(1,'employer','Test1','Test123456789!','test1@gmail.com'),(2,'employer','Test2','Test123456789!','test3@gmail.com'),(3,'employer','Test4','Test123456789!','test4@gmail.com');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `student_ratings` WRITE;
+/*!40000 ALTER TABLE `student_ratings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `student_ratings` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
