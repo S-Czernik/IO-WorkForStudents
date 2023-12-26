@@ -9,12 +9,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Model;
 
-@WebServlet(name = "RegisterServlet", urlPatterns = {"/registerServlet"})
-public class RegisterServlet extends HttpServlet {
+@WebServlet(name = "CalendarServlet", urlPatterns = {"/calendar"})
+public class CalendarServlet extends HttpServlet {
 
 	Model model;
 
-	public RegisterServlet() {
+	public CalendarServlet() {
 		model = Model.getModel();
 	}
 
@@ -23,15 +23,26 @@ public class RegisterServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/plaintext;charset=UTF-8");
 
-		String type = request.getParameter("arg1");
-		String login = request.getParameter("arg2");
-		String passwd = request.getParameter("arg3");
-		String email = request.getParameter("arg4");
-
-		boolean registered = model.register(login, passwd, email, type);
+		String requestType = request.getParameter("rqtype");
 
 		PrintWriter out = response.getWriter();
-		out.print(registered);
+		switch (requestType) {
+			case "getuser" -> {
+				out.print(model.loadStudentCalendarFromDatabase(request.getParameter("login")));
+			}
+			case "getoffer" -> {
+				out.print(model.loadOfferCalendarFromDatabase(Integer.valueOf(request.getParameter("offerid"))));
+			}
+			case "setuser" -> {
+
+			}
+			case "setoffer" -> {
+
+			}
+			case "compare" -> {
+
+			}
+		}
 		out.close();
 	}
 

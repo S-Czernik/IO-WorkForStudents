@@ -22,22 +22,37 @@ public class Kalyndarz {
 		}
 	}
 
-	public Kalyndarz(int... values) throws Exception {
+	List<Interval> intervals;
+
+	public Kalyndarz() {
 		intervals = new ArrayList<>();
+	}
+
+	public void loadCSV(String csv) throws Exception {
+		var values = csv.split(",");
 
 		if (values.length % 3 != 0) {
-			throw new Exception("Invalid Kalyndarz constructor input");
+			throw new Exception("Invalid CSV input");
 		}
 
 		for (int i = 0; i < values.length; i += 3) {
-			var interval = new Interval(values[i], values[i + 1], values[i + 2]);
+			var bg = Integer.valueOf(values[i]);
+			var nd = Integer.valueOf(values[i + 1]);
+			var d = Integer.valueOf(values[i + 2]);
+			var interval = new Interval(bg, nd, d);
 			if (interval.ok()) {
 				intervals.add(interval);
 			}
 		}
 	}
 
-	List<Interval> intervals;
+	public String getCSV() {
+		String ret = "";
+		for (var i : intervals) {
+			ret += i.begin + "," + i.end + "," + i.day + ",";
+		}
+		return ret.substring(0, ret.length() - 1);
+	}
 
 	float compare(final Kalyndarz cmp) {
 		return 0.0f;

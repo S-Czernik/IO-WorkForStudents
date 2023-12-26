@@ -8,88 +8,124 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Model {
-    static Model singleton = null;
-    Connection connection;
-    Statement statement;
 
-    public static Model getModel() {
-        if (singleton == null) {
-            singleton = new Model();
-        }
-        return singleton;
-    }
+	static Model singleton = null;
+	Connection connection;
+	Statement statement;
 
-    public Model() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        connect();
-    }
+	public static Model getModel() {
+		if (singleton == null) {
+			singleton = new Model();
+		}
+		return singleton;
+	}
 
-    public void connect() {
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ioio?useSSL=false", "root", "1234");
-            statement = connection.createStatement();
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-    }
+	public Model() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		connect();
+	}
 
-    public boolean checkLogin(String login, String password) {
-        try {
-            String query = "SELECT * FROM USERS WHERE login = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, login);
-            ResultSet results = preparedStatement.executeQuery();
+	public void connect() {
+		try {
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ioio?useSSL=false", "root", "1234");
+			statement = connection.createStatement();
+		}
+		catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
 
-            return (results.next() && results.getString("password").equals(password));
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
-    }
+	public boolean checkLogin(String login, String password) {
+		try {
+			String query = "SELECT * FROM users WHERE login = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, login);
+			ResultSet results = preparedStatement.executeQuery();
 
-    public boolean register(String login, String password, String email, String type) {
-        try {
-            String query = "SELECT * FROM USERS WHERE login = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, login);
-            ResultSet results = preparedStatement.executeQuery();
+			return (results.next() && results.getString("password").equals(password));
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
 
-            if (results.next()) {
-                return false;
-            }
+	public boolean register(String login, String password, String email, String type) {
+		try {
+			String query = "SELECT * FROM users WHERE login = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, login);
+			ResultSet results = preparedStatement.executeQuery();
 
-            String insertQuery = "INSERT INTO users (id, type, login, password, email) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
-            insertStatement.setString(1, String.valueOf(getUserCount()));
-            insertStatement.setString(2, type);
-            insertStatement.setString(3, login);
-            insertStatement.setString(4, password);
-            insertStatement.setString(5, email);
+			if (results.next()) {
+				return false;
+			}
 
-            insertStatement.executeUpdate();
-            return true;
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
-    }
+			String insertQuery = "INSERT INTO users (id, type, login, password, email) VALUES (?, ?, ?, ?, ?)";
+			PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
+			insertStatement.setString(1, String.valueOf(getUserCount()));
+			insertStatement.setString(2, type);
+			insertStatement.setString(3, login);
+			insertStatement.setString(4, password);
+			insertStatement.setString(5, email);
 
-    int getUserCount() {
-        try {
-            String query = "SELECT COUNT(*) AS count FROM USERS";
-            ResultSet results = statement.executeQuery(query);
+			insertStatement.executeUpdate();
+			return true;
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
 
-            if (results.next()) {
-                return results.getInt("count");
-            }
-            return 0;
-        } catch (Exception e) {
-            System.out.println(e);
-            return -1;
-        }
-    }
+	int getUserCount() {
+		try {
+			String query = "SELECT COUNT(*) AS count FROM users";
+			ResultSet results = statement.executeQuery(query);
+
+			if (results.next()) {
+				return results.getInt("count");
+			}
+			return 0;
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			return -1;
+		}
+	}
+
+	public String loadStudentCalendarFromDatabase(String userLogin) {
+		Kalyndarz ret;
+		try {
+			String query = "SELECT * FROM hours";
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+
+		if (ret == null) {
+			return null;
+		}
+		return ret.getCSV();
+	}
+	
+	public String loadOfferCalendarFromDatabase(int offerID) {
+		Kalyndarz ret;
+		try {
+			String query = "SELECT * FROM hours";
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+
+		if (ret == null) {
+			return null;
+		}
+		return ret.getCSV();
+	}
 }

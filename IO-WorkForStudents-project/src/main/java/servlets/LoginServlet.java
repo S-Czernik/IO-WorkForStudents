@@ -11,40 +11,30 @@ import model.Model;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet"})
 public class LoginServlet extends HttpServlet {
-    Model model;
 
-    public LoginServlet() {
-        model = Model.getModel();
-    }
+	Model model;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/plaintext;charset=UTF-8");
+	public LoginServlet() {
+		model = Model.getModel();
+	}
 
-        String arg1 = request.getParameter("arg1");
-        String arg2 = request.getParameter("arg2");
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/plaintext;charset=UTF-8");
 
-        boolean found = model.checkLogin(arg1, arg2);
+		String arg1 = request.getParameter("arg1");
+		String arg2 = request.getParameter("arg2");
 
-        PrintWriter out = response.getWriter();
-        out.print(found);
-        out.close();
-    }
+		boolean found = model.checkLogin(arg1, arg2);
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+		PrintWriter out = response.getWriter();
+		out.print(found);
+		out.close();
+	}
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Informacje";
-    }
+	@Override
+	public String getServletInfo() {
+		return "Informacje";
+	}
 }
