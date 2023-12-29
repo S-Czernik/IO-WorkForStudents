@@ -18,3 +18,26 @@ body {
     font-size: 1.5em;
     font-weight: bold;
 }
+
+.side-panel {
+    display: flex;
+}
+
+.side-panel form {
+    margin: 0 5px;
+}
+
+.side-panel input[type="submit"] {
+    padding: 8px 15px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #007bff;
+    transition: background-color 0.3s ease;
+}
+
+.side-panel input[type="submit"]:hover {
+    background-color: #0056b3;
+}

@@ -3,17 +3,19 @@ body {
     margin: 0;
     padding: 0;
     background-color: #E66A50;
+    height: 100%;
+    min-height: 100%;
 }
-
+html {
+    height: 100%;
+}
 .containersContainer {
     
     display: flex;
-    width: 80%;
+    flex-basis: 70%;
     flex-wrap: wrap;
     justify-content: space-around;
     text-align: justify;
-    margin: auto;
-    margin-top: 20px;
     background-color: #E66A50;
 
 }
@@ -160,16 +162,38 @@ h2{
     top: -22px;
     cursor: pointer;
 }
-
+.mainDiv{
+    height: 100%;
+    background-color: #E66A50;
+    
+    
+}
 .input_styling{
     width: 60%;
     height: 40px;
     padding: 10px;
     box-sizing: border-box;
-    border: 1px solid #ccc;
+    border: 1px dashed #f1f1f1;
     border-radius: 5px;
     color: gray;
 }
+
+.customCheckbox + label:before {
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #007bff;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+}
+
+.customCheckbox:checked + label:before {
+    background-color: #007bff;
+}
+
 
 a{
     background-color: white;
@@ -183,4 +207,32 @@ a{
     cursor: pointer;
     text-decoration: none;
     font-weight: 100;
+}
+
+.side-panel {
+    width: 10%;
+    float: left;
+    height: 100vh;
+    background-color: #d9745f;
+    border: 1px dashed #f1f1f1;
+    padding: 10px; 
+}
+
+.side-panel input[type="submit"] {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #007bff;
+    transition: background-color 0.3s ease;
+}
+
+.side-panel input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.side-panel > * {
+    padding: 8px;
 }
