@@ -31,7 +31,7 @@ public class Model {
 
     public void connect() {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ioio?useSSL=false", "root", "root");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ioio?useSSL=false", "root", "1234");
             statement = connection.createStatement();
         } catch (SQLException e) {
             System.out.println(e);
@@ -101,14 +101,7 @@ public class Model {
     public ArrayList<Offer> getOffers(int begin, int end) {
         ArrayList<Offer> offers = new ArrayList<>();
 
-        try {
-            int count = getOfferCount() - 1;
-            int tmp = -1;
-            if (end > count) {
-                tmp = count - begin;
-                end = count;
-            }
-            
+        try {    
             String query = "SELECT * FROM OFFERS WHERE id_offer >= ? AND id_offer <= ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -126,26 +119,6 @@ public class Model {
 
                 Offer offer = new Offer(id_offer, id_empl, title, content, info);
                 offers.add(offer);
-            }
-            
-            if (tmp != -1) {
-                query = "SELECT * FROM OFFERS WHERE id_offer <= ?";
-
-                preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setInt(1, tmp);
-
-                results = preparedStatement.executeQuery();
-
-                while (results.next()) {
-                    int id_offer = results.getInt("id_offer");
-                    int id_empl = results.getInt("id_empl");
-                    String title = results.getString("title");
-                    String content = results.getString("content");
-                    String info = results.getString("info");
-
-                    Offer offer = new Offer(id_offer, id_empl, title, content, info);
-                    offers.add(offer);
-                }
             }
         } catch (Exception exp) {
             System.out.println(exp);

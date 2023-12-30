@@ -1,6 +1,6 @@
-window.onload = startPage;
+window.onload = startPage(0);
 
-function startPage() {
+function startPage(pageNumber) {
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function () {
@@ -10,10 +10,11 @@ function startPage() {
         }
     };
     
-    let currentPage = window.location.href;
-    var page = currentPage.includes('mainPage.html') ? 1 : 0;
-
-    xhttp.open("GET", "offersdisplay?arg1=" + page, true);
+    //let currentPage = window.location.href;
+    //var page = currentPage.includes('mainPage.html') ? 1 : 0;  do późniejszego odróżniania czy mają być wyświetlane też %
+    //xhttp.open("GET", "offersdisplay?arg1=" + page, true);
+    
+    xhttp.open("GET", "offersdisplay?arg1=" + pageNumber, true);
     xhttp.send();
 }
 
