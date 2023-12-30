@@ -16,32 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `users`
+-- Table structure for table `mailbox_student`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `mailbox_student`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
-  `id_user` int NOT NULL,
-  `type` enum('student','employer') NOT NULL,
-  `login` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_user`),
-  UNIQUE KEY `id_UNIQUE` (`id_user`),
-  UNIQUE KEY `login_UNIQUE` (`login`)
+CREATE TABLE `mailbox_student` (
+  `id_box_stud` int NOT NULL,
+  `id_offer` varchar(45) NOT NULL,
+  `id_stud` varchar(45) NOT NULL,
+  `mess_type` enum('newOffer','accepted') NOT NULL,
+  PRIMARY KEY (`id_box_stud`),
+  UNIQUE KEY `id_mail_UNIQUE` (`id_box_stud`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `mailbox_student`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (0,'student','Test','Test123456789!','test@gmail.com'),(1,'employer','Test1','Test123456789!','test1@gmail.com'),(2,'employer','Test2','Test123456789!','test3@gmail.com'),(3,'employer','Test4','Test123456789!','test4@gmail.com'),(4,'student','Test5','Test123456789!','test5@gmail.com');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `mailbox_student` WRITE;
+/*!40000 ALTER TABLE `mailbox_student` DISABLE KEYS */;
+INSERT INTO `mailbox_student` VALUES (0,'1','0','newOffer'),(1,'2','0','newOffer'),(2,'5','0','accepted'),(3,'2','4','newOffer'),(4,'3','4','newOffer');
+/*!40000 ALTER TABLE `mailbox_student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
