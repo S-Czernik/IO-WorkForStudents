@@ -35,7 +35,7 @@ function displayNotifications(notifications) {
         } else if (notification.messageType === 'application') {
             anchor.innerHTML = `Student: ${notification.userLogin}!<br>Has applied to job: ${notification.offerTitle}!`;
         } else if (notification.messageType === 'acceptation') {
-            anchor.innerHTML = `Stduent: ${notification.userLogin}!<br>Accepted your offer: ${notification.offerTitle}<br>!`;
+            anchor.innerHTML = `Student: ${notification.userLogin}!<br>Accepted your offer: ${notification.offerTitle}<br>!`;
         } else {
             // handle other message types if needed
             anchor.textContent = 'Unknown message type';
