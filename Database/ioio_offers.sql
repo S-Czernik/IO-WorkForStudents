@@ -39,6 +39,7 @@ CREATE TABLE `offers` (
 
 LOCK TABLES `offers` WRITE;
 /*!40000 ALTER TABLE `offers` DISABLE KEYS */;
+INSERT INTO `offers` VALUES (0,1,'Lutowanie chinskich czesci','Zarobek najnizsza krajowa','Szukam studenta, ktory za nie wielka sume bedzie pracowal jako lutownik chinskich moudlow elektronicznych'),(1,2,'Lutowanie chinskich czesci','Zarobek: najnizsza krajowa','Szukam studenta, ktory za niezla sume bedzie pracowal jako lutownik chinskich moudlow elektronicznych. Tylko studenci ze zdecydowana reka!'),(2,2,'Programowanie procesorow Z80','Zarobek: 5000 zl/msc','Szukam studenta, ktory za niezla sume bedzie pracowal jako programista procesorow Z80. Nie szukam osob, ktore umia tylko zrobic stacje pogodowa!'),(3,2,'Tester urzadzen','Zarobek: do ustalenia','Poszukiwany student z umiejetnosciami pozwalajacymi testowanie wszelakich mikrokontrolerow. Przyjmuje tylko osoby, ktore zrobily prace inzynierska na mikrokontrolerach!'),(4,3,'Pracownik w sieci restauracji McDonald\'s','Zarobek: 23,50zl/h','Poszukiwany student, ktory musi sobie dorobic w weekendy, aby moc przezyc na karmach ©Whiskas'),(5,3,'Stanowisko menadzera w McDonalds','Zarobek: 24,50zl/h','Poszukiwany student, ktory musi sobie poradzic z ciezko pracujacymi studentami w nasazych restauracjach. Pensja miesieczna moze ulec zmianie w zaleznosci od wydajnosci realizacji zamowien - aka. obcinanie wynagrodzenia za wolna realizacje zamowien');
 /*!40000 ALTER TABLE `offers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-26 18:22:20
+-- Dump completed on 2023-12-30 11:20:30

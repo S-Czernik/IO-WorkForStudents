@@ -26,6 +26,7 @@ CREATE TABLE `mailbox_employer` (
   `id_box_emp` int NOT NULL,
   `id_stud` varchar(45) NOT NULL,
   `id_offer` varchar(45) NOT NULL,
+  `mess_type` enum('application','acceptation') NOT NULL,
   PRIMARY KEY (`id_box_emp`),
   UNIQUE KEY `id_box_emp_UNIQUE` (`id_box_emp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -37,6 +38,7 @@ CREATE TABLE `mailbox_employer` (
 
 LOCK TABLES `mailbox_employer` WRITE;
 /*!40000 ALTER TABLE `mailbox_employer` DISABLE KEYS */;
+INSERT INTO `mailbox_employer` VALUES (0,'0','3','application'),(1,'0','4','application'),(2,'0','5','application'),(3,'4','0','application'),(4,'4','3','acceptation');
 /*!40000 ALTER TABLE `mailbox_employer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-26 18:22:20
+-- Dump completed on 2023-12-30 11:20:29
