@@ -40,17 +40,21 @@ public class Model {
         }
     }
 
-    public boolean checkLogin(String login, String password) {
+    public int checkLogin(String login, String password) {
         try {
             String query = "SELECT * FROM USERS WHERE login = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, login);
             ResultSet results = preparedStatement.executeQuery();
-
-            return (results.next() && results.getString("password").equals(password));
+            
+            if (results.next() && results.getString("password").equals(password))
+                return results.getInt("id_user");
+            else 
+                return -1;
+            
         } catch (Exception e) {
             System.out.println(e);
-            return false;
+            return -1;
         }
     }
 
