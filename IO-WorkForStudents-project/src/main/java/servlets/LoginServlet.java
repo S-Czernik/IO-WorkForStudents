@@ -12,7 +12,7 @@ import model.Model;
 @WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet"})
 public class LoginServlet extends HttpServlet {
     Model model;
-
+    
     public LoginServlet() {
         model = Model.getModel();
     }
