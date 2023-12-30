@@ -24,10 +24,10 @@ public class LoginServlet extends HttpServlet {
         String arg1 = request.getParameter("arg1");
         String arg2 = request.getParameter("arg2");
 
-        boolean found = model.checkLogin(arg1, arg2);
+        int found_id = model.checkLogin(arg1, arg2);
 
         PrintWriter out = response.getWriter();
-        out.print(found);
+        out.print(found_id);
         out.close();
     }
 
