@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", function() {
     fetchNotifications();
 });
 
-function fetchNotifications() {
+function fetchNotifications(arg1) {
     var xhttp = new XMLHttpRequest();
-
+    arg1 = sessionStorage.getItem('found_id');
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             var notifications = JSON.parse(this.responseText);
@@ -16,7 +16,7 @@ function fetchNotifications() {
         }
     };
 
-    xhttp.open("GET", "NotificationServlet", true);
+    xhttp.open("GET", "NotificationServlet?arg1="+arg1 ,true);
     xhttp.send();
 }
 
