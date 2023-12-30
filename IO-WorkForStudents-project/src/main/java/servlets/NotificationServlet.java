@@ -11,6 +11,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import model.Model;
+import model.Notification;
+
 
 /**
  *
@@ -19,31 +23,43 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(name = "NotificationServlet", urlPatterns = {"/NotificationServlet"})
 public class NotificationServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet NotificationServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet NotificationServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+    Model model;
+    String userType;
+    ArrayList<Notification> notifications = new ArrayList<>();
+
+    public NotificationServlet() {
+        model = Model.getModel();
     }
+    
+
+  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    response.setContentType("application/json;charset=UTF-8");
+    String userID = "2";
+    try (PrintWriter out = response.getWriter()) {
+        this.notifications.clear();
+        this.userType = model.getUserType(userID);
+        this.notifications = model.getNotifications(userType, userID);
+        
+        StringBuilder jsonNotifications = new StringBuilder("[");
+        for (int i = 0; i < notifications.size(); i++) {
+            Notification notification = notifications.get(i);
+            jsonNotifications.append("{")
+                             .append("\"ID\": \"").append(notification.getID()).append("\",")
+                             .append("\"messageType\": \"").append(notification.getMessageType()).append("\",")
+                             .append("\"userLogin\": \"").append(notification.getUserLogin()).append("\",")
+                             .append("\"offerTitle\": \"").append(notification.getOfferTitle()).append("\"")
+                             .append("}");
+            if (i < notifications.size() - 1) {
+                jsonNotifications.append(",");
+            }
+        }
+        jsonNotifications.append("]");
+        
+        out.println(jsonNotifications.toString());
+    }
+}
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -82,6 +98,5 @@ public class NotificationServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }
