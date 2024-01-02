@@ -31,16 +31,10 @@ public class CalendarServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		switch (requestType) {
 			case "getuser" -> {
-				out.print(model.loadStudentCalendarFromDatabase(login).getCSV());
+				out.print(model.loadStudentCalendarFromDatabase(login));
 			}
 			case "getoffer" -> {
-				out.print(model.loadOfferCalendarFromDatabase(offerID).getCSV());
-			}
-			case "setuser" -> {
-				model.saveStudentCalendarToDatabase(login,);
-			}
-			case "setoffer" -> {
-
+				out.print(model.loadOfferCalendarFromDatabase(offerID));
 			}
 			case "compare" -> {
 

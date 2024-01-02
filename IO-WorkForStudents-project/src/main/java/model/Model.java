@@ -172,33 +172,29 @@ public class Model {
 			else {
 				// Obsługa innego typu użytkownika
 			}
-			return notifications;
 		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		return notifications;
+	}
 
-		String getUserType
-		(String userID
-		
-			) {
+	String getUserType(String userID) {
 		try {
-				String query = "SELECT type FROM users WHERE id_user = ?";
-				PreparedStatement preparedStatement = connection.prepareStatement(query);
-				preparedStatement.setString(1, userID);
-				ResultSet results = preparedStatement.executeQuery();
+			String query = "SELECT type FROM users WHERE id_user = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, userID);
+			ResultSet results = preparedStatement.executeQuery();
 
-				if (results.next()) {
-					String type = results.getString("type");
-					return type;
-				}
+			if (results.next()) {
+				String type = results.getString("type");
+				return type;
 			}
-			catch (SQLException e) {
-				System.out.println(e);
-			}
-			return "No type assigned or no user";
 		}
-		if (ret == null) {
-			return null;
+		catch (SQLException e) {
+			System.out.println(e);
 		}
-		return ret.getCSV();
+		return "No type assigned or no user";
 	}
 
 	public String loadStudentCalendarFromDatabase(String userLogin) {
@@ -209,6 +205,12 @@ public class Model {
 		catch (Exception e) {
 			System.out.println(e);
 		}
+		if (ret
+				== null) {
+			return null;
+		}
+
+		return ret.getCSV();
 	}
 
 	public String loadOfferCalendarFromDatabase(int offerID) {
@@ -224,5 +226,11 @@ public class Model {
 			return null;
 		}
 		return ret.getCSV();
+	}
+
+	public void saveStudentCalendarToDatabase(String login, String csv) {
+	}
+
+	public void saveOfferCalendarToDatabase(int offerID, String csv) {
 	}
 }
