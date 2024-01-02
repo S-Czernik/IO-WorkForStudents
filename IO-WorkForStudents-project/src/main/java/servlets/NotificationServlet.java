@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import model.Model;
 import model.Notification;
 
-
 /**
  *
  * @author adamk
@@ -23,80 +22,41 @@ import model.Notification;
 @WebServlet(name = "NotificationServlet", urlPatterns = {"/NotificationServlet"})
 public class NotificationServlet extends HttpServlet {
 
-    Model model;
-    String userType;
-    ArrayList<Notification> notifications = new ArrayList<>();
+	Model model;
 
-    public NotificationServlet() {
-        model = Model.getModel();
-    }
-    
+	public NotificationServlet() {
+		model = Model.getModel();
+	}
 
-  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    response.setContentType("application/json;charset=UTF-8");
-    String userID = "2";
-    try (PrintWriter out = response.getWriter()) {
-        this.notifications.clear();
-        this.userType = model.getUserType(userID);
-        this.notifications = model.getNotifications(userType, userID);
-        
-        StringBuilder jsonNotifications = new StringBuilder("[");
-        for (int i = 0; i < notifications.size(); i++) {
-            Notification notification = notifications.get(i);
-            jsonNotifications.append("{")
-                             .append("\"ID\": \"").append(notification.getID()).append("\",")
-                             .append("\"messageType\": \"").append(notification.getMessageType()).append("\",")
-                             .append("\"userLogin\": \"").append(notification.getUserLogin()).append("\",")
-                             .append("\"offerTitle\": \"").append(notification.getOfferTitle()).append("\"")
-                             .append("}");
-            if (i < notifications.size() - 1) {
-                jsonNotifications.append(",");
-            }
-        }
-        jsonNotifications.append("]");
-        
-        out.println(jsonNotifications.toString());
-    }
-}
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("application/json;charset=UTF-8");
+		String userID = "2";
+		try (PrintWriter out = response.getWriter()) {
+			ArrayList<Notification> notifications = model.getNotifications(userID);
 
+			StringBuilder jsonNotifications = new StringBuilder("[");
+			for (int i = 0; i < notifications.size(); i++) {
+				Notification notification = notifications.get(i);
+				jsonNotifications.append("{")
+						.append("\"ID\": \"").append(notification.getID()).append("\",")
+						.append("\"messageType\": \"").append(notification.getMessageType()).append("\",")
+						.append("\"userLogin\": \"").append(notification.getUserLogin()).append("\",")
+						.append("\"offerTitle\": \"").append(notification.getOfferTitle()).append("\"")
+						.append("}");
+				if (i < notifications.size() - 1) {
+					jsonNotifications.append(",");
+				}
+			}
+			jsonNotifications.append("]");
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+			out.println(jsonNotifications.toString());
+		}
+	}
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }
+	@Override
+	public String getServletInfo() {
+		return "Short description";
+	}
 }
