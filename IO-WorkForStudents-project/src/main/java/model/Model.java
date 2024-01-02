@@ -173,3 +173,4 @@ public class Model {
         return searchedoffers;
     }
 }
+
