@@ -102,7 +102,11 @@ public class Model {
         ArrayList<Offer> offers = new ArrayList<>();
 
         try {    
-            String query = "SELECT * FROM OFFERS WHERE id_offer >= ? AND id_offer <= ?";
+            String query;
+            if (end >= begin)
+                query = "SELECT * FROM OFFERS WHERE id_offer >= ? AND id_offer <= ?";
+            else
+                query = "SELECT * FROM OFFERS WHERE id_offer >= ? OR id_offer <= ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, begin);
@@ -139,5 +143,33 @@ public class Model {
             System.out.println(e);
             return -1;
         }
+    }
+    
+    public ArrayList<Offer> getSearchedOffers(String offerTitle) {
+        ArrayList<Offer> searchedoffers = new ArrayList<>();
+
+        try {    
+            String query = "SELECT * FROM OFFERS WHERE title = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, offerTitle);
+
+            ResultSet results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                int id_offer = results.getInt("id_offer");
+                int id_empl = results.getInt("id_empl");
+                String title = results.getString("title");
+                String content = results.getString("content");
+                String info = results.getString("info");
+
+                Offer offer = new Offer(id_offer, id_empl, title, content, info);
+                searchedoffers.add(offer);
+            }
+        } catch (Exception exp) {
+            System.out.println(exp);
+        }
+
+        return searchedoffers;
     }
 }

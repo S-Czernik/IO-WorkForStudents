@@ -18,6 +18,22 @@ function startPage(pageNumber) {
     xhttp.send();
 }
 
+function searchForOffer(title) {
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            //var offers = JSON.parse(this.responseText);
+            //displayOffers(offers);
+        }
+    };
+    
+    var arg1 = document.getElementById(title).value;
+    
+    xhttp.open("GET", "offerssearch?arg1=" + arg1, true);
+    xhttp.send();
+}
+
 function displayOffers(offers) {
     var containersContainer = document.getElementById("containersContainerID");
 

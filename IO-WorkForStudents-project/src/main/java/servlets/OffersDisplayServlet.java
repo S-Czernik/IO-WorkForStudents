@@ -18,12 +18,10 @@ public class OffersDisplayServlet extends HttpServlet {
     Model model;
     ArrayList<Offer> offers = new ArrayList<>();
     Random random;
-    int begin, end;
+    int begin, end, start;
 
     public OffersDisplayServlet() {
         model = Model.getModel();
-        begin = 0;
-        end = 9;
     }
 
     @Override
@@ -34,33 +32,53 @@ public class OffersDisplayServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String arg1 = request.getParameter("arg1");
             offers.clear();
-            
+
+            start = -1;
             Cookie[] cookies = request.getCookies();
+            if (cookies != null)
+                for (Cookie cookie : cookies)
+                    switch (cookie.getName()) {
+                        case "start" -> start = Integer.parseInt(cookie.getValue());
+                        case "begin" -> begin = Integer.parseInt(cookie.getValue());
+                        case "end" -> end = Integer.parseInt(cookie.getValue());
+                    }
             
-            if (arg1.equals("0")) {
-                int count = model.getOfferCount() - 10;
+            int count = model.getOfferCount() - 1;
+            if (arg1.equals("0") && start == -1) {
                 random = new Random();
-                begin = random.nextInt(count);
+                begin = random.nextInt(count - 9);
                 end = begin + 9;
-            } else if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("begin"))
-                        begin = Integer.parseInt(cookie.getValue());
-                    else if (cookie.getName().equals("end"))
-                        end = Integer.parseInt(cookie.getValue());
-                }
-                
+                start = begin;
+                Cookie startCookie = new Cookie("start", String.valueOf(start));
+                response.addCookie(startCookie);
+            } else {
                 if (arg1.equals("-1")) {
                     begin -= 10;
-                    if (begin < 0)
-                        begin = 0;
-                    end = begin + 9;
+                    if (begin + 10 == start)
+                        begin += 10;
+                    else if (begin < 0) {
+                        end = begin + 9;
+                        begin = count + begin + 1;
+                    } else if (begin >= start)
+                        end = begin + 9;
+                    else if (begin < start && end > start) {
+                        end = begin + 9;
+                        begin = start + 1;
+                    } else 
+                        end = begin + 9;
                 } else if (arg1.equals("1")) {
                     end += 10;
-                    int count = model.getOfferCount() - 1;
-                    if (end > count)
-                        end = count;
-                    begin = end - 9;
+                    if (end > count) {
+                        begin = end - 9;
+                        end = Math.abs(count - end) - 1;
+                    }
+                    else if (end < start)
+                        begin = end - 9;
+                    else if (end >= start && (begin < start || begin > end)) {
+                        if ((begin = end - 9) == start) begin--;
+                        end = start - 1;
+                    } else
+                        begin += 10;
                 }
             }
 
@@ -88,7 +106,9 @@ public class OffersDisplayServlet extends HttpServlet {
             jsonOffers.append("]");
 
             out.println(jsonOffers.toString());
-        } catch (Exception exp) { }
+        } catch (Exception exp) { 
+            System.out.println(exp);
+        }
     }
 
     @Override
