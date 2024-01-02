@@ -11,42 +11,32 @@ import model.Model;
 
 @WebServlet(name = "RegisterServlet", urlPatterns = {"/registerServlet"})
 public class RegisterServlet extends HttpServlet {
-    Model model;
 
-    public RegisterServlet() {
-        model = Model.getModel();
-    }
+	Model model;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/plaintext;charset=UTF-8");
+	public RegisterServlet() {
+		model = Model.getModel();
+	}
 
-        String type = request.getParameter("arg1");
-        String login = request.getParameter("arg2");
-        String passwd = request.getParameter("arg3");
-        String email = request.getParameter("arg4");
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/plaintext;charset=UTF-8");
 
-        boolean registered = model.register(login, passwd, email, type);
+		String type = request.getParameter("arg1");
+		String login = request.getParameter("arg2");
+		String passwd = request.getParameter("arg3");
+		String email = request.getParameter("arg4");
 
-        PrintWriter out = response.getWriter();
-        out.print(registered);
-        out.close();
-    }
+		boolean registered = model.register(login, passwd, email, type);
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+		PrintWriter out = response.getWriter();
+		out.print(registered);
+		out.close();
+	}
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }
+	@Override
+	public String getServletInfo() {
+		return "Short description";
+	}
 }

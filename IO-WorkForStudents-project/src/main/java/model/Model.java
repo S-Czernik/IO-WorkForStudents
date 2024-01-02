@@ -43,7 +43,7 @@ public class Model {
 
 	public boolean checkLogin(String login, String password) {
 		try {
-			String query = "SELECT * FROM USERS WHERE login = ?";
+			String query = "SELECT * FROM users WHERE login = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, login);
 			ResultSet results = preparedStatement.executeQuery();
@@ -58,7 +58,7 @@ public class Model {
 
 	public boolean register(String login, String password, String email, String type) {
 		try {
-			String query = "SELECT * FROM USERS WHERE login = ?";
+			String query = "SELECT * FROM users WHERE login = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, login);
 			ResultSet results = preparedStatement.executeQuery();
@@ -86,7 +86,7 @@ public class Model {
 
 	int getUserCount() {
 		try {
-			String query = "SELECT COUNT(*) AS count FROM USERS";
+			String query = "SELECT COUNT(*) AS count FROM users";
 			ResultSet results = statement.executeQuery(query);
 
 			if (results.next()) {
@@ -172,29 +172,57 @@ public class Model {
 			else {
 				// Obsługa innego typu użytkownika
 			}
+			return notifications;
+		}
+
+		String getUserType
+		(String userID
+		
+			) {
+		try {
+				String query = "SELECT type FROM users WHERE id_user = ?";
+				PreparedStatement preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, userID);
+				ResultSet results = preparedStatement.executeQuery();
+
+				if (results.next()) {
+					String type = results.getString("type");
+					return type;
+				}
+			}
+			catch (SQLException e) {
+				System.out.println(e);
+			}
+			return "No type assigned or no user";
+		}
+		if (ret == null) {
+			return null;
+		}
+		return ret.getCSV();
+	}
+
+	public String loadStudentCalendarFromDatabase(String userLogin) {
+		Kalyndarz ret = null;
+		try {
+			String query = "SELECT * FROM hours";
 		}
 		catch (Exception e) {
 			System.out.println(e);
 		}
-		return notifications;
 	}
 
-	String getUserType(String userID) {
+	public String loadOfferCalendarFromDatabase(int offerID) {
+		Kalyndarz ret = null;
 		try {
-			String query = "SELECT type FROM users WHERE id_user = ?";
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, userID);
-			ResultSet results = preparedStatement.executeQuery();
-
-			if (results.next()) {
-				String type = results.getString("type");
-				return type;
-			}
+			String query = "SELECT * FROM hours";
 		}
-		catch (SQLException e) {
+		catch (Exception e) {
 			System.out.println(e);
 		}
-		return "No type assigned or no user";
-	}
 
+		if (ret == null) {
+			return null;
+		}
+		return ret.getCSV();
+	}
 }
