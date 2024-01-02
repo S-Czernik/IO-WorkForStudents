@@ -25,22 +25,49 @@ public class CalendarServlet extends HttpServlet {
 
 		String requestType = request.getParameter("rqtype");
 
+		String login = request.getParameter("login");
+		int offerID = Integer.parseInt(request.getParameter("offerid"));
+
 		PrintWriter out = response.getWriter();
 		switch (requestType) {
 			case "getuser" -> {
-				out.print(model.loadStudentCalendarFromDatabase(request.getParameter("login")));
+				out.print(model.loadStudentCalendarFromDatabase(login).getCSV());
 			}
 			case "getoffer" -> {
-				out.print(model.loadOfferCalendarFromDatabase(Integer.valueOf(request.getParameter("offerid"))));
+				out.print(model.loadOfferCalendarFromDatabase(offerID).getCSV());
 			}
 			case "setuser" -> {
-
+				model.saveStudentCalendarToDatabase(login,);
 			}
 			case "setoffer" -> {
 
 			}
 			case "compare" -> {
 
+			}
+		}
+		out.close();
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		response.setContentType("text/plaintext;charset=UTF-8");
+
+		String requestType = request.getHeader("rqtype");
+
+		String login = request.getHeader("login");
+		int offerID = Integer.parseInt(request.getHeader("offerid"));
+		String csv = request.getHeader("csv");
+
+		PrintWriter out = response.getWriter();
+		switch (requestType) {
+			case "setuser" -> {
+				model.saveStudentCalendarToDatabase(login, csv);
+			}
+			case "setoffer" -> {
+				model.saveOfferCalendarToDatabase(offerID, csv);
 			}
 		}
 		out.close();
