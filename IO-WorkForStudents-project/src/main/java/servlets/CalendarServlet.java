@@ -7,7 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Model;
+import model.*;
 
 @WebServlet(name = "CalendarServlet", urlPatterns = {"/calendar"})
 public class CalendarServlet extends HttpServlet {
@@ -21,24 +21,43 @@ public class CalendarServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setContentType("text/plaintext;charset=UTF-8");
 
 		String requestType = request.getParameter("rqtype");
 
 		String login = request.getParameter("login");
-		int offerID = Integer.parseInt(request.getParameter("offerid"));
+		String idString = request.getParameter("offerid");
+		int offerID = (idString != null ? Integer.parseInt(idString) : -1);
 
 		PrintWriter out = response.getWriter();
-		switch (requestType) {
-			case "getuser" -> {
-				out.print(model.loadStudentCalendarFromDatabase(login));
-			}
-			case "getoffer" -> {
-				out.print(model.loadOfferCalendarFromDatabase(offerID));
-			}
-			case "compare" -> {
 
+		if (requestType != null) {
+			switch (requestType) {
+				case "getusercsv" -> {
+					response.setContentType("text/plaintext;charset=UTF-8");
+					out.print(model.loadStudentCalendarFromDatabase(login));
+				}
+				case "getoffercsv" -> {
+					response.setContentType("text/plaintext;charset=UTF-8");
+					out.print(model.loadOfferCalendarFromDatabase(offerID));
+				}
+				case "getuserhtml" -> {
+					response.setContentType("text/html;charset=UTF-8");
+					out.print(model.loadStudentCalendarFromDatabase(login));
+				}
+				case "getofferhtml" -> {
+					response.setContentType("text/html;charset=UTF-8");
+					out.print(model.loadOfferCalendarFromDatabase(offerID));
+				}
+				case "compare" -> {
+
+				}
 			}
+		}
+		else {
+			response.setContentType("text/html;charset=UTF-8");
+			Kalyndarz test = new Kalyndarz();
+			test.loadCSV("45,1380,1,450,1200,2,360,1020,3,270,840,4");
+			out.print(CalendarHTMLBuilder.get(test));
 		}
 		out.close();
 	}

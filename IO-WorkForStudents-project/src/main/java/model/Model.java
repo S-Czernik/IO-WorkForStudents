@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import model.*;
 
 public class Model {
 
@@ -198,30 +199,15 @@ public class Model {
 	}
 
 	public String loadStudentCalendarFromDatabase(String userLogin) {
-		Kalyndarz ret = null;
-		try {
-			String query = "SELECT * FROM hours";
-		}
-		catch (Exception e) {
-			System.out.println(e);
-		}
-		if (ret
-				== null) {
+		Kalyndarz ret = getStudentCalendar(userLogin);
+		if (ret == null) {
 			return null;
 		}
-
 		return ret.getCSV();
 	}
 
 	public String loadOfferCalendarFromDatabase(int offerID) {
-		Kalyndarz ret = null;
-		try {
-			String query = "SELECT * FROM hours";
-		}
-		catch (Exception e) {
-			System.out.println(e);
-		}
-
+		Kalyndarz ret = getOfferCalendar(offerID);
 		if (ret == null) {
 			return null;
 		}
@@ -229,8 +215,50 @@ public class Model {
 	}
 
 	public void saveStudentCalendarToDatabase(String login, String csv) {
+		try {
+			String query = "SELECT * FROM hours";
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 	public void saveOfferCalendarToDatabase(int offerID, String csv) {
+		try {
+			String query = "SELECT * FROM hours";
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	public float compareCalendars(String login, int offerID) {
+		Kalyndarz stud = getStudentCalendar(login);
+		Kalyndarz offer = getOfferCalendar(offerID);
+
+		if (stud != null && offer != null) {
+			return stud.compare(offer);
+		}
+		return 0.0f;
+	}
+
+	Kalyndarz getStudentCalendar(String login) {
+		try {
+			String query = "SELECT * FROM hours";
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+
+	Kalyndarz getOfferCalendar(int offerID) {
+		try {
+			String query = "SELECT * FROM hours";
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 }

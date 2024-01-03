@@ -28,14 +28,10 @@ public class Kalyndarz {
 		intervals = new ArrayList<>();
 	}
 
-	public void loadCSV(String csv) throws Exception {
+	public void loadCSV(String csv) {
 		var values = csv.split(",");
 
-		if (values.length % 3 != 0) {
-			throw new Exception("Invalid CSV input");
-		}
-
-		for (int i = 0; i < values.length; i += 3) {
+		for (int i = 0; i + 2 < values.length; i += 3) {
 			var bg = Integer.valueOf(values[i]);
 			var nd = Integer.valueOf(values[i + 1]);
 			var d = Integer.valueOf(values[i + 2]);
