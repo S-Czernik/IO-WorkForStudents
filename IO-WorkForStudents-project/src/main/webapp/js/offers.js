@@ -104,3 +104,76 @@ function displayOffersMainPage(offers) {
         containersContainer.appendChild(offerDiv);
     }
 }
+
+function validateOffer(arg2, arg3, arg4, arg5, result) {
+    event.preventDefault();
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var correct = this.responseText;
+            
+            if (correct === "true") {
+                document.getElementById("titleInput").value = "";
+                document.getElementById("contentInput").value = "";
+                document.getElementById("infoInput").value = "";
+                document.getElementById("salaryInput").value = "";
+                resultElem.innerHTML = "";
+                
+                document.getElementById("offersPage").action = "offers.html";
+                document.getElementById("offersPage").submit();
+            } else {
+                resultElem.innerHTML = "Addition of an offer failed. Please try different data.";
+            }
+        }
+    };
+    
+    
+    var resultElem = document.getElementById(result);
+    var id_empl = document.getElementById(sessionStorage.getItem('found_id')).value;
+    var title = document.getElementById(arg2).value;
+    var content = document.getElementById(arg3).value;
+    var info = document.getElementById(arg4).value;
+    var salary = document.getElementById(arg5).value;
+    if (!title.trim() || !content.trim() || !info.trim() || !salary.trim()) {
+        resultElem.innerHTML = "Addition of an offer failed. Please complete all fields.";
+    } else {
+        xhttp.open("POST", "OfferAddingServlet?arg1=" + id_empl + "&arg2=" + title + "&arg3=" + content + "&arg4=" + info + "&arg5=" + salary, true);
+        xhttp.send();
+    }
+}
+
+function validateOffer(arg2, arg3, arg4, arg5, result) {
+    event.preventDefault();
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var correct = this.responseText;
+            
+            if (correct === "true") {
+                document.getElementById("titleInput").value = "";
+                document.getElementById("contentInput").value = "";
+                document.getElementById("infoInput").value = "";
+                document.getElementById("salaryInput").value = "";
+                resultElem.innerHTML = "";
+                
+                document.getElementById("offersPage").action = "offers.html";
+                document.getElementById("offersPage").submit();
+            } else {
+                resultElem.innerHTML = "Addition of an offer failed. Please try different data.";
+            }
+        }
+    };
+    
+    var resultElem = document.getElementById(result);  
+    var title = document.getElementById(arg2).value;
+    var content = document.getElementById(arg3).value;
+    var info = document.getElementById(arg4).value;
+    var salary = document.getElementById(arg5).value;
+    if (!title.trim() || !content.trim() || !info.trim() || !salary.trim()) {
+        resultElem.innerHTML = "Addition of an offer failed. Please complete all fields.";
+    } else {
+        xhttp.open("POST", "OfferAddingServlet?arg1=" + sessionStorage.getItem('found_id') + "&arg2=" + title + "&arg3=" + content + "&arg4=" + info + "&arg5=" + salary, true);
+        xhttp.send();
+    }
+}

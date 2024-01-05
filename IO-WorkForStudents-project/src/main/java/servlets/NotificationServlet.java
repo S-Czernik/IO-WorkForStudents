@@ -32,7 +32,7 @@ public class NotificationServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("application/json;charset=UTF-8");
-		String userID = "2";
+		String userID = request.getParameter("arg1");
 		try (PrintWriter out = response.getWriter()) {
 			ArrayList<Notification> notifications = model.getNotifications(userID);
 

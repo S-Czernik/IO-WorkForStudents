@@ -283,4 +283,47 @@ public class Model {
 		}
 		return "No type assigned or no user";
 	}
+        
+        public boolean addOffer(String id_empl, String title, String content, String info, String salary) {
+		try {
+                    int newMax = getLastOffer()+1   ;
+                        String dotSalary = salary;
+			String insertQuery = "INSERT INTO offers (id_offer, id_empl, title, content, info, salary) VALUES (?, ?, ?, ?, ?, ?)";
+			PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
+			insertStatement.setString(1, String.valueOf(newMax));
+			insertStatement.setString(2, id_empl);
+			insertStatement.setString(3, title);
+			insertStatement.setString(4, content);
+			insertStatement.setString(5, info);
+                        if (salary.contains(",")) {
+                            dotSalary = salary.replace(",", ".");
+                        } else {
+                            dotSalary = salary;
+                        }
+                        insertStatement.setString(6, dotSalary);
+
+			insertStatement.executeUpdate();
+                        return true;
+		}
+		catch (Exception e) {
+			System.out.println(e);
+                        return false;
+		}
+	}
+        
+        	int getLastOffer() {
+		try {
+			String query = "SELECT MAX(id_offer) AS last_offer FROM offers";
+			ResultSet results = statement.executeQuery(query);
+
+			if (results.next()) {
+				return results.getInt("last_offer");
+			}
+			return 0;
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			return -1;
+		}
+	}
 }
