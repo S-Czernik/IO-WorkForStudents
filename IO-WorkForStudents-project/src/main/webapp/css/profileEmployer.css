@@ -205,4 +205,3 @@ img {
 
 .side-menu-trigger:focus ~ .side-menu, .side-menu:hover {
   transform: translateX(-400px); }
-
