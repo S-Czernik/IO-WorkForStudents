@@ -326,4 +326,43 @@ public class Model {
 			return -1;
 		}
 	}
+                public boolean deleteOffer(String id_offer) {
+		try {
+
+			String insertQuery = "DELETE FROM offers WHERE offer_id = ?";
+			PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
+			insertStatement.setString(1, String.valueOf(id_offer));
+			insertStatement.executeUpdate();
+                        return true;
+		}
+		catch (Exception e) {
+			System.out.println(e);
+                        return false;
+		}
+	}
+                        public boolean editOffer(String id_offer, String title, String content, String info, String salary) {
+		try {
+                        String dotSalary; 
+                        String insertQuery = "UPDATE offers SET title = ?, content = ?, info = ?, salary = ? WHERE (id_offer = ?)";
+                        
+			PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
+			insertStatement.setString(1, title);
+			insertStatement.setString(2, content);
+			insertStatement.setString(3, info);                       
+                        if (salary.contains(",")) {
+                            dotSalary = salary.replace(",", ".");
+                        } else {
+                            dotSalary = salary;
+                        }
+                        insertStatement.setString(4, dotSalary);
+			insertStatement.setString(5, String.valueOf(id_offer));
+                        
+			insertStatement.executeUpdate();
+                        return true;
+		}
+		catch (Exception e) {
+			System.out.println(e);
+                        return false;
+		}
+	}
 }
