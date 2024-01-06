@@ -141,6 +141,44 @@ public class Model {
 
 		return offers;
 	}
+        
+        public ArrayList<Offer> getOffers(int begin, int end, String empl_id) {
+		ArrayList<Offer> offers = new ArrayList<>();
+
+		try {
+			String query;
+			if (end >= begin) {
+				query = "SELECT * FROM OFFERS WHERE id_offer >= ? AND id_offer <= ? AND id_empl =?";
+			}
+			else {
+				query = "SELECT * FROM OFFERS WHERE id_offer >= ? OR id_offer <= ? AND id_empl =?";
+			}
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, begin);
+			preparedStatement.setInt(2, end);
+                        preparedStatement.setString(3, empl_id);
+
+			ResultSet results = preparedStatement.executeQuery();
+
+			while (results.next()) {
+				int id_offer = results.getInt("id_offer");
+				int id_empl = results.getInt("id_empl");
+				String title = results.getString("title");
+				String content = results.getString("content");
+				String info = results.getString("info");
+
+				Offer offer = new Offer(id_offer, id_empl, title, content, info);
+				offers.add(offer);
+			}
+		}
+		catch (Exception exp) {
+			System.out.println(exp);
+		}
+
+		return offers;
+	}
+
 
 	public int getOfferCount() {
 		try {
