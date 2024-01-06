@@ -16,28 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `employers_ratings`
+-- Table structure for table `student_profiles`
 --
 
-DROP TABLE IF EXISTS `employers_ratings`;
+DROP TABLE IF EXISTS `student_profiles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `employers_ratings` (
-  `id_empl_rating` int NOT NULL,
-  `number` float NOT NULL,
-  `comment` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_empl_rating`),
-  UNIQUE KEY `id_empl_rating_UNIQUE` (`id_empl_rating`)
+CREATE TABLE `student_profiles` (
+  `id_stud` int NOT NULL,
+  `title` varchar(45) NOT NULL,
+  `content` varchar(45) NOT NULL,
+  `info` varchar(45) NOT NULL,
+  PRIMARY KEY (`id_stud`),
+  UNIQUE KEY `id_stud_UNIQUE` (`id_stud`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `employers_ratings`
+-- Dumping data for table `student_profiles`
 --
 
-LOCK TABLES `employers_ratings` WRITE;
-/*!40000 ALTER TABLE `employers_ratings` DISABLE KEYS */;
-/*!40000 ALTER TABLE `employers_ratings` ENABLE KEYS */;
+LOCK TABLES `student_profiles` WRITE;
+/*!40000 ALTER TABLE `student_profiles` DISABLE KEYS */;
+INSERT INTO `student_profiles` VALUES (0,'1','b','b'),(1,'1','b','b'),(2,'1','b','b'),(3,'1','b','b'),(4,'1','b','b'),(5,'1','b','b'),(6,'1','b','b'),(7,'1','b','b'),(8,'1','b','b'),(9,'1','b','b'),(10,'1','b','b'),(11,'1','b','b'),(12,'1','b','b'),(13,'14','b','b'),(14,'15','b','b'),(15,'16','b','b'),(16,'17','b','b'),(17,'18','b','b'),(18,'19','b','b'),(19,'20','b','b'),(20,'21','b','b');
+/*!40000 ALTER TABLE `student_profiles` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
