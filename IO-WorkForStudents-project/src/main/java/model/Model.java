@@ -31,29 +31,37 @@ public class Model {
 
     public void connect() {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ioio?useSSL=false", "root", "root");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ioio?useSSL=false", "root", "1234");
             statement = connection.createStatement();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
 
-    public int checkLogin(String login, String password) {
+    public ArrayList<String> checkLogin(String login, String password) {
+        ArrayList<String> idAndType = new ArrayList<>();
+        
         try {
             String query = "SELECT * FROM USERS WHERE login = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, login);
             ResultSet results = preparedStatement.executeQuery();
 
-            if (results.next() && results.getString("password").equals(password))
-                return results.getInt("id_user");
-            else
-                return -1;
-            
+            if (results.next() && results.getString("password").equals(password)) {
+                idAndType.add(results.getString("id_user"));
+                idAndType.add(results.getString("type"));
+            }
+            else {
+                idAndType.add("-1");
+                idAndType.add("-1");
+            }
         } catch (Exception e) {
             System.out.println(e);
-            return -1;
+            idAndType.add("-1");
+            idAndType.add("-1");
         }
+        
+        return idAndType;
     }
 
     public boolean register(String login, String password, String email, String type) {
@@ -131,9 +139,45 @@ public class Model {
         return offers;
     }
     
-    public int getOfferCount() {
+    public ArrayList<Offer> getProfiles(int begin, int end) {
+        ArrayList<Offer> offers = new ArrayList<>();
+
+        try {    
+            String query;
+            if (end >= begin)
+                query = "SELECT * FROM STUDENT_PROFILES WHERE id_stud >= ? AND id_stud <= ?";
+            else
+                query = "SELECT * FROM STUDENT_PROFILES WHERE id_stud >= ? OR id_stud <= ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, begin);
+            preparedStatement.setInt(2, end);
+
+            ResultSet results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                int id_stud = results.getInt("id_stud");
+                String title = results.getString("title");
+                String content = results.getString("content");
+                String info = results.getString("info");
+
+                Offer offer = new Offer(id_stud, title, content, info);
+                offers.add(offer);
+            }
+        } catch (Exception exp) {
+            System.out.println(exp);
+        }
+
+        return offers;
+    }
+    
+    public int getOffersCount(String type) {
         try {
-            String query = "SELECT COUNT(*) AS count FROM OFFERS";
+            String query;
+            if (type.equals("offers"))
+                query = "SELECT COUNT(*) AS count FROM OFFERS";
+            else 
+                query = "SELECT COUNT(*) AS count FROM STUDENT_PROFILES"; 
             ResultSet results = statement.executeQuery(query);
 
             if (results.next())
@@ -172,5 +216,80 @@ public class Model {
 
         return searchedoffers;
     }
-}
+    
+    public ArrayList<Offer> getSearchedProfiles(String offerTitle) {
+        ArrayList<Offer> searchedoffers = new ArrayList<>();
 
+        try {    
+            String query = "SELECT * FROM STUDENT_PROFILES WHERE title = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, offerTitle);
+
+            ResultSet results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                int id_stud = results.getInt("id_stud");
+                String title = results.getString("title");
+                String content = results.getString("content");
+                String info = results.getString("info");
+
+                Offer offer = new Offer(id_stud, title, content, info);
+                searchedoffers.add(offer);
+            }
+        } catch (Exception exp) {
+            System.out.println(exp);
+        }
+
+        return searchedoffers;
+    }
+    
+    public ArrayList<Offer> getSortedAndFilteredOffers(int min, int max, int type) {
+        ArrayList<Offer> searchedoffers = new ArrayList<>();
+
+        try {
+            String sortBy = "title";
+            String sortOrder = "ASC";
+
+            if (type % 2 == 0) {
+                if (type == 2) {
+                    sortBy = "content";
+                } else if (type == 4) {
+                    sortBy = "percentage";
+                }
+            } else {
+                if (type == 3) {
+                    sortBy = "content";
+                } else if (type == 5) {
+                    sortBy = "percentage";
+                }
+                sortOrder = "DESC";
+            }
+
+            String query = "SELECT * FROM OFFERS";
+            
+            if (min != 0 || (max != 0 && max >= min))
+                query += " WHERE content BETWEEN " + min + " AND " + max;
+
+            query += " ORDER BY " + sortBy + " " + sortOrder;
+            
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                int id_offer = results.getInt("id_offer");
+                int id_empl = results.getInt("id_empl");
+                String title = results.getString("title");
+                String content = results.getString("content");
+                String info = results.getString("info");
+
+                Offer offer = new Offer(id_offer, id_empl, title, content, info);
+                searchedoffers.add(offer);
+            }
+        } catch (Exception exp) {
+            System.out.println(exp);
+        }
+
+        return searchedoffers;
+    }
+}

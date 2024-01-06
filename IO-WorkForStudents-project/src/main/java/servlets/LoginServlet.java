@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import model.Model;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet"})
@@ -24,10 +25,11 @@ public class LoginServlet extends HttpServlet {
         String arg1 = request.getParameter("arg1");
         String arg2 = request.getParameter("arg2");
 
-        int found_id = model.checkLogin(arg1, arg2);
+        ArrayList<String> idAndType = model.checkLogin(arg1, arg2);
+        String args = idAndType.get(0) + "." + idAndType.get(1);
 
         PrintWriter out = response.getWriter();
-        out.print(found_id);
+        out.println(args);
         out.close();
     }
 

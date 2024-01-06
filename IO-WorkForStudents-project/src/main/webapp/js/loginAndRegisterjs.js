@@ -39,18 +39,21 @@ function validateRegister(arg1, arg2, arg3, arg4, result) {
 function validateLogin(arg1, arg2, result) {
     event.preventDefault();
     var xhttp = new XMLHttpRequest();
-
+    
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            var found_id = this.responseText;
+            var parts = this.responseText.split('.');
+            var found_id = parts[0];
+            var found_type = parts[1];
 
             if (found_id !== "-1") {
                 document.getElementById("arg1").value = "";
                 document.getElementById("arg2").value = "";
                 resultElem.innerHTML = "";
-                
+
                 sessionStorage.setItem('found_id', found_id);
-                
+                sessionStorage.setItem('found_type', found_type);
+
                 document.getElementById("loginPage").action = "mainPage.html";
                 document.getElementById("loginPage").submit();
             } else {
