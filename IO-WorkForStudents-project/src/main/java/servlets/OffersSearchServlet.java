@@ -48,6 +48,8 @@ public class OffersSearchServlet extends HttpServlet {
                         jsonOffers.append(",");
                     }
                 }
+                Cookie searchCookie = new Cookie("searchedO", String.valueOf(arg1));
+                response.addCookie(searchCookie);
             } else {
                 jsonOffers.append("{")
                         .append("\"title\": \"").append("Offer not found!").append("\"")

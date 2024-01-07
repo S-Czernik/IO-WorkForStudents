@@ -47,6 +47,8 @@ public class ProfilesSearchServlet extends HttpServlet {
                         jsonOffers.append(",");
                     }
                 }
+                Cookie searchCookie = new Cookie("searchedP", String.valueOf(arg1));
+                response.addCookie(searchCookie);
             } else {
                 jsonOffers.append("{")
                         .append("\"title\": \"").append("Profile not found!").append("\"")

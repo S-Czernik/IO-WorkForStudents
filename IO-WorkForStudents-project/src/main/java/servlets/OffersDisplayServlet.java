@@ -81,9 +81,11 @@ public class OffersDisplayServlet extends HttpServlet {
                     begin = end - 9;
                 else
                     begin += 10;
-            } else if (arg1.equals("2"))
+            } else if (arg1.equals("2")) {
                 random();
-            else if (arg1.equals("3")){
+                Cookie searchCookie = new Cookie("searchedO", "");
+                response.addCookie(searchCookie);     
+            } else if (arg1.equals("3")){
                 Random random = new Random();
                 start = random.nextInt(model.getOffersCount("offers") - 1);
                 random();

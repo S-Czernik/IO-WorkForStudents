@@ -240,7 +240,7 @@ public class Model {
         return searchedoffers;
     }
     
-    public ArrayList<Offer> getSortedAndFilteredOffers(int min, int max, int type) {
+    public ArrayList<Offer> getSortedAndFilteredOffers(int min, int max, int type, String searched) {
         ArrayList<Offer> searchedoffers = new ArrayList<>();
 
         try {
@@ -262,8 +262,18 @@ public class Model {
 
             String query = "SELECT * FROM OFFERS";
             
-            if (max > min && max >= 0 && min >= 0)
-                query += " WHERE content BETWEEN " + min + " AND " + max;
+            boolean was = false;
+            if (!searched.equals("")) {
+                query += " WHERE title = " + searched;
+                was = true;
+            }
+            
+            if (max >= min && max >= 0 && min >= 0) {
+                if (was)
+                    query += " AND content BETWEEN " + min + " AND " + max;
+                else
+                    query += " WHERE content BETWEEN " + min + " AND " + max;
+            }
 
             query += " ORDER BY " + sortBy + " " + sortOrder;
             
@@ -286,7 +296,7 @@ public class Model {
         return searchedoffers;
     }
     
-    public ArrayList<Offer> getSortedAndFilteredProfiles(int min, int max, int type) {
+    public ArrayList<Offer> getSortedAndFilteredProfiles(int min, int max, int type, String searched) {
         ArrayList<Offer> searchedoffers = new ArrayList<>();
 
         try {
@@ -308,8 +318,18 @@ public class Model {
 
             String query = "SELECT * FROM STUDENT_PROFILES";
             
-            if (max >= min && max >= 0 && min >= 0)
-                query += " WHERE title BETWEEN " + min + " AND " + max;
+            boolean was = false;
+            if (!searched.equals("")) {
+                query += " WHERE title = " + searched;
+                was = true;
+            }
+            
+            if (max >= min && max >= 0 && min >= 0) {
+                if (was)
+                    query += " AND content BETWEEN " + min + " AND " + max;
+                else
+                    query += " WHERE content BETWEEN " + min + " AND " + max;
+            }
 
             query += " ORDER BY " + sortBy + " " + sortOrder;
             

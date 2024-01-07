@@ -31,8 +31,17 @@ public class OffersSortAndFilterServlet extends HttpServlet {
             int arg2 = Integer.parseInt(request.getParameter("arg2"));
             int arg3 = Integer.parseInt(request.getParameter("arg3"));
             offers.clear();
+            
+            String arg4 = "";
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null)
+                for (Cookie cookie : cookies)
+                    if (cookie.getName().equals("searchedO")) {
+                        arg4 = cookie.getValue();
+                        break;
+                    }
 
-            offers = model.getSortedAndFilteredOffers(arg1, arg2, arg3);
+            offers = model.getSortedAndFilteredOffers(arg1, arg2, arg3, arg4);
 
             StringBuilder jsonOffers = new StringBuilder("[");
             if (!offers.isEmpty()) {
