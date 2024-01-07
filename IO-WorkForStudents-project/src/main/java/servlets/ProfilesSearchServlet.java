@@ -38,7 +38,7 @@ public class ProfilesSearchServlet extends HttpServlet {
                     Offer offer = offers.get(i);
 
                     jsonOffers.append("{")
-                            .append("\"id_stud\": \"").append(offer.getIdPerson()).append("\",")
+                            .append("\"id_person\": \"").append(offer.getIdPerson()).append("\",")
                             .append("\"title\": \"").append(offer.getTitle()).append("\",")
                             .append("\"content\": \"").append(offer.getContent()).append("\",")
                             .append("\"info\": \"").append(offer.getInfo()).append("\"")
@@ -47,9 +47,6 @@ public class ProfilesSearchServlet extends HttpServlet {
                         jsonOffers.append(",");
                     }
                 }
-
-                Cookie returnedCookie = new Cookie("returnedP", "true");
-                response.addCookie(returnedCookie);
             } else {
                 jsonOffers.append("{")
                         .append("\"title\": \"").append("Profile not found!").append("\"")

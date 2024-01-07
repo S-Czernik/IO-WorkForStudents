@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import model.Model;
 import model.Offer;
 
-@WebServlet(name = "OffersSortAndFilterServlet", urlPatterns = {"/sortAndFilter"})
+@WebServlet(name = "OffersSortAndFilterServlet", urlPatterns = {"/sortAndFilterOff"})
 public class OffersSortAndFilterServlet extends HttpServlet {
     Model model;
     ArrayList<Offer> offers = new ArrayList<>();
@@ -50,9 +50,6 @@ public class OffersSortAndFilterServlet extends HttpServlet {
                         jsonOffers.append(",");
                     }
                 }
-
-                Cookie returnedCookie = new Cookie("returnedO", "true");
-                response.addCookie(returnedCookie);
             } else {
                 jsonOffers.append("{")
                         .append("\"title\": \"").append("Offer not found!").append("\"")

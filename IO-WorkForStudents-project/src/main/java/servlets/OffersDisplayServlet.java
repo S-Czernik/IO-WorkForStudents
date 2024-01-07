@@ -18,7 +18,6 @@ public class OffersDisplayServlet extends HttpServlet {
     Model model;
     ArrayList<Offer> offers = new ArrayList<>();
     int start, begin, end;
-    boolean returned;
 
     public OffersDisplayServlet() {
         model = Model.getModel();
@@ -26,8 +25,6 @@ public class OffersDisplayServlet extends HttpServlet {
         Random random = new Random();
         start = random.nextInt(model.getOffersCount("offers") - 1);
         random();
-
-        returned = false;
     }
 
     @Override
@@ -54,23 +51,10 @@ public class OffersDisplayServlet extends HttpServlet {
                         case "endO":
                             end = Integer.parseInt(cookie.getValue());
                             break;
-                        case "returnedO":
-                            returned = Boolean.parseBoolean(cookie.getValue());
-                            break;
                     }
             
             int count = model.getOffersCount("offers") - 1;
-            if (arg1.equals("3")){
-                Random random = new Random();
-                start = random.nextInt(model.getOffersCount("offers") - 1);
-                random();
-                Cookie startCookie = new Cookie("startO", String.valueOf(start));
-                response.addCookie(startCookie);
-            } 
-            if (returned) {
-                Cookie returnedCookie = new Cookie("returnedO", "false");
-                response.addCookie(returnedCookie);
-            } else if (arg1.equals("-1")) {
+            if (arg1.equals("-1")) {
                 begin -= 10;
                 if (begin + 10 == start)
                     begin += 10;
@@ -99,7 +83,13 @@ public class OffersDisplayServlet extends HttpServlet {
                     begin += 10;
             } else if (arg1.equals("2"))
                 random();
-            else if (!exists) {
+            else if (arg1.equals("3")){
+                Random random = new Random();
+                start = random.nextInt(model.getOffersCount("offers") - 1);
+                random();
+                Cookie startCookie = new Cookie("startO", String.valueOf(start));
+                response.addCookie(startCookie);
+            } else if (!exists) {
                 Cookie startCookie = new Cookie("startO", String.valueOf(start));
                 response.addCookie(startCookie);
             }

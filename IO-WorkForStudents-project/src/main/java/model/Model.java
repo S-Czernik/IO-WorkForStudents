@@ -124,18 +124,17 @@ public class Model {
 
             while (results.next()) {
                 int id_offer = results.getInt("id_offer");
-                int id_empl = results.getInt("id_empl");
+                int id_person = results.getInt("id_empl");
                 String title = results.getString("title");
                 String content = results.getString("content");
                 String info = results.getString("info");
 
-                Offer offer = new Offer(id_offer, id_empl, title, content, info);
+                Offer offer = new Offer(id_offer, id_person, title, content, info);
                 offers.add(offer);
             }
         } catch (Exception exp) {
             System.out.println(exp);
         }
-
         return offers;
     }
     
@@ -156,18 +155,17 @@ public class Model {
             ResultSet results = preparedStatement.executeQuery();
 
             while (results.next()) {
-                int id_stud = results.getInt("id_stud");
+                int id_person = results.getInt("id_stud");
                 String title = results.getString("title");
                 String content = results.getString("content");
                 String info = results.getString("info");
 
-                Offer offer = new Offer(id_stud, title, content, info);
+                Offer offer = new Offer(id_person, title, content, info);
                 offers.add(offer);
             }
         } catch (Exception exp) {
             System.out.println(exp);
         }
-
         return offers;
     }
     
@@ -202,18 +200,17 @@ public class Model {
 
             while (results.next()) {
                 int id_offer = results.getInt("id_offer");
-                int id_empl = results.getInt("id_empl");
+                int id_person = results.getInt("id_empl");
                 String title = results.getString("title");
                 String content = results.getString("content");
                 String info = results.getString("info");
 
-                Offer offer = new Offer(id_offer, id_empl, title, content, info);
+                Offer offer = new Offer(id_offer, id_person, title, content, info);
                 searchedoffers.add(offer);
             }
         } catch (Exception exp) {
             System.out.println(exp);
         }
-
         return searchedoffers;
     }
     
@@ -229,18 +226,17 @@ public class Model {
             ResultSet results = preparedStatement.executeQuery();
 
             while (results.next()) {
-                int id_stud = results.getInt("id_stud");
+                int id_person = results.getInt("id_stud");
                 String title = results.getString("title");
                 String content = results.getString("content");
                 String info = results.getString("info");
 
-                Offer offer = new Offer(id_stud, title, content, info);
+                Offer offer = new Offer(id_person, title, content, info);
                 searchedoffers.add(offer);
             }
         } catch (Exception exp) {
             System.out.println(exp);
         }
-
         return searchedoffers;
     }
     
@@ -252,23 +248,21 @@ public class Model {
             String sortOrder = "ASC";
 
             if (type % 2 == 0) {
-                if (type == 2) {
+                if (type == 2)
                     sortBy = "content";
-                } else if (type == 4) {
+                else if (type == 4)
                     sortBy = "percentage";
-                }
             } else {
-                if (type == 3) {
+                if (type == 3)
                     sortBy = "content";
-                } else if (type == 5) {
+                else if (type == 5)
                     sortBy = "percentage";
-                }
                 sortOrder = "DESC";
             }
 
             String query = "SELECT * FROM OFFERS";
             
-            if (min != 0 || (max != 0 && max >= min))
+            if (max > min && max >= 0 && min >= 0)
                 query += " WHERE content BETWEEN " + min + " AND " + max;
 
             query += " ORDER BY " + sortBy + " " + sortOrder;
@@ -278,18 +272,62 @@ public class Model {
 
             while (results.next()) {
                 int id_offer = results.getInt("id_offer");
-                int id_empl = results.getInt("id_empl");
+                int id_person = results.getInt("id_empl");
                 String title = results.getString("title");
                 String content = results.getString("content");
                 String info = results.getString("info");
 
-                Offer offer = new Offer(id_offer, id_empl, title, content, info);
+                Offer offer = new Offer(id_offer, id_person, title, content, info);
                 searchedoffers.add(offer);
             }
         } catch (Exception exp) {
             System.out.println(exp);
         }
+        return searchedoffers;
+    }
+    
+    public ArrayList<Offer> getSortedAndFilteredProfiles(int min, int max, int type) {
+        ArrayList<Offer> searchedoffers = new ArrayList<>();
 
+        try {
+            String sortBy = "title";
+            String sortOrder = "ASC";
+
+            if (type % 2 == 0) {
+                if (type == 2)
+                    sortBy = "content";
+                else if (type == 4)
+                    sortBy = "percentage";
+            } else {
+                if (type == 3)
+                    sortBy = "content";
+                else if (type == 5)
+                    sortBy = "percentage";
+                sortOrder = "DESC";
+            }
+
+            String query = "SELECT * FROM STUDENT_PROFILES";
+            
+            if (max >= min && max >= 0 && min >= 0)
+                query += " WHERE title BETWEEN " + min + " AND " + max;
+
+            query += " ORDER BY " + sortBy + " " + sortOrder;
+            
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet results = preparedStatement.executeQuery();
+
+            while (results.next()) {
+                int id_person = results.getInt("id_stud");
+                String title = results.getString("title");
+                String content = results.getString("content");
+                String info = results.getString("info");
+
+                Offer offer = new Offer(id_person, title, content, info);
+                searchedoffers.add(offer);
+            }
+        } catch (Exception exp) {
+            System.out.println(exp);
+        }
         return searchedoffers;
     }
 }

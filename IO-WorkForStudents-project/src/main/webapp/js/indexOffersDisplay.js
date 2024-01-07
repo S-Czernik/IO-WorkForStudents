@@ -1,9 +1,11 @@
 window.onload = loadOffers(0);
 
 let currentType = "student";
+
 function nextPage(pageNumber) {
     window.scrollTo(0, 0);
     var arg = pageNumber;
+    
     if (currentType === 'student')
         loadOffers(arg);
     else
@@ -44,11 +46,16 @@ function loadProfiles(pageNumber) {
 
 function searchType(title) {
     window.scrollTo(0, 0);
-    var arg = document.getElementById(title).value;
-    if (currentType === 'student')
-        searchForOffers(arg);
-    else
-        searchForProfiles(arg);
+    var arg = document.getElementById(title).value.trim();
+
+    if (arg === '')
+        loadOffers(2);
+    else {
+        if (currentType === 'student')
+            searchForOffers(arg);
+        else
+            searchForProfiles(arg);
+    }
 }
 
 function searchForOffers(title) {
@@ -81,7 +88,26 @@ function searchForProfiles(title) {
     xhttp.send();
 }
 
-function filterAndSort(min, max) {
+function sortType(min, max) {
+    window.scrollTo(0, 0);
+    var arg1 = document.getElementById(min).value.trim();
+    var arg2 = document.getElementById(max).value.trim();
+    var sort = document.querySelector('input[name="sort"]:checked').value;
+
+    if (sort === '-1' && arg1 === '' && arg2 === '')
+        nextPage(2);
+    else {
+        if (arg1 === '' || arg2 === '')
+            arg1 = arg2 = -1;
+        
+        if (currentType === 'student')
+            filterAndSortOffers(arg1, arg2, sort);
+        else
+            filterAndSortProfiles(arg1, arg2, sort);
+    }
+}
+
+function filterAndSortOffers(min, max, sort) {
     window.scrollTo(0, 0);
     var xhttp = new XMLHttpRequest();
 
@@ -92,11 +118,22 @@ function filterAndSort(min, max) {
         }
     };
     
-    var arg1 = document.getElementById(min).value.trim();
-    var arg2 = document.getElementById(max).value.trim();
-    var selectedSortOption = document.querySelector('input[name="sort"]:checked').value;
+    xhttp.open("GET", "sortAndFilterOff?arg1=" + min + "&arg2=" + max + "&arg3=" + sort, true);
+    xhttp.send();
+}
 
-    xhttp.open("GET", "sortAndFilter?arg1=" + arg1 + "&arg2=" + arg2 + "&arg3=" + selectedSortOption, true);
+function filterAndSortProfiles(min, max, sort) {
+    window.scrollTo(0, 0);
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var offers = JSON.parse(this.responseText);
+            displayOffers(offers);
+        }
+    };
+
+    xhttp.open("GET", "sortAndFilterProf?arg1=" + min + "&arg2=" + max + "&arg3=" + sort, true);
     xhttp.send();
 }
 

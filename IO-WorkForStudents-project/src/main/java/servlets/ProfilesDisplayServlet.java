@@ -18,7 +18,6 @@ public class ProfilesDisplayServlet extends HttpServlet {
     Model model;
     ArrayList<Offer> offers = new ArrayList<>();
     int start, begin, end;
-    boolean returned;
 
     public ProfilesDisplayServlet() {
         model = Model.getModel();
@@ -26,8 +25,6 @@ public class ProfilesDisplayServlet extends HttpServlet {
         Random random = new Random();
         start = random.nextInt(model.getOffersCount("profiles") - 1);
         random();
-        
-        returned = false;
     }
 
     @Override
@@ -54,24 +51,10 @@ public class ProfilesDisplayServlet extends HttpServlet {
                         case "endP":
                             end = Integer.parseInt(cookie.getValue());
                             break;
-                        case "returnedP":
-                            returned = Boolean.parseBoolean(cookie.getValue());
-                            break;
                     }
             
             int count = model.getOffersCount("profiles") - 1;
-            
-            if (arg1.equals("3")){
-                Random random = new Random();
-                start = random.nextInt(model.getOffersCount("profiles") - 1);
-                random();
-                Cookie startCookie = new Cookie("startP", String.valueOf(start));
-                response.addCookie(startCookie);
-            } 
-            if (returned) {
-                Cookie returnedCookie = new Cookie("returnedP", "false");
-                response.addCookie(returnedCookie);
-            } else if (arg1.equals("-1")) {
+            if (arg1.equals("-1")) {
                 begin -= 10;
                 if (begin + 10 == start)
                     begin += 10;
@@ -80,7 +63,7 @@ public class ProfilesDisplayServlet extends HttpServlet {
                     begin = count + begin + 1;
                 } else if (begin >= start)
                     end = begin + 9;
-                if (begin < start && end > start) {
+                else if (begin < start && end > start) {
                     end = begin + 9;
                     begin = start + 1;
                 } else
@@ -100,7 +83,13 @@ public class ProfilesDisplayServlet extends HttpServlet {
                     begin += 10;
             } else if (arg1.equals("2"))
                 random();
-            else if (!exists) {
+            else if (arg1.equals("3")){
+                Random random = new Random();
+                start = random.nextInt(model.getOffersCount("profiles") - 1);
+                random();
+                Cookie startCookie = new Cookie("startP", String.valueOf(start));
+                response.addCookie(startCookie);
+            } else if (!exists) {
                 Cookie startCookie = new Cookie("startP", String.valueOf(start));
                 response.addCookie(startCookie);
             }
@@ -136,7 +125,7 @@ public class ProfilesDisplayServlet extends HttpServlet {
     public void random() {
         begin = start;
         end = begin + 9;
-        int count = model.getOffersCount("offers") - 1;
+        int count = model.getOffersCount("profiles") - 1;
         if (end > count)
             end = Math.abs(count - end) - 1;
     }

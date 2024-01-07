@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import model.Model;
 import model.Offer;
 
-@WebServlet(name = "OffersSearchServlet", urlPatterns = {"/searchoff"})
-public class OffersSearchServlet extends HttpServlet {
+@WebServlet(name = "ProfilesSortAndFilterServlet", urlPatterns = {"/sortAndFilterProf"})
+public class ProfilesSortAndFilterServlet extends HttpServlet {
     Model model;
     ArrayList<Offer> offers = new ArrayList<>();
 
-    public OffersSearchServlet() {
+    public ProfilesSortAndFilterServlet() {
         model = Model.getModel();
     }
 
@@ -27,10 +27,12 @@ public class OffersSearchServlet extends HttpServlet {
         response.setContentType("text/plaintext;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
-            String arg1 = request.getParameter("arg1");
+            int arg1 = Integer.parseInt(request.getParameter("arg1"));
+            int arg2 = Integer.parseInt(request.getParameter("arg2"));
+            int arg3 = Integer.parseInt(request.getParameter("arg3"));
             offers.clear();
 
-            offers = model.getSearchedOffers(arg1);
+            offers = model.getSortedAndFilteredProfiles(arg1, arg2, arg3);
 
             StringBuilder jsonOffers = new StringBuilder("[");
             if (!offers.isEmpty()) {
@@ -38,7 +40,6 @@ public class OffersSearchServlet extends HttpServlet {
                     Offer offer = offers.get(i);
 
                     jsonOffers.append("{")
-                            .append("\"id_offer\": \"").append(offer.getIdOffer()).append("\",")
                             .append("\"id_person\": \"").append(offer.getIdPerson()).append("\",")
                             .append("\"title\": \"").append(offer.getTitle()).append("\",")
                             .append("\"content\": \"").append(offer.getContent()).append("\",")
