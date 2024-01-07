@@ -21,45 +21,46 @@
         </div>
 
         <div class="side-panel">
-            <div class = "search">
+            <div class="search">
                 <input type="text" placeholder="Szukaj ofert" name="offerTitle"  id="sideBarSearch" class = "sidePanelSearch">
                 <input type="button" value ="Szukaj"  id="sideBarNameSearch" class = "sidePanelButton" onclick="searchType('sideBarSearch')">
             </div>
-                <div class = "sortLabelFrame">
-                    <h1>Sortowanie</h1>
-                    <input type="radio" id ="radio-1" value = "-1" class = "customCheckbox" name = "sort" checked />
-                    <label for="radio-1">None</label><br>
-                    <input type="radio" id ="radio0" value = "0" class = "customCheckbox" name = "sort" />
-                    <label for="radio0">Ocena ↑</label><br>
-                    <input type="radio" id ="radio1" value = "1" class = "customCheckbox" name = "sort"  />
-                    <label for="radio1">Ocena ↓</label><br>
-                    <input type="radio" id ="radio2" value = "2" class = "customCheckbox" name = "sort"  />
-                    <label for="radio2">Procent Dopasowania ↑</label><br>
-                    <input type="radio" id ="radio3" value = "3" class = "customCheckbox" name = "sort"  />
-                    <label for="radio3">Procent Dopasowania ↓</label><br>
-                    <input type="radio" id ="radio4" value = "4" class = "customCheckbox" name = "sort" />
-                    <label for="radio4">Alfabetycznie ↑</label><br>
-                    <input type="radio" id ="radio5" value = "5" class = "customCheckbox" name = "sort" />
-                    <label for="radio5">Alfabetycznie ↓</label><br>
-                </div>
-                <div class = "filterLabelFrame">
-                    <h1>Filtrowanie</h1>
-                    <h2>Zarobki</h2><br>
-                    <label for="minIncome" class = "customNumberLabel">Min</label><br>
-                    <input type="number" id ="minIncome" class = "customNumber" value="" />
-                    <label for="maxIncome" class = "customNumberLabel">Max</label><br>
-                    <input type="number"  id ="maxIncome" class = "customNumber" value="" />
-                    <br>
+            <h1 class = "sideMainHeader">Sortowanie</h1>
+            <div class = "sortLabelFrame">
+                <input type="radio" id ="radio-1" value = "-1" class = "customCheckbox" name = "sort" checked />
+                <label for="radio-1">None</label><br>
+                <input type="radio" id ="radio0" value = "0" class = "customCheckbox" name = "sort"  />
+                <label for="radio0">Ocena ↑</label><br>
+                <input type="radio" id ="radio1" value = "1" class = "customCheckbox" name = "sort"  />
+                <label for="radio1">Ocena ↓</label><br>
+                <input type="radio" id ="radio2" value = "2" class = "customCheckbox" name = "sort"  />
+                <label for="radio2">Procent Dopasowania ↑</label><br>
+                <input type="radio" id ="radio3" value = "3" class = "customCheckbox" name = "sort"  />
+                <label for="radio3">Procent Dopasowania ↓</label><br>
+                <input type="radio" id ="radio4" value = "4" class = "customCheckbox" name = "sort" />
+                <label for="radio4">Alfabetycznie ↑</label><br>
+                <input type="radio" id ="radio5" value = "5" class = "customCheckbox" name = "sort" />
+                <label for="radio5">Alfabetycznie ↓</label><br>
+            </div>
+            <h1 class = "sideMainHeader">Filtrowanie</h1>
+            <div class = "filterLabelFrame">
+                <h2 class = "sideh1">Zarobki</h2><br>
+                <label for="minIncome" class = "customNumberLabel">Min</label><br>
+                <input type="number" id ="minIncome" class = "customNumber" value="" />
+                <label for="maxIncome" class = "customNumberLabel">Max</label><br>
+                <input type="number"  id ="maxIncome" class = "customNumber" value="" />
+                <br>
 
-                    <h2>Ocena</h2><br>
-                    <label for="minScore" class = "customNumberLabel">Min</label><br>
-                    <input type="number" id ="minScore" class = "customNumber" value="" />
-                    <label for="maxScore" class = "customNumberLabel">Max</label><br>
-                    <input type="number"  id ="maxScore" class = "customNumber" value="" />
-                    <br>
-                </div>
-
-                <button class ="submit" onclick="sortType('minIncome', 'maxIncome')">Filter</button>
+                <h2>Ocena</h2><br>
+                <label for="minScore" class = "customNumberLabel">Min</label><br>
+                <input type="number" id ="minScore" class = "customNumber" value="" />
+                <label for="maxScore" class = "customNumberLabel">Max</label><br>
+                <input type="number"  id ="maxScore" class = "customNumber" value="" />
+                <br>
+            </div>
+            <h1>
+                <button class ="typeButton" onclick="sortType('minIncome', 'maxIncome')">Filter</button>
+            </h1>
                 
             </div>
 

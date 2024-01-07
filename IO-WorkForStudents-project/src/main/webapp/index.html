@@ -9,13 +9,15 @@
     
     <body>
         <div class="top-bar" id="startPage">
-            <div class="logo">Work 4 Students</div>
-            <div class="button-container">
+            <div class = "topBarButton"  class="logo">Work 4 Students</div>
+            <div class = "topBarButton"  class="button-container">
+            <button class = "topBarButton" onclick="loadOffers(2)">Student</button>
+            <button class = "topBarButton"  onclick="loadProfiles(2)">Employer</button>
                 <form action="login.html">
-                    <input type="submit" value="Login" />
+                    <input class = "topBarButton" type="submit" value="Login" />
                 </form>
                 <form action="register.html">
-                    <input type="submit" value="Register" />
+                    <input class = "topBarButton" type="submit" value="Register" />
                 </form>
             </div>
         </div>
@@ -25,8 +27,8 @@
                 <input type="text" placeholder="Szukaj ofert" name="offerTitle"  id="sideBarSearch" class = "sidePanelSearch">
                 <input type="button" value ="Szukaj"  id="sideBarNameSearch" class = "sidePanelButton" onclick="searchType('sideBarSearch')">
             </div>
+            <h1 class = "sideMainHeader">Sortowanie</h1>
             <div class = "sortLabelFrame">
-                <h1>Sortowanie</h1>
                 <input type="radio" id ="radio-1" value = "-1" class = "customCheckbox" name = "sort" checked />
                 <label for="radio-1">None</label><br>
                 <input type="radio" id ="radio0" value = "0" class = "customCheckbox" name = "sort"  />
@@ -42,9 +44,9 @@
                 <input type="radio" id ="radio5" value = "5" class = "customCheckbox" name = "sort" />
                 <label for="radio5">Alfabetycznie ↓</label><br>
             </div>
+            <h1 class = "sideMainHeader">Filtrowanie</h1>
             <div class = "filterLabelFrame">
-                <h1>Filtrowanie</h1>
-                <h2>Zarobki</h2><br>
+                <h2 class = "sideh1">Zarobki</h2><br>
                 <label for="minIncome" class = "customNumberLabel">Min</label><br>
                 <input type="number" id ="minIncome" class = "customNumber" value="" />
                 <label for="maxIncome" class = "customNumberLabel">Max</label><br>
@@ -59,12 +61,10 @@
                 <br>
             </div>
 
-            <button class ="submit" onclick="sortType('minIncome', 'maxIncome')">Filter</button>
             
             <div class ="type">
                 <h1>
-                    <button class ="typeButton" onclick="loadOffers(2)">Student</button>
-                    <button class ="typeButton" onclick="loadProfiles(2)">Employer</button>
+                    <button class ="filterButton" onclick="sortType('minIncome', 'maxIncome')">Filter</button><br>
                 </h1>
             </div>
         </div>
