@@ -5,11 +5,20 @@
         <script type="text/javascript" src="js/loginAndRegisterjs.js"></script>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/topBar.css" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="css/register.css">
     </head>
     <body>
+        <div class="top-bar" id="startPage">
+            <a class="logo" href = "index.html">Work 4 Students</a>
+            <div class="button-container">
+                    <a class = "topBarButton" href ="login.html"  >Login</a>
+                    <a class = "topBarButton" href ="register.html"  >Register</a>
+            </div>
+        </div>
+        <br>
         <div class="container">
-            <h2>Register</h2><br>
+            <h2>Register</h2>
             <form id="registerPage" onsubmit="return validateRegister('loginInput', 'emailInput', 'passwordInput', 'passwordRepeatInput', 'result')" method="POST">
                 <p id="result" style="color: red; text-align: center;"></p><br>
                 <div class ="radioDiv">
@@ -21,16 +30,16 @@
 
                 <div class ="inputsDiv">
                     <label for="login">Login:</label>
-                    <input type="text" id="loginInput" class ="input_styling"><br><br>
+                    <input type="text" id="loginInput" class ="input_styling"><br>
                     <label for="email">Email:</label>
-                    <input type="text" id="emailInput" class ="input_styling"><br><br>
+                    <input type="text" id="emailInput" class ="input_styling"><br>
                     <label for="password">Password:</label>
-                    <input type="password" id="passwordInput" class ="input_styling"><br><br>
+                    <input type="password" id="passwordInput" class ="input_styling"><br>
                     <label for="passwordRepeat">Repeat password:</label>
-                    <input type="password" id="passwordRepeatInput" class ="input_styling"><br><br>
+                    <input type="password" id="passwordRepeatInput" class ="input_styling"><br>
                 </div>
                 <input type="submit" value="Register" class = "button-styling">
-                <h1> <a href="login.html" class="register_button">Already have an account? Log-in instead</a></h1>
+                <h1> <a href="login.html" class="loginLink">Already have an account? Log-in instead</a></h1>
             </form>
         </div>
     </body>
