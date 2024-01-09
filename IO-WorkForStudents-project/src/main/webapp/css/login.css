@@ -1,9 +1,3 @@
-body{
-    background-color: #E66A50;
-    font-family: 'Arial', cursive;
-    margin: 0px;
-    padding: 0px;
-}
 
 .container {
 
@@ -90,7 +84,6 @@ h2{
     border-radius: 5px;
     font-family: 'Arial', cursive;
     position: relative;
-    top: -22px;
     cursor: pointer;
     text-decoration: none;
     font-weight: 100;
