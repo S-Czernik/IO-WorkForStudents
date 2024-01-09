@@ -58,35 +58,6 @@
                         <br>
                     </div>
 
-        <div class="side-panel">
-            <div class="search">
-                <input type="text" placeholder="Szukaj ofert" name="offerTitle"  id="sideBarSearch" class = "sidePanelSearch">
-                <input type="button" value ="Szukaj"  id="sideBarNameSearch" class = "sidePanelButton" onclick="searchType('sideBarSearch')">
-            </div>
-            <h1 class = "sideMainHeader">Sort</h1>
-            <div class = "sortLabelFrame">
-                <input type="radio" id ="radio-1" value = "-1" class = "customCheckbox" name = "sort" checked />
-                <label for="radio-1">None</label><br>
-                <input type="radio" id ="radio2" value = "2" class = "customCheckbox" name = "sort"  />
-                <label for="radio2">Matching Percentage ↑</label><br>
-                <input type="radio" id ="radio3" value = "3" class = "customCheckbox" name = "sort"  />
-                <label for="radio3">Matching Percentage ↓</label><br>
-                <input type="radio" id ="radio4" value = "4" class = "customCheckbox" name = "sort" />
-                <label for="radio4">Alphabetical ↑</label><br>
-                <input type="radio" id ="radio5" value = "5" class = "customCheckbox" name = "sort" />
-                <label for="radio5">Alphabetical ↓</label><br>
-            </div>
-            <h1 class = "sideMainHeader">Filter</h1>
-            <div class = "filterLabelFrame">
-                <h2>Rating</h2><br>
-                <label for="minScore" class = "customNumberLabel">Min</label><br>
-                <input type="number" id ="minScore" class = "customNumber" value="" />
-                <label for="maxScore" class = "customNumberLabel">Max</label><br>
-                <input type="number"  id ="maxScore" class = "customNumber" value="" />
-                <br>
-            </div>
-
-            
             <div class ="type">
                 <h1>
                     <button class ="filterButton" onclick="sortType('minIncome', 'maxIncome')">Filter</button><br>
