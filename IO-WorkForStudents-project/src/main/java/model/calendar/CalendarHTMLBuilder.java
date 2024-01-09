@@ -1,4 +1,4 @@
-package model;
+package model.calendar;
 
 public class CalendarHTMLBuilder {
 

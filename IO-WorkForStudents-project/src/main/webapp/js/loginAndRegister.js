@@ -76,6 +76,6 @@ function validateLogin(arg1, arg2, result) {
     var argument1 = document.getElementById(arg1).value;
     var argument2 = document.getElementById(arg2).value;
 
-    xhttp.open("POST", "loginServlet?arg1=" + argument1 + "&arg2=" + argument2, true);
+    xhttp.open("GET", "loginServlet?arg1=" + argument1 + "&arg2=" + argument2, true);
     xhttp.send();
 }

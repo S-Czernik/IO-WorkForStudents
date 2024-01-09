@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.Model;
-import model.Notification;
+import model.notifications.Notification;
 
 @WebServlet(name = "NotificationServlet", urlPatterns = {"/NotificationServlet"})
 public class NotificationServlet extends HttpServlet {
@@ -26,7 +26,7 @@ public class NotificationServlet extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		String userID = request.getParameter("arg1");
 		try (PrintWriter out = response.getWriter()) {
-			ArrayList<Notification> notifications = model.getNotifications(userID);
+			ArrayList<Notification> notifications = model.notificationInterface.getNotifications(userID);
 
 			StringBuilder jsonNotifications = new StringBuilder("[");
 			for (int i = 0; i < notifications.size(); i++) {
@@ -45,10 +45,5 @@ public class NotificationServlet extends HttpServlet {
 
 			out.println(jsonNotifications.toString());
 		}
-	}
-
-	@Override
-	public String getServletInfo() {
-		return "Short description";
 	}
 }

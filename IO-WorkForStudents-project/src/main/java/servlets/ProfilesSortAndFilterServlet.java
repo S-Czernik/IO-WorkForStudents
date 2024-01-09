@@ -10,70 +10,68 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.Model;
-import model.Offer;
+import model.offers.Offer;
 
 @WebServlet(name = "ProfilesSortAndFilterServlet", urlPatterns = {"/sortAndFilterProf"})
 public class ProfilesSortAndFilterServlet extends HttpServlet {
-    Model model;
-    ArrayList<Offer> offers = new ArrayList<>();
 
-    public ProfilesSortAndFilterServlet() {
-        model = Model.getModel();
-    }
+	Model model;
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/plaintext;charset=UTF-8");
+	public ProfilesSortAndFilterServlet() {
+		model = Model.getModel();
+	}
 
-        try (PrintWriter out = response.getWriter()) {
-            int arg1 = Integer.parseInt(request.getParameter("arg1"));
-            int arg2 = Integer.parseInt(request.getParameter("arg2"));
-            int arg3 = Integer.parseInt(request.getParameter("arg3"));
-            offers.clear();
-            
-            String arg4 = "";
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null)
-                for (Cookie cookie : cookies)
-                    if (cookie.getName().equals("searchedP")) {
-                        arg4 = cookie.getValue();
-                        break;
-                    }
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/plaintext;charset=UTF-8");
 
-            offers = model.getSortedAndFilteredProfiles(arg1, arg2, arg3, arg4);
+		try (PrintWriter out = response.getWriter()) {
+			int arg1 = Integer.parseInt(request.getParameter("arg1"));
+			int arg2 = Integer.parseInt(request.getParameter("arg2"));
+			int arg3 = Integer.parseInt(request.getParameter("arg3"));
+			ArrayList<Offer> offers = new ArrayList<>();
 
-            StringBuilder jsonOffers = new StringBuilder("[");
-            if (!offers.isEmpty()) {
-                for (int i = 0; i < offers.size(); i++) {
-                    Offer offer = offers.get(i);
+			String arg4 = "";
+			Cookie[] cookies = request.getCookies();
+			if (cookies != null) {
+				for (Cookie cookie : cookies) {
+					if (cookie.getName().equals("searchedP")) {
+						arg4 = cookie.getValue();
+						break;
+					}
+				}
+			}
 
-                    jsonOffers.append("{")
-                            .append("\"id_person\": \"").append(offer.getIdPerson()).append("\",")
-                            .append("\"title\": \"").append(offer.getTitle()).append("\",")
-                            .append("\"content\": \"").append(offer.getContent()).append("\",")
-                            .append("\"info\": \"").append(offer.getInfo()).append("\"")
-                            .append("}");
-                    if (i < offers.size() - 1) {
-                        jsonOffers.append(",");
-                    }
-                }
-            } else {
-                jsonOffers.append("{")
-                        .append("\"title\": \"").append("Offer not found!").append("\"")
-                        .append("}");
-            }
-            jsonOffers.append("]");
+			offers = model.offerInterface.getSortedAndFilteredProfiles(arg1, arg2, arg3, arg4);
 
-            out.println(jsonOffers.toString());
-        } catch (Exception exp) { 
-            System.out.println(exp);
-        }
-    }
+			StringBuilder jsonOffers = new StringBuilder("[");
+			if (!offers.isEmpty()) {
+				for (int i = 0; i < offers.size(); i++) {
+					Offer offer = offers.get(i);
 
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }
+					jsonOffers.append("{")
+							.append("\"id_person\": \"").append(offer.getIdPerson()).append("\",")
+							.append("\"title\": \"").append(offer.getTitle()).append("\",")
+							.append("\"content\": \"").append(offer.getContent()).append("\",")
+							.append("\"info\": \"").append(offer.getInfo()).append("\"")
+							.append("}");
+					if (i < offers.size() - 1) {
+						jsonOffers.append(",");
+					}
+				}
+			}
+			else {
+				jsonOffers.append("{")
+						.append("\"title\": \"").append("Offer not found!").append("\"")
+						.append("}");
+			}
+			jsonOffers.append("]");
+
+			out.println(jsonOffers.toString());
+		}
+		catch (Exception exp) {
+			System.out.println(exp);
+		}
+	}
 }
-

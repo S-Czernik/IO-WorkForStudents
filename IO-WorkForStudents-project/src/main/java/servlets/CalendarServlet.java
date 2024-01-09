@@ -1,5 +1,7 @@
 package servlets;
 
+import model.calendar.Kalyndarz;
+import model.calendar.CalendarHTMLBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -34,19 +36,19 @@ public class CalendarServlet extends HttpServlet {
 			switch (requestType) {
 				case "getusercsv" -> {
 					response.setContentType("text/plaintext;charset=UTF-8");
-					out.print(model.loadStudentCalendarFromDatabase(login));
+					out.print(model.calendarInterface.loadStudentCalendarFromDatabase(login));
 				}
 				case "getoffercsv" -> {
 					response.setContentType("text/plaintext;charset=UTF-8");
-					out.print(model.loadOfferCalendarFromDatabase(offerID));
+					out.print(model.calendarInterface.loadOfferCalendarFromDatabase(offerID));
 				}
 				case "getuserhtml" -> {
 					response.setContentType("text/html;charset=UTF-8");
-					out.print(model.loadStudentCalendarFromDatabase(login));
+					out.print(model.calendarInterface.loadStudentCalendarFromDatabase(login));
 				}
 				case "getofferhtml" -> {
 					response.setContentType("text/html;charset=UTF-8");
-					out.print(model.loadOfferCalendarFromDatabase(offerID));
+					out.print(model.calendarInterface.loadOfferCalendarFromDatabase(offerID));
 				}
 				case "compare" -> {
 
@@ -77,17 +79,12 @@ public class CalendarServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		switch (requestType) {
 			case "setuser" -> {
-				model.saveStudentCalendarToDatabase(login, csv);
+				model.calendarInterface.saveStudentCalendarToDatabase(login, csv);
 			}
 			case "setoffer" -> {
-				model.saveOfferCalendarToDatabase(offerID, csv);
+				model.calendarInterface.saveOfferCalendarToDatabase(offerID, csv);
 			}
 		}
 		out.close();
-	}
-
-	@Override
-	public String getServletInfo() {
-		return "Short description";
 	}
 }

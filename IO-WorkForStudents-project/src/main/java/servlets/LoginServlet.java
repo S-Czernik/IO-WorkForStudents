@@ -12,26 +12,27 @@ import model.Model;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet"})
 public class LoginServlet extends HttpServlet {
-    Model model;
-	
-    public LoginServlet() {
-        model = Model.getModel();
-    }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/plaintext;charset=UTF-8");
+	Model model;
 
-        String arg1 = request.getParameter("arg1");
-        String arg2 = request.getParameter("arg2");
+	public LoginServlet() {
+		model = Model.getModel();
+	}
 
-        ArrayList<String> idAndType = model.checkLogin(arg1, arg2);
-        String args = idAndType.get(0) + "." + idAndType.get(1);
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/plaintext;charset=UTF-8");
 
-        PrintWriter out = response.getWriter();
-        out.println(args);
-		
-        out.close();
-    }
+		String arg1 = request.getParameter("arg1");
+		String arg2 = request.getParameter("arg2");
+
+		ArrayList<String> idAndType = model.accountInterface.checkLogin(arg1, arg2);
+		String args = idAndType.get(0) + "." + idAndType.get(1);
+
+		PrintWriter out = response.getWriter();
+		out.println(args);
+
+		out.close();
+	}
 }

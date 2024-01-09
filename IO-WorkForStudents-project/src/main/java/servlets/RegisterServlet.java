@@ -28,15 +28,10 @@ public class RegisterServlet extends HttpServlet {
 		String passwd = request.getParameter("arg3");
 		String email = request.getParameter("arg4");
 
-		boolean registered = model.register(login, passwd, email, type);
+		boolean registered = model.accountInterface.register(login, passwd, email, type);
 
 		PrintWriter out = response.getWriter();
 		out.print(registered);
 		out.close();
-	}
-
-	@Override
-	public String getServletInfo() {
-		return "Short description";
 	}
 }

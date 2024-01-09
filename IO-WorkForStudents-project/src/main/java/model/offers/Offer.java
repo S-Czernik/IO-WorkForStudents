@@ -1,4 +1,4 @@
-package model;
+package model.offers;
 
 public class Offer {
     private int id_offer, id_person;
