@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Profile</title>
         <script type="text/javascript" src="js/notificationJS.js"></script>
+        <script type="text/javascript" src="js/profileStudentInfoJS.js"></script>
         <link rel="stylesheet" type="text/css" href="css/profileStudent.css">
     </head>
     <body>     
@@ -23,24 +24,23 @@
                         </li>
                     </ul>
                 </aside>
-
-                <a href="offers.html">My offers</a>
             </div>
         </div>
 
         <div class="content">
             <div class="title-basicInfo-pic-files">
-                <h1>Your profile, Test2</h1>
+                <h1 id="login"></h1>
                 <div class="under_title">
                     <div class="basicInfo">
-                        <h3>Name:</h3><h2> Test2 Test2</h2>
-                        <h3>Email:</h3><h2> Test2@gmail.com</h2>
+                        <h3>Name:</h3> <h2 id="name_and_surname"></h2>
+                        <h3>Email:</h3> <h2 id="email"> </h2>
+                        <h3>City:</h3> <h2 id="city"> </h2>
                         <div class="editButton">
                             <a href="editProfile.html">Edit</a>
                         </div>
                     </div>
                     <div class="image-container">
-                        <img src="../java/model/profile-pictures/profile-pic.jpg" alt="-User Picture-" class='profile-pic-img'>
+                        <img id="picture" class='profile-pic-img'>
                     </div>
                     <div class='uploaded-files'>
                         <h3> My uploaded files:</h3>
@@ -57,9 +57,9 @@
                 </div>
             </div>
             <div class="description-and-ratings">
-                <h3> "Looking for an IT job, fullstack" </h3>
+                <h3 id="title"> </h3>
                 <div class="description-container">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p id="description"></p>
                 </div>
                 <h3>My Ratings:</h3>
                 <div class="ratings-container">
