@@ -28,26 +28,26 @@ public class Model {
 	public NotificationInterface notificationInterface;
 	public AccountInterface accountInterface;
 
-	public static Model getModel() {
-		if (singleton == null) {
-			singleton = new Model();
-		}
-		return singleton;
-	}
+    public static Model getModel() {
+        if (singleton == null) {
+            singleton = new Model();
+            Interface.model = singleton;
+            singleton.calendarInterface = new CalendarInterface();
+            singleton.offerInterface = new OfferInterface();
+            singleton.notificationInterface = new NotificationInterface();
+            singleton.accountInterface = new AccountInterface();
+        }
+
+        return singleton;
+    }
 
 	public Model() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println(e);
 		}
 		connect();
-
-		calendarInterface = new CalendarInterface();
-		offerInterface = new OfferInterface();
-		notificationInterface = new NotificationInterface();
-		accountInterface = new AccountInterface();
 
 	}
 
