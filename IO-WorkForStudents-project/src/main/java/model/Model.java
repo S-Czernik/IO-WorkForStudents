@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import model.*;
 
 public class Model {
 
@@ -46,7 +47,7 @@ public class Model {
 		ArrayList<String> idAndType = new ArrayList<>();
 
 		try {
-			String query = "SELECT * FROM USERS WHERE login = ?";
+			String query = "SELECT * FROM users WHERE login = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, login);
 			ResultSet results = preparedStatement.executeQuery();
@@ -71,7 +72,7 @@ public class Model {
 
 	public boolean register(String login, String password, String email, String type) {
 		try {
-			String query = "SELECT * FROM USERS WHERE login = ?";
+			String query = "SELECT * FROM users WHERE login = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, login);
 			ResultSet results = preparedStatement.executeQuery();
@@ -115,7 +116,7 @@ public class Model {
 
 	public int getUserCount() {
 		try {
-			String query = "SELECT COUNT(*) AS count FROM USERS";
+			String query = "SELECT COUNT(*) AS count FROM users";
 			ResultSet results = statement.executeQuery(query);
 
 			if (results.next()) {
@@ -800,6 +801,59 @@ public class Model {
 		}
 		return "No company_name in DB";
 	}
+	public String loadStudentCalendarFromDatabase(String userLogin) {
+		Kalyndarz ret = getStudentCalendar(userLogin);
+		if (ret == null) {
+			return null;
+		}
+		return ret.getCSV();
+	}
+
+	public String loadOfferCalendarFromDatabase(int offerID) {
+		Kalyndarz ret = getOfferCalendar(offerID);
+		if (ret == null) {
+			return null;
+		}
+		return ret.getCSV();
+	}
+
+	public void saveStudentCalendarToDatabase(String login, String csv) {
+		try {
+			String query = "SELECT * FROM hours";
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	public void saveOfferCalendarToDatabase(int offerID, String csv) {
+		try {
+			String query = "SELECT * FROM hours";
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	public float compareCalendars(String login, int offerID) {
+		Kalyndarz stud = getStudentCalendar(login);
+		Kalyndarz offer = getOfferCalendar(offerID);
+
+		if (stud != null && offer != null) {
+			return stud.compare(offer);
+		}
+		return 0.0f;
+	}
+
+	Kalyndarz getStudentCalendar(String login) {
+		try {
+			String query = "SELECT * FROM hours";
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
 
 	public String getNIP(String userID) {
 
@@ -818,5 +872,15 @@ public class Model {
 			System.out.println(e);
 		}
 		return "No NIP in DB";
+	}
+
+	Kalyndarz getOfferCalendar(int offerID) {
+		try {
+			String query = "SELECT * FROM hours";
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 }
