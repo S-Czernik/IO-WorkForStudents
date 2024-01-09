@@ -19,12 +19,24 @@
 
         <br>
         <div class="container">
+            
+                <div class ="inputsDiv">
+                </div>
+            
+            
+            
+            
             <h2>Log in</h2><br>
             <form id="loginPage" onsubmit="return validateLogin('arg1', 'arg2', 'result')" method="POST">
                 <p id="result" style="color: red; text-align: center;"></p>
-                <h1> <input type="text" size="35" placeholder="Login" name="login" id="arg1" class ="input_styling"></h1>
-                <h1> <input type="password" size="35" placeholder="Password" name="password" id="arg2" class = "input_styling" autocomplete = "off"></h1>
-                <h1> <input type="submit" class="button-styling" value="Log in"/></h1>
+                
+                <div class ="inputsDiv">
+                    <label for="login">Login:</label>
+                    <input type="text" size="35" name="login" id="arg1" class ="input_styling"><br>
+                    <label for="email">Email:</label>
+                    <input type="password" size="35" name="password" id="arg2" class = "input_styling" autocomplete = "off"><br>
+                    <h1> <input type="submit" class="button-styling" value="Log in"/></h1>
+                    <div>
                 <h1> <a href="register.html" class="registerLink">Don't have an account? Register now</a></h1>
             </form>   
         </div>

@@ -67,13 +67,34 @@ h2{
 }
 
 .input_styling{
-    width: 60%;
-    height: 40px;
-    padding: 10px;
-    box-sizing: border-box;
+    width: 300px;
+    padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
     color: gray;
+}
+
+.inputsDiv{
+    color: gray;
+    width: 100%;
+    margin-bottom: 20px;
+    display:inline-flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.inputsDiv > *{
+    display: flex;
+    flex-basis: 100%;
+    margin: 4px;
+}
+
+.loginInput{
+    
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .a1{

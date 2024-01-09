@@ -12,8 +12,8 @@
         <div class="top-bar" id="startPage">
             <a class="logo" href = "index.html">Work 4 Students</a>
             <div class="button-container">
-                    <a class = "topBarButton" href ="indexStudent.html" >Student View</a>
-                    <a class = "topBarButtonGrey" href ="index.html" >Employer View</a>
+                    <a class = "topBarButtonGrey" href ="indexStudent.html" >Student View</a>
+                    <a class = "topBarButton" href ="index.html" >Employer View</a>
                     <a class = "topBarButton" href ="login.html"  >Login</a>
                     <a class = "topBarButton" href ="register.html"  >Register</a>
             </div>
@@ -23,38 +23,30 @@
                 <input type="text" placeholder="Szukaj ofert" name="offerTitle"  id="sideBarSearch" class = "sidePanelSearch">
                 <input type="button" value ="Szukaj"  id="sideBarNameSearch" class = "sidePanelButton" onclick="searchType('sideBarSearch')">
             </div>
-            <h1 class = "sideMainHeader">Sort</h1>
             <div class = "sortLabelFrame">
-                <input type="radio" id ="radio-1" value = "-1" class = "customCheckbox" name = "sort" checked />
-                <label for="radio-1">None</label><br>
-                <input type="radio" id ="radio0" value = "0" class = "customCheckbox" name = "sort"  />
-                <label for="radio0">Rating ↑</label><br>
-                <input type="radio" id ="radio1" value = "1" class = "customCheckbox" name = "sort"  />
-                <label for="radio1">Rating ↓</label><br>
+                <h1 class = "sideMainHeader">Sort</h1>
                 <input type="radio" id ="radio4" value = "4" class = "customCheckbox" name = "sort" />
                 <label for="radio4">Alphabetical ↑</label><br>
                 <input type="radio" id ="radio5" value = "5" class = "customCheckbox" name = "sort" />
                 <label for="radio5">Alphabetical ↓</label><br>
                 <input type="radio" id ="radio6" value = "6" class = "customCheckbox" name = "sort" />
-                <label for="radio5">Salary ↓</label><br>
+                <label for="radio5">Salary ↑</label><br>
                 <input type="radio" id ="radio7" value = "7" class = "customCheckbox" name = "sort" />
                 <label for="radio5">Salary ↓</label><br>
+                <input type="radio" id ="radio8" value = "8" class = "customCheckbox" name = "sort" checked />
+                <label for="radio5">Most Recent</label><br>
+                <input type="radio" id ="radio9" value = "9" class = "customCheckbox" name = "sort" />
+                <label for="radio5">Least Recent</label><br>
             </div>
-            <h1 class = "sideMainHeader">Filter</h1>
             <div class = "filterLabelFrame">
+                <h1 class = "sideMainHeader">Filter</h1>
                 <h2 class = "sideh1">Salary</h2><br>
                 <label for="minIncome" class = "customNumberLabel">Min</label><br>
-                <input type="number" id ="minIncome" class = "customNumber" value="" />
+                <input type="number" id ="minIncome" class = "customNumber" value="0" />
                 <label for="maxIncome" class = "customNumberLabel">Max</label><br>
-                <input type="number"  id ="maxIncome" class = "customNumber" value="" />
+                <input type="number"  id ="maxIncome" class = "customNumber" value="10000" />
                 <br>
 
-                <h2>Ocena</h2><br>
-                <label for="minScore" class = "customNumberLabel">Min</label><br>
-                <input type="number" id ="minScore" class = "customNumber" value="" />
-                <label for="maxScore" class = "customNumberLabel">Max</label><br>
-                <input type="number"  id ="maxScore" class = "customNumber" value="" />
-                <br>
             </div>
 
             
