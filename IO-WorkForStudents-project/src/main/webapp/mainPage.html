@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Work4Students</title>
-        <link rel="stylesheet" href="css/mainPage.css" type="text/css"/>
+        <link rel="stylesheet" href="css/index.css" type="text/css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
@@ -14,6 +14,34 @@
                 </form>
             </div>
         </div>
+        
+        <div class ="mainDiv">
+            <div class="side-panel">
+                <form action="profile.html">
+                    <input type="checkbox" id ="checkBox1" class = "customCheckbox" value="My Profile" />
+                    <label for="checkbox1">Checkbox 1</label><br>
+                    <input type="checkbox" id ="checkBox2" class = "customCheckbox" value="My Profile" />
+                    <label for="checkbox2">Checkbox 1</label><br>
+                    <input type="checkbox" id ="checkBox3" class = "customCheckbox" value="My Profile" />
+                    <label for="checkbox3">Checkbox 1</label><br>
 
+                </form>
+            </div>
+
+            <div class = "containersContainer" id = "containersContainerID">
+            </div>
+            
+            <div class="buttContainer">
+                <button onclick="startPage(-1)">Previous</button>
+                <button onclick="startPage(1)">Next</button>
+            </div>
+            
+            <form>
+                <input type="text" id="title" name="title" placeholder="Title">
+                <button type="submit" onclick="searchForOffer('title')">Search</button>
+            </form>
+
+        </div>
     </body>
+    <script type="text/javascript" src="js/offers.js"></script>
 </html>

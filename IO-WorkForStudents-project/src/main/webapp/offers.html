@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Work4Students</title>
+        <link rel="stylesheet" href="css/offers.css" type="text/css"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="js/offers.js"></script>
+    </head>
+    <body>
+        <div class="top-bar" id="startPage">
+            <div class="logo">Work 4 Students</div>
+            <div class="button-container">
+                <form action="profile.html">
+                    <input type="submit" value="My Profile" /></form>
+                <form action="offer_workspace.html">
+                    <input type="submit" value="Make new offer" />
+                </form>
+            </div>
+        </div>
+        
+    <div class ="mainDiv">
+        <div class = "containersContainer" id = "containersContainerID">
+            </div>
+            <div class ="footer">
+                <form id="searchOption" onsubmit="searchForOffer('title')" method="GET">
+                    <h1> <input type="text" placeholder="Title" name="offerTitle" id="offerTitle">
+                        <input type="submit" value="Search"/>
+                    </h1>
+                </form> 
+                <h1>
+                    <button class ="footerButton" onclick="startPage(-1)">Previous</button>
+                    <button class ="footerButton" onclick="startPage(1)">Next</button>
+                </h1>
+            </div>
+        </div>
+
+    </body>
+</html>
