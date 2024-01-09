@@ -277,13 +277,12 @@ h2{
 }
 
 .sortLabelFrame, .filterLabelFrame{
-    padding: 1em;
-    margin: 0.5em;
+    width: 80%;
+    padding: 2em;
+    margin: 5px auto;
     border: #E66A50 1px solid;
     border-radius: 5px;
     background-color: #fff;
-    
-    
 }
 
 .sideMainHeader{
@@ -298,16 +297,12 @@ h2{
 
 }
 .sortLabelFrame > *{
-    margin: 5px;
-    
-    
+    margin: 5px; 
 }
+
 .filterLabelFrame{
     display: flex;
     flex-wrap: wrap;
-    
-    
-    
 }
 .filterLabelFrame > h1{
     flex-basis: 90%;
