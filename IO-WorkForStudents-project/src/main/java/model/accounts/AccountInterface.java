@@ -36,7 +36,9 @@ public class AccountInterface extends Interface {
 		return idAndType;
 	}
 
-	public boolean register(String login, String password, String email, String type) {
+	public ArrayList<String> register(String login, String password, String email, String type) {
+		ArrayList<String> idAndType = new ArrayList<>();
+		
 		try {
 			String query = "SELECT * FROM users WHERE login = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -44,29 +46,36 @@ public class AccountInterface extends Interface {
 			ResultSet results = preparedStatement.executeQuery();
 
 			if (results.next()) {
-				return false;
+				idAndType.add("-1");
+				idAndType.add("-1");
+				return idAndType;
 			}
 
-			String insertQuery = "INSERT INTO users (id, type, login, password, email) VALUES (?, ?, ?, ?, ?)";
+			String insertQuery = "INSERT INTO users (id_user, type, login, password, email) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
-			insertStatement.setString(1, String.valueOf(getLastUserId() + 1));
+			String id = String.valueOf(getLastUserId() + 1);
+			insertStatement.setString(1, id);
 			insertStatement.setString(2, type);
 			insertStatement.setString(3, login);
 			insertStatement.setString(4, password);
 			insertStatement.setString(5, email);
 
 			insertStatement.executeUpdate();
-			return true;
+			idAndType.add("id");
+			idAndType.add("type");
+			return idAndType;
 		}
 		catch (Exception e) {
 			System.out.println(e);
-			return false;
+			idAndType.add("-1");
+			idAndType.add("type");
+			return idAndType;
 		}
 	}
 
 	int getLastUserId() {
 		try {
-			String query = "SELECT MAX(id) AS max FROM USERS";
+			String query = "SELECT MAX(id_user) AS max FROM USERS";
 			ResultSet results = statement.executeQuery(query);
 
 			if (results.next()) {

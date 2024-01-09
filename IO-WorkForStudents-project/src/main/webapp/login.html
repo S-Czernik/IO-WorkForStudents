@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Login</title>
-        <script type="text/javascript" src="js/loginAndRegister.js"></script>
+        <script type="text/javascript" src="js/loginAndRegisterjs.js"></script>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/topBar.css" type="text/css"/>
@@ -10,26 +10,23 @@
     </head>
     <body>
         <div class="top-bar" id="startPage">
-            <a class="logo" href = "index.html">Work 4 Students</a>
+            <a class="logo" href = "indexEmployer.html">Work 4 Students</a>
             <div class="button-container">
-                    <a class = "topBarButton" href ="login.html"  >Login</a>
-                    <a class = "topBarButton" href ="register.html"  >Register</a>
+				<a class = "topBarButton" href ="login.html"  >Login</a>
+				<a class = "topBarButton" href ="register.html"  >Register</a>
             </div>
         </div>
 
         <br>
         <div class="container">
-            
-                <div class ="inputsDiv">
-                </div>
-            
-            
-            
-            
+
+			<div class ="inputsDiv">
+			</div>
+
             <h2>Log in</h2><br>
             <form id="loginPage" onsubmit="return validateLogin('arg1', 'arg2', 'result')" method="POST">
                 <p id="result" style="color: red; text-align: center;"></p>
-                
+
                 <div class ="inputsDiv">
                     <label for="login">Login:</label>
                     <input type="text" size="35" name="login" id="arg1" class ="input_styling"><br>
@@ -37,8 +34,8 @@
                     <input type="password" size="35" name="password" id="arg2" class = "input_styling" autocomplete = "off"><br>
                     <h1> <input type="submit" class="button-styling" value="Log in"/></h1>
                     <div>
-                <h1> <a href="register.html" class="registerLink">Don't have an account? Register now</a></h1>
-            </form>   
-        </div>
-    </body>
+					<h1> <a href="register.html" class="registerLink">Don't have an account? Register now</a></h1>
+			</form>   
+		</div>
+	</body>
 </html>

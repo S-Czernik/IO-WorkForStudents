@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Work4Students</title>
-        <script type="text/javascript" src="js/mainOffersDisplay.js"></script>
+        <script type="text/javascript" src="js/mainPageEmployer.js"></script>
         <link rel="stylesheet" href="css/index.css" type="text/css"/>
         <link rel="stylesheet" href="css/topBar.css" type="text/css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,7 +10,7 @@
 
     <body>
         <div class="top-bar" id="startPage">
-            <a class="logo" href = "index.html">Work 4 Students</a>
+            <a class="logo" href = "indexEmployer.html">Work 4 Students</a>
             <div class="button-container">
                     <a class = "topBarButton" href ="login.html"  >Login</a>
                     <a class = "topBarButton" href ="register.html"  >Register</a>
@@ -21,7 +21,7 @@
         <div class="side-panel">
             <div class="search">
                 <input type="text" placeholder="Szukaj ofert" name="offerTitle"  id="sideBarSearch" class = "sidePanelSearch">
-                <input type="button" value ="Szukaj"  id="sideBarNameSearch" class = "sidePanelButton" onclick="searchType('sideBarSearch')">
+                <input type="button" value ="Szukaj"  id="sideBarNameSearch" class = "sidePanelButton" onclick="searchForProfiles('sideBarSearch')">
             </div>
             <h1 class = "sideMainHeader">Sort</h1>
             <div class = "sortLabelFrame">
@@ -61,7 +61,7 @@
                 <br>
             </div>
             <h1>
-                <button class ="typeButton" onclick="sortType('minIncome', 'maxIncome')">Filter</button>
+                <button class ="typeButton" onclick="filterAndSortProfiles('minIncome', 'maxIncome')">Filter</button>
             </h1>
                 
             </div>
@@ -70,8 +70,8 @@
             <div class = "containersContainer" id = "containersContainerID"></div>
             <div class ="footer">
                 <h1>
-                    <button class ="footerButton" onclick="nextPage(-1)">Previous</button>
-                    <button class ="footerButton" onclick="nextPage(1)">Next</button>
+                    <button class ="footerButton" onclick="loadProfiles(-1)">Previous</button>
+                    <button class ="footerButton" onclick="loadProfiles(1)">Next</button>
                 </h1>
             </div>
         </div>

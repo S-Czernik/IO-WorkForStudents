@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import model.Model;
 
 @WebServlet(name = "RegisterServlet", urlPatterns = {"/registerServlet"})
@@ -28,10 +29,11 @@ public class RegisterServlet extends HttpServlet {
 		String passwd = request.getParameter("arg3");
 		String email = request.getParameter("arg4");
 
-		boolean registered = model.accountInterface.register(login, passwd, email, type);
+		ArrayList<String> idAndType = model.accountInterface.register(login, passwd, email, type);
+		String args = idAndType.get(0) + "." + idAndType.get(1);
 
 		PrintWriter out = response.getWriter();
-		out.print(registered);
+		out.print(args);
 		out.close();
 	}
 }

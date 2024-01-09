@@ -4,17 +4,28 @@ function validateRegister(arg1, arg2, arg3, arg4, result) {
 
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            var correct = this.responseText;
+            var parts = this.responseText.split('.');
+            var found_id = parts[0];
+            var found_type = parts[1];
+			found_type = found_type.replace(/\s+$/g, '');
 
-            if (correct === "true") {
+            if (found_type !== "-1") {
                 document.getElementById("loginInput").value = "";
                 document.getElementById("emailInput").value = "";
                 document.getElementById("passwordInput").value = "";
                 document.getElementById("passwordRepeatInput").value = "";
                 resultElem.innerHTML = "";
                 
-                document.getElementById("registerPage").action = "mainPage.html";
-                document.getElementById("registerPage").submit();
+				sessionStorage.setItem('found_id', found_id);
+				sessionStorage.setItem('found_type', found_type);
+				
+				if (found_type === "student") {
+					document.getElementById("registerPage").action = "mainPage.html";
+					document.getElementById("registerPage").submit();
+				} else {
+					document.getElementById("registerPage").action = "mainPageEmployer.html";
+					document.getElementById("registerPage").submit();
+				}
             } else {
                 resultElem.innerHTML = "Register failed. Please try different data.";
             }
@@ -37,7 +48,7 @@ function validateRegister(arg1, arg2, arg3, arg4, result) {
     } else if (passwd !== passwdCheck) {
         resultElem.innerHTML = "Register failed. Passwords are different.";
     } else {
-        xhttp.open("POST", "registerServlet?arg1=" + type + "&arg2=" + login + "&arg3=" + passwd + "&arg4=" + email, true);
+        xhttp.open("GET", "registerServlet?arg1=" + type + "&arg2=" + login + "&arg3=" + passwd + "&arg4=" + email, true);
         xhttp.send();
     }
 }
@@ -51,6 +62,7 @@ function validateLogin(arg1, arg2, result) {
             var parts = this.responseText.split('.');
             var found_id = parts[0];
             var found_type = parts[1];
+			found_type = found_type.replace(/\s+$/g, '');
 			
             if (found_id !== "-1") {
                 document.getElementById("arg1").value = "";
@@ -60,8 +72,13 @@ function validateLogin(arg1, arg2, result) {
                 sessionStorage.setItem('found_id', found_id);
                 sessionStorage.setItem('found_type', found_type);
 
-                document.getElementById("loginPage").action = "mainPage.html";
-                document.getElementById("loginPage").submit();
+				if (found_type === "student") {
+					document.getElementById("loginPage").action = "mainPage.html";
+					document.getElementById("loginPage").submit();
+				} else {
+					document.getElementById("loginPage").action = "mainPageEmployer.html";
+					document.getElementById("loginPage").submit();
+				}
             } else {
                 if (!argument1.trim() || !argument2.trim()) {
                     resultElem.innerHTML = "Login failed. Please complete all fields.";
