@@ -13,12 +13,13 @@ import model.Model;
 @WebServlet(name = "LoginServlet", urlPatterns = {"/loginServlet"})
 public class LoginServlet extends HttpServlet {
     Model model;
-
+	
     public LoginServlet() {
         model = Model.getModel();
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/plaintext;charset=UTF-8");
 
@@ -30,23 +31,7 @@ public class LoginServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         out.println(args);
+		
         out.close();
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Informacje";
     }
 }
