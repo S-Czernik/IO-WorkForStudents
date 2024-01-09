@@ -81,7 +81,7 @@ public class Model {
 
 			String insertQuery = "INSERT INTO users (id, type, login, password, email) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
-			insertStatement.setString(1, String.valueOf(getUserCount()));
+			insertStatement.setString(1, String.valueOf(getLastUserId() + 1));
 			insertStatement.setString(2, type);
 			insertStatement.setString(3, login);
 			insertStatement.setString(4, password);
@@ -96,13 +96,45 @@ public class Model {
 		}
 	}
 
-	int getUserCount() {
+	int getLastUserId() {
 		try {
-			String query = "SELECT COUNT(id) AS max FROM USERS";
+			String query = "SELECT MAX(id) AS max FROM USERS";
 			ResultSet results = statement.executeQuery(query);
 
 			if (results.next()) {
 				return results.getInt("max");
+			}
+			return 0;
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			return -1;
+		}
+	}
+
+	public int getUserCount() {
+		try {
+			String query = "SELECT COUNT(*) AS count FROM USERS";
+			ResultSet results = statement.executeQuery(query);
+
+			if (results.next()) {
+				return results.getInt("count");
+			}
+			return 0;
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			return -1;
+		}
+	}
+
+	public int getUserCount(String type) {
+		try {
+			String query = "SELECT COUNT(*) AS count FROM USERS WHERE type = '" + type + "'";
+			ResultSet results = statement.executeQuery(query);
+
+			if (results.next()) {
+				return results.getInt("count");
 			}
 			return 0;
 		}
@@ -181,35 +213,6 @@ public class Model {
 		return offers;
 	}
 
-	public int getOffersCount(String type) {
-		try {
-			String query;
-			if (type.equals("offers")) {
-				query = "SELECT COUNT(*) AS count FROM OFFERS";
-			}
-			else {
-				query = "SELECT COUNT(*) AS count FROM STUDENT_PROFILES";
-			}
-			ResultSet results = statement.executeQuery(query);
-
-			while (results.next()) {
-				int id_offer = results.getInt("id_offer");
-				int id_empl = results.getInt("id_empl");
-				String title = results.getString("title");
-				String content = results.getString("content");
-				String info = results.getString("info");
-
-				Offer offer = new Offer(id_offer, id_empl, title, content, info);
-				offers.add(offer);
-			}
-		}
-		catch (Exception exp) {
-			System.out.println(exp);
-		}
-
-		return offers;
-	}
-
 	public ArrayList<Offer> getOffers(int begin, int end, String empl_id) {
 		ArrayList<Offer> offers = new ArrayList<>();
 
@@ -262,7 +265,7 @@ public class Model {
 		}
 	}
 
-	int getLastOffer() {
+	int getLastOfferId() {
 		try {
 			String query = "SELECT MAX(id_offer) AS last_offer FROM offers";
 			ResultSet results = statement.executeQuery(query);
@@ -404,7 +407,7 @@ public class Model {
 
 	public boolean addOffer(String id_empl, String title, String content, String info, String salary) {
 		try {
-			int newMax = getLastOffer() + 1;
+			int newMax = getLastOfferId() + 1;
 			String dotSalary = salary;
 			String insertQuery = "INSERT INTO offers (id_offer, id_empl, title, content, info, salary) VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement insertStatement = connection.prepareStatement(insertQuery);

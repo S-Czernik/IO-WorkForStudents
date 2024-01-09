@@ -23,7 +23,7 @@ public class ProfilesDisplayServlet extends HttpServlet {
         model = Model.getModel();
         
         Random random = new Random();
-        start = random.nextInt(model.getOffersCount("profiles") - 1);
+        start = random.nextInt(model.getUserCount("student") - 1);
         random();
     }
 
@@ -53,7 +53,7 @@ public class ProfilesDisplayServlet extends HttpServlet {
                             break;
                     }
             
-            int count = model.getOffersCount("profiles") - 1;
+            int count = model.getUserCount("student") - 1;
             if (arg1.equals("-1")) {
                 begin -= 10;
                 if (begin + 10 == start)
@@ -87,7 +87,7 @@ public class ProfilesDisplayServlet extends HttpServlet {
                 response.addCookie(searchCookie);     
             } else if (arg1.equals("3")){
                 Random random = new Random();
-                start = random.nextInt(model.getOffersCount("profiles") - 1);
+                start = random.nextInt(model.getUserCount("student") - 1);
                 random();
                 Cookie startCookie = new Cookie("startP", String.valueOf(start));
                 response.addCookie(startCookie);
@@ -127,7 +127,7 @@ public class ProfilesDisplayServlet extends HttpServlet {
     public void random() {
         begin = start;
         end = begin + 9;
-        int count = model.getOffersCount("profiles") - 1;
+        int count = model.getUserCount("student") - 1;
         if (end > count)
             end = Math.abs(count - end) - 1;
     }

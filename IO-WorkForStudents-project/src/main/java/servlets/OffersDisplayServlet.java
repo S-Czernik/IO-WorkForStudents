@@ -23,7 +23,7 @@ public class OffersDisplayServlet extends HttpServlet {
         model = Model.getModel();
 
         Random random = new Random();
-        start = random.nextInt(model.getOffersCount("offers") - 1);
+        start = random.nextInt(model.getOfferCount() - 1);
         random();
     }
 
@@ -53,7 +53,7 @@ public class OffersDisplayServlet extends HttpServlet {
                             break;
                     }
             
-            int count = model.getOffersCount("offers") - 1;
+            int count = model.getOfferCount() - 1;
             if (arg1.equals("-1")) {
                 begin -= 10;
                 if (begin + 10 == start)
@@ -87,7 +87,7 @@ public class OffersDisplayServlet extends HttpServlet {
                 response.addCookie(searchCookie);     
             } else if (arg1.equals("3")){
                 Random random = new Random();
-                start = random.nextInt(model.getOffersCount("offers") - 1);
+                start = random.nextInt(model.getOfferCount() - 1);
                 random();
                 Cookie startCookie = new Cookie("startO", String.valueOf(start));
                 response.addCookie(startCookie);
@@ -128,7 +128,7 @@ public class OffersDisplayServlet extends HttpServlet {
     public void random() {
         begin = start;
         end = begin + 9;
-        int count = model.getOffersCount("offers") - 1;
+        int count = model.getOfferCount() - 1;
         if (end > count)
             end = Math.abs(count - end) - 1;
     }
