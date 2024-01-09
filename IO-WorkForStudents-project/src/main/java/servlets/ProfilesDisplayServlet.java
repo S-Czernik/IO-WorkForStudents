@@ -13,17 +13,17 @@ import model.Model;
 import model.Offer;
 import jakarta.servlet.http.Cookie;
 
-@WebServlet(name = "OffersDisplayServlet", urlPatterns = {"/offersdisplay"})
-public class OffersDisplayServlet extends HttpServlet {
+@WebServlet(name = "ProfilesDisplayServlet", urlPatterns = {"/profilesdisplay"})
+public class ProfilesDisplayServlet extends HttpServlet {
     Model model;
     ArrayList<Offer> offers = new ArrayList<>();
     int start, begin, end;
 
-    public OffersDisplayServlet() {
+    public ProfilesDisplayServlet() {
         model = Model.getModel();
-
+        
         Random random = new Random();
-        start = random.nextInt(model.getOffersCount("offers") - 1);
+        start = random.nextInt(model.getOffersCount("profiles") - 1);
         random();
     }
 
@@ -41,19 +41,19 @@ public class OffersDisplayServlet extends HttpServlet {
             if (cookies != null)
                 for (Cookie cookie : cookies)
                     switch (cookie.getName()) {
-                        case "startO":
+                        case "startP":
                             start = Integer.parseInt(cookie.getValue());
                             exists = true;
                             break;
-                        case "beginO":
+                        case "beginP":
                             begin = Integer.parseInt(cookie.getValue());
                             break;
-                        case "endO":
+                        case "endP":
                             end = Integer.parseInt(cookie.getValue());
                             break;
                     }
             
-            int count = model.getOffersCount("offers") - 1;
+            int count = model.getOffersCount("profiles") - 1;
             if (arg1.equals("-1")) {
                 begin -= 10;
                 if (begin + 10 == start)
@@ -83,23 +83,23 @@ public class OffersDisplayServlet extends HttpServlet {
                     begin += 10;
             } else if (arg1.equals("2")) {
                 random();
-                Cookie searchCookie = new Cookie("searchedO", "");
+                Cookie searchCookie = new Cookie("searchedP", "");
                 response.addCookie(searchCookie);     
             } else if (arg1.equals("3")){
                 Random random = new Random();
-                start = random.nextInt(model.getOffersCount("offers") - 1);
+                start = random.nextInt(model.getOffersCount("profiles") - 1);
                 random();
-                Cookie startCookie = new Cookie("startO", String.valueOf(start));
+                Cookie startCookie = new Cookie("startP", String.valueOf(start));
                 response.addCookie(startCookie);
             } else if (!exists) {
-                Cookie startCookie = new Cookie("startO", String.valueOf(start));
+                Cookie startCookie = new Cookie("startP", String.valueOf(start));
                 response.addCookie(startCookie);
             }
 
-            offers = model.getOffers(begin, end);
+            offers = model.getProfiles(begin, end);
             
-            Cookie beginCookie = new Cookie("beginO", String.valueOf(begin));
-            Cookie endCookie = new Cookie("endO", String.valueOf(end));
+            Cookie beginCookie = new Cookie("beginP", String.valueOf(begin));
+            Cookie endCookie = new Cookie("endP", String.valueOf(end));
             response.addCookie(beginCookie);
             response.addCookie(endCookie);
 
@@ -108,7 +108,6 @@ public class OffersDisplayServlet extends HttpServlet {
                 Offer offer = offers.get(i);
                 
                 jsonOffers.append("{")
-                        .append("\"id_offer\": \"").append(offer.getIdOffer()).append("\",")
                         .append("\"id_person\": \"").append(offer.getIdPerson()).append("\",")
                         .append("\"title\": \"").append(offer.getTitle()).append("\",")
                         .append("\"content\": \"").append(offer.getContent()).append("\",")
@@ -124,11 +123,11 @@ public class OffersDisplayServlet extends HttpServlet {
             System.out.println(exp);
         }
     }
-    
+
     public void random() {
         begin = start;
         end = begin + 9;
-        int count = model.getOffersCount("offers") - 1;
+        int count = model.getOffersCount("profiles") - 1;
         if (end > count)
             end = Math.abs(count - end) - 1;
     }

@@ -2,20 +2,22 @@
 <html>
     <head>
         <title>Work4Students</title>
+        <script type="text/javascript" src="js/indexOffersDisplay.js"></script>
         <link rel="stylesheet" href="css/index.css" type="text/css"/>
+        <link rel="stylesheet" href="css/topBar.css" type="text/css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="js/offers.js"></script>
     </head>
+    
+  
     <body>
         <div class="top-bar" id="startPage">
-            <div class="logo">Work 4 Students</div>
+            <a class="logo" href = "index.html">Work 4 Students</a>
             <div class="button-container">
-                <form action="login.html">
-                    <input type="submit" value="Login" />
-                </form>
-                <form action="register.html">
-                    <input type="submit" value="Register" />
-                </form>
+                    <a class = "topBarButton" href ="indexStudent.html" >Student View</a>
+                    <a class = "topBarButtonGrey" href ="index.html" >Employer View</a>
+                    <a class = "topBarButton" href ="login.html"  >Login</a>
+                    <a class = "topBarButton" href ="register.html"  >Register</a>
             </div>
         </div>
             <div class="side-panel">
@@ -56,21 +58,48 @@
                         <br>
                     </div>
 
-                    <input type="submit" value="Zastosuj"/>
-                </form>
+        <div class="side-panel">
+            <div class="search">
+                <input type="text" placeholder="Szukaj ofert" name="offerTitle"  id="sideBarSearch" class = "sidePanelSearch">
+                <input type="button" value ="Szukaj"  id="sideBarNameSearch" class = "sidePanelButton" onclick="searchType('sideBarSearch')">
             </div>
-        <div class ="mainDiv">
-            <div class = "containersContainer" id = "containersContainerID">
+            <h1 class = "sideMainHeader">Sort</h1>
+            <div class = "sortLabelFrame">
+                <input type="radio" id ="radio-1" value = "-1" class = "customCheckbox" name = "sort" checked />
+                <label for="radio-1">None</label><br>
+                <input type="radio" id ="radio2" value = "2" class = "customCheckbox" name = "sort"  />
+                <label for="radio2">Matching Percentage ↑</label><br>
+                <input type="radio" id ="radio3" value = "3" class = "customCheckbox" name = "sort"  />
+                <label for="radio3">Matching Percentage ↓</label><br>
+                <input type="radio" id ="radio4" value = "4" class = "customCheckbox" name = "sort" />
+                <label for="radio4">Alphabetical ↑</label><br>
+                <input type="radio" id ="radio5" value = "5" class = "customCheckbox" name = "sort" />
+                <label for="radio5">Alphabetical ↓</label><br>
             </div>
-            <div class ="footer">
-                <form id="searchOption" onsubmit="searchForOffer('title')" method="GET">
-                    <h1> <input type="text" placeholder="Title" name="offerTitle" id="offerTitle">
-                        <input type="submit" value="Search"/>
-                    </h1>
-                </form> 
+            <h1 class = "sideMainHeader">Filter</h1>
+            <div class = "filterLabelFrame">
+                <h2>Rating</h2><br>
+                <label for="minScore" class = "customNumberLabel">Min</label><br>
+                <input type="number" id ="minScore" class = "customNumber" value="" />
+                <label for="maxScore" class = "customNumberLabel">Max</label><br>
+                <input type="number"  id ="maxScore" class = "customNumber" value="" />
+                <br>
+            </div>
+
+            
+            <div class ="type">
                 <h1>
-                    <button class ="footerButton" onclick="startPage(-1)">Previous</button>
-                    <button class ="footerButton" onclick="startPage(1)">Next</button>
+                    <button class ="filterButton" onclick="sortType('minIncome', 'maxIncome')">Filter</button><br>
+                </h1>
+            </div>
+        </div>
+
+        <div class ="mainDiv">
+            <div class = "containersContainer" id = "containersContainerID"></div>
+            <div class ="footer">
+                <h1>
+                    <button class ="footerButton" onclick="nextPage(-1)">Previous</button>
+                    <button class ="footerButton" onclick="nextPage(1)">Next</button>
                 </h1>
             </div>
         </div>
