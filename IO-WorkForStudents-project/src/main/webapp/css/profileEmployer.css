@@ -1,12 +1,4 @@
 
-body {
-    background-color: #E66A50;
-    font-family: 'Arial', cursive;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-}
-
 h1 {
     text-align: center;
     font-size: 40px;
@@ -44,31 +36,9 @@ h3 {
     font-weight: bold;
 }
 
-.buttons-topBar {
-    display: flex;
-    align-items: center;
-    button,
-    a {
-        background-color: #E66A50;
-        color: white;
-        font-size: 20px;
-        border-radius: 5px;
-        margin-left: 10px;
-        margin-right:10px;
-        padding: 10px 15px;
-        text-decoration: none;
-        transition: background-color 0.3s;
-        margin-left: 10px;
-        &:hover {
-            background-color: white;
-            color: #E66A50;
-        }
-    }
-
-}
 
 .content {
-    margin: 50px;
+    margin: 100px 50px;
     text-align: center;
     background-color: white;
     padding-left: 80px;
@@ -223,12 +193,6 @@ h3 {
     height: 20px;
 }
 
-.side-menu-trigger {
-    border: 0;
-    border-radius: 5px;
-    background: #ffffff;
-
-}
 
 .side-menu {
     display: flex;
