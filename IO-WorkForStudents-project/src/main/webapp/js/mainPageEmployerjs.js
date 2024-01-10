@@ -1,11 +1,6 @@
-window.onload = function () {
-    if (!sessionStorage.getItem('firstOpen')) {
-        loadOffers(3);
-        sessionStorage.setItem('firstOpen', 'true');
-    }
-};
+window.onload = loadProfiles(3);
 
-function loadOffers(pageNumber) {
+function loadProfiles(pageNumber) {
     window.scrollTo(0, 0);
     var xhttp = new XMLHttpRequest();
 
@@ -16,11 +11,11 @@ function loadOffers(pageNumber) {
         }
     };
 
-    xhttp.open("GET", "offersdisplay?arg1=" + pageNumber, true);
+    xhttp.open("GET", "profilesdisplay?arg1=" + pageNumber, true);
     xhttp.send();
 }
 
-function searchForOffers(title) {
+function searchForProfiles(title) {
     window.scrollTo(0, 0);
     var xhttp = new XMLHttpRequest();
 
@@ -34,14 +29,14 @@ function searchForOffers(title) {
 	var arg1 = document.getElementById(title).value.trim();
 
     if (arg1 === '')
-        loadOffers(2);
+        loadProfiles(2);
     else {
-        xhttp.open("GET", "searchoff?arg1=" + arg1, true);
+        xhttp.open("GET", "searchprof?arg1=" + arg1, true);
 		xhttp.send();
     }
 }
 
-function filterAndSortOffers(min, max) {
+function filterAndSortProfiles(min, max) {
     window.scrollTo(0, 0);
     var xhttp = new XMLHttpRequest();
 
@@ -57,13 +52,13 @@ function filterAndSortOffers(min, max) {
     var sort = document.querySelector('input[name="sort"]:checked').value;
 
     if (sort === '-1' && arg1 === '' && arg2 === '')
-        loadOffers(2);
+        loadProfiles(2);
     else {
         if (arg1 === '' || arg2 === '')
             arg1 = arg2 = -1;
         
-        xhttp.open("GET", "sortAndFilterOff?arg1=" + min + "&arg2=" + max + "&arg3=" + sort, true);
-		xhttp.send();
+        xhttp.open("GET", "sortAndFilterProf?arg1=" + min + "&arg2=" + max + "&arg3=" + sort, true);
+    xhttp.send();
     }
 }
 
