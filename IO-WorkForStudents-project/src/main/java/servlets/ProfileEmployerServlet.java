@@ -24,7 +24,7 @@ public class ProfileEmployerServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		response.setContentType("application/json;charset=UTF-8");
-		String userID = "6";
+		String userID = request.getParameter("arg1");
 		try (PrintWriter out = response.getWriter()) {
 			byte[] picture = model.accountInterface.getProfilePicture(userID);
 			String base64Image = Base64.getEncoder().encodeToString(picture);
