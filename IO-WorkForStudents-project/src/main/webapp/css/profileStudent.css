@@ -1,26 +1,4 @@
 
-.buttons-topBar {
-    display: flex;
-    align-items: center;
-    button,
-    a {
-        background-color: #E66A50;
-        color: white;
-        font-size: 20px;
-        border-radius: 5px;
-        margin-left: 10px;
-        margin-right:10px;
-        padding: 10px 15px;
-        text-decoration: none;
-        transition: background-color 0.3s;
-        margin-left: 10px;
-        &:hover {
-            background-color: white;
-            color: #E66A50;
-        }
-    }
-
-}
 
 .uploaded-files{
     width:200px;
