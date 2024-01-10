@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Model;
 
-@WebServlet(name = "OfferAddingServlet", urlPatterns = {"/OfferAddingServlet"})
+@WebServlet(name = "OfferAddingServlet", urlPatterns = {"/offerAddingServlet"})
 public class OfferAddingServlet extends HttpServlet {
 
 	Model model;

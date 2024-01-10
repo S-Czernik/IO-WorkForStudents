@@ -5,11 +5,11 @@
         <link rel="stylesheet" href="css/offers.css" type="text/css"/>
         <link rel="stylesheet" href="css/topBar.css" type="text/css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script type="text/javascript" src="js/offers.js"></script>
+        <script type="text/javascript" src="js/makingOffer.js"></script>
     </head>
     <body>
         <div class="top-bar" id="startPage">
-            <div class="logo">Work 4 Students</div>
+            <a class="logo" href = "mainPageEmployer.html">Work 4 Students</a>
             <div class="button-container">
                 <a class = "topBarButton" href ="profileStudent.html"  >Profile</a>
                 <a class = "topBarButton" href ="offerWorkspace.html"  >New Offer</a>
@@ -20,14 +20,9 @@
         <div class = "containersContainer" id = "containersContainerID">
             </div>
             <div class ="footer">
-                <form id="searchOption" onsubmit="searchForOffer('title')" method="GET">
-                    <h1> <input type="text" placeholder="Title" name="offerTitle" id="offerTitle">
-                        <input type="submit" value="Search"/>
-                    </h1>
-                </form> 
                 <h1>
-                    <button class ="footerButton" onclick="startPage(-1)">Previous</button>
-                    <button class ="footerButton" onclick="startPage(1)">Next</button>
+                    <button class ="footerButton">Previous</button>
+                    <button class ="footerButton">Next</button>
                 </h1>
             </div>
         </div>

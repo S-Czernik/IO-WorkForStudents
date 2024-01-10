@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Work4Students</title>
-        <script type="text/javascript" src="js/mainPage.js"></script>
+        <script type="text/javascript" src="js/mainPagejs.js"></script>
         <link rel="stylesheet" href="css/index.css" type="text/css"/>
         <link rel="stylesheet" href="css/topBar.css" type="text/css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,7 +10,7 @@
 
     <body>
         <div class="top-bar" id="startPage">
-            <a class="logo" href = "indexEmployer.html">Work 4 Students</a>
+            <a class="logo" href = "mainPage.html">Work 4 Students</a>
             <div class="button-container">
                 <a class = "topBarButton" href ="profileStudent.html"  >My Profile</a>
 
@@ -36,6 +36,10 @@
                 <label for="radio2">Matching Percentage ↑</label><br>
                 <input type="radio" id ="radio3" value = "3" class = "customCheckbox" name = "sort"  />
                 <label for="radio3">Matching Percentage ↓</label><br>
+				<input type="radio" id ="radio6" value = "0" class = "customCheckbox" name = "sort" />
+				<label for="radio5">Salary ↑</label><br>
+				<input type="radio" id ="radio7" value = "1" class = "customCheckbox" name = "sort" />
+				<label for="radio5">Salary ↓</label><br>
             </div>
             <h1 class = "sideMainHeader">Filter</h1>
             <div class = "filterLabelFrame">
@@ -44,13 +48,6 @@
                 <input type="number" id ="minIncome" class = "customNumber" value="" />
                 <label for="maxIncome" class = "customNumberLabel">Max</label><br>
                 <input type="number"  id ="maxIncome" class = "customNumber" value="" />
-                <br>
-
-                <h2>Rating</h2><br>
-                <label for="minScore" class = "customNumberLabel">Min</label><br>
-                <input type="number" id ="minScore" class = "customNumber" value="" />
-                <label for="maxScore" class = "customNumberLabel">Max</label><br>
-                <input type="number"  id ="maxScore" class = "customNumber" value="" />
                 <br>
             </div>
             <h1>
