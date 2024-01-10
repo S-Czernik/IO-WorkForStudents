@@ -19,6 +19,8 @@ function validateRegister(arg1, arg2, arg3, arg4, result) {
 				sessionStorage.setItem('found_id', found_id);
 				sessionStorage.setItem('found_type', found_type);
 				
+				var arg1 = sessionStorage.getItem('found_id');
+				
 				if (found_type === "student") {
 					document.getElementById("registerPage").action = "mainPage.html";
 					document.getElementById("registerPage").submit();
