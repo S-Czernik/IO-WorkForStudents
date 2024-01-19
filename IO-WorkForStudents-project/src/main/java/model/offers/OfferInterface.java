@@ -59,9 +59,7 @@ public class OfferInterface extends Interface {
 				else if (type == 6)
 					sortBy = "salary";
 			} else {
-				if (type == 1)
-					sortBy = "id_offer";
-				else if (type == 3)
+				if (type == 3)
 					sortBy = "percentage";
 				else if (type == 5)
 					sortBy = "title";
@@ -99,14 +97,28 @@ public class OfferInterface extends Interface {
 			}
 
 			ResultSet results = preparedStatement.executeQuery();
-
+			
+			boolean wasNum = false;
 			int count = 0;
-			while (results.next() && count < 10) {
-				int id_offer = results.getInt("id_offer");
-				if (type2 == 1 && id_offer == last) {
-					if (number == 10) {
-						while (results.next() && count < 10) {
-							id_offer = results.getInt("id_offer");
+			if (type2 == 0) {
+				while (results.next() && count < 10) {
+					int id_offer = results.getInt("id_offer");
+					int id_person = results.getInt("id_empl");
+					String title = results.getString("title");
+					String content = results.getString("content");
+					String info = results.getString("info");
+					BigDecimal salary = results.getBigDecimal("salary");
+					Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
+					searchedoffers.add(offer);
+					count++;
+				}
+			} else if (type2 == 1) {
+				if (number == 10) {
+					while (results.next() && count < 10) {
+						int id_offer = results.getInt("id_offer");
+						if (id_offer == last) {
+							wasNum = true;
+						} else if (wasNum) {
 							int id_person = results.getInt("id_empl");
 							String title = results.getString("title");
 							String content = results.getString("content");
@@ -116,22 +128,11 @@ public class OfferInterface extends Interface {
 							searchedoffers.add(offer);
 							count++;
 						}
-					} else {
-						while (results.previous() && count <= number) {
-							id_offer = results.getInt("id_offer");
-							int id_person = results.getInt("id_empl");
-							String title = results.getString("title");
-							String content = results.getString("content");
-							String info = results.getString("info");
-							BigDecimal salary = results.getBigDecimal("salary");
-							Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
-							searchedoffers.add(0, offer);
-							count++;
-						}
 					}
-				} else if (type2 == -1 && id_offer == last) {
-					while (results.previous() && count < 10) {
-						id_offer = results.getInt("id_offer");
+				} else {
+					results.afterLast();
+					while (results.previous() && count < number) {
+						int id_offer = results.getInt("id_offer");
 						int id_person = results.getInt("id_empl");
 						String title = results.getString("title");
 						String content = results.getString("content");
@@ -141,15 +142,36 @@ public class OfferInterface extends Interface {
 						searchedoffers.add(0, offer);
 						count++;
 					}
-				} else if (type2 == 0) {
-					int id_person = results.getInt("id_empl");
-					String title = results.getString("title");
-					String content = results.getString("content");
-					String info = results.getString("info");
-					BigDecimal salary = results.getBigDecimal("salary");
-					Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
-					searchedoffers.add(offer);
-					count++;
+				}
+			} else if (type2 == -1) {
+				results.afterLast();
+				while (results.previous() && count < 10) {
+					int id_offer = results.getInt("id_offer");
+					if (id_offer == last) {
+						wasNum = true;
+					} else if (wasNum) {
+						int id_person = results.getInt("id_empl");
+						String title = results.getString("title");
+						String content = results.getString("content");
+						String info = results.getString("info");
+						BigDecimal salary = results.getBigDecimal("salary");
+						Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
+						searchedoffers.add(0, offer);
+						count++;
+					}
+				}
+				if (count == 0) {
+					while (results.next() && count < 10) {
+						int id_offer = results.getInt("id_offer");
+						int id_person = results.getInt("id_empl");
+						String title = results.getString("title");
+						String content = results.getString("content");
+						String info = results.getString("info");
+						BigDecimal salary = results.getBigDecimal("salary");
+						Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
+						searchedoffers.add(offer);
+						count++;
+					}
 				}
 			}
 		}
@@ -181,8 +203,9 @@ public class OfferInterface extends Interface {
 				String title = results.getString("title");
 				String content = results.getString("content");
 				String info = results.getString("info");
+				int rating = results.getInt("rating");
 
-				Offer offer = new Offer(id_person, title, content, info);
+				Offer offer = new Offer(id_person, title, content, info, rating);
 				searchedoffers.add(offer);
 			}
 		}
@@ -192,51 +215,58 @@ public class OfferInterface extends Interface {
 		return searchedoffers;
 	}
 
-	public ArrayList<Offer> getSortedAndFilteredProfiles(int min, int max, int type, String searched) {
+	public ArrayList<Offer> getSortedAndFilteredProfiles(int min, int max, int type, String searched, int last, int number, int type2) {
 		ArrayList<Offer> searchedoffers = new ArrayList<>();
 
 		try {
-			String sortBy = "title";
+			String sortBy = "id_stud";
 			String sortOrder = "ASC";
 
 			if (type % 2 == 0) {
-				if (type == 2) {
-					sortBy = "content";
-				}
-				else if (type == 4) {
+				if (type == 2)
 					sortBy = "percentage";
-				}
-			}
-			else {
-				if (type == 3) {
-					sortBy = "content";
-				}
-				else if (type == 5) {
+				else if (type == 4)
+					sortBy = "title";
+				else if (type == 6)
+					sortBy = "rating";
+			} else {
+				if (type == 3)
 					sortBy = "percentage";
-				}
+				else if (type == 5)
+					sortBy = "title";
+				else if (type == 7)
+					sortBy = "rating";
 				sortOrder = "DESC";
 			}
 
 			String query = "SELECT * FROM STUDENT_PROFILES";
-
+			
 			boolean was = false;
 			if (!searched.equals("")) {
-				query += " WHERE title = " + searched;
+				query += " WHERE title = ?";
 				was = true;
 			}
 
 			if (max >= min && max >= 0 && min >= 0) {
-				if (was) {
-					query += " AND content BETWEEN " + min + " AND " + max;
-				}
-				else {
-					query += " WHERE content BETWEEN " + min + " AND " + max;
-				}
+				if (was)
+					query += " AND content BETWEEN ? AND ?";
+				else
+					query += " WHERE content BETWEEN ? AND ?";
 			}
-
+			
 			query += " ORDER BY " + sortBy + " " + sortOrder;
 
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			PreparedStatement preparedStatement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			int parameterIndex = 1;
+			if (was)
+				preparedStatement.setString(parameterIndex++, searched);
+
+			if (max >= min && max >= 0 && min >= 0) {
+				preparedStatement.setInt(parameterIndex++, min);
+				preparedStatement.setInt(parameterIndex, max);
+			}
+
 			ResultSet results = preparedStatement.executeQuery();
 
 			while (results.next()) {
@@ -244,9 +274,82 @@ public class OfferInterface extends Interface {
 				String title = results.getString("title");
 				String content = results.getString("content");
 				String info = results.getString("info");
+				int rating = results.getInt("rating");
 
-				Offer offer = new Offer(id_person, title, content, info);
+				Offer offer = new Offer(id_person, title, content, info, rating);
 				searchedoffers.add(offer);
+			}
+			
+			boolean wasNum = false;
+			int count = 0;
+			if (type2 == 0) {
+				while (results.next() && count < 10) {
+					int id_person = results.getInt("id_stud");
+					String title = results.getString("title");
+					String content = results.getString("content");
+					String info = results.getString("info");
+					int rating = results.getInt("rating");
+					Offer offer = new Offer(id_person, title, content, info, rating);
+					searchedoffers.add(offer);
+					count++;
+				}
+			} else if (type2 == 1) {
+				if (number == 10) {
+					while (results.next() && count < 10) {
+						int id_person = results.getInt("id_stud");
+						if (id_person == last) {
+							wasNum = true;
+						} else if (wasNum) {
+							String title = results.getString("title");
+							String content = results.getString("content");
+							String info = results.getString("info");
+							int rating = results.getInt("rating");
+							Offer offer = new Offer( id_person, title, content, info, rating);
+							searchedoffers.add(offer);
+							count++;
+						}
+					}
+				} else {
+					results.afterLast();
+					while (results.previous() && count < number) {
+						int id_person = results.getInt("id_stud");
+						String title = results.getString("title");
+						String content = results.getString("content");
+						String info = results.getString("info");
+						int rating = results.getInt("rating");
+						Offer offer = new Offer( id_person, title, content, info, rating);
+						searchedoffers.add(0, offer);
+						count++;
+					}
+				}
+			} else if (type2 == -1) {
+				results.afterLast();
+				while (results.previous() && count < 10) {
+					int id_person = results.getInt("id_stud");
+					if (id_person == last) {
+						wasNum = true;
+					} else if (wasNum) {
+						String title = results.getString("title");
+						String content = results.getString("content");
+						String info = results.getString("info");
+						int rating = results.getInt("rating");
+						Offer offer = new Offer( id_person, title, content, info, rating);
+						searchedoffers.add(0, offer);
+						count++;
+					}
+				}
+				if (count == 0) {
+					while (results.next() && count < 10) {
+						int id_person = results.getInt("id_stud");
+						String title = results.getString("title");
+						String content = results.getString("content");
+						String info = results.getString("info");
+						int rating = results.getInt("rating");
+						Offer offer = new Offer( id_person, title, content, info, rating);
+						searchedoffers.add(offer);
+						count++;
+					}
+				}
 			}
 		}
 		catch (Exception exp) {
@@ -310,8 +413,9 @@ public class OfferInterface extends Interface {
 				String title = results.getString("title");
 				String content = results.getString("content");
 				String info = results.getString("info");
+				int rating = results.getInt("rating");
 
-				Offer offer = new Offer(id_person, title, content, info);
+				Offer offer = new Offer(id_person, title, content, info, rating);
 				offers.add(offer);
 			}
 		}

@@ -2,7 +2,7 @@ package model.offers;
 import java.math.BigDecimal;
 
 public class Offer {
-    private int id_offer, id_person;
+    private int id_offer, id_person, rating;
     private String title;
     private String content;
     private String info;
@@ -17,11 +17,12 @@ public class Offer {
 		this.salary = salary;
     }
     
-    public Offer(int id_stud, String title, String content, String info) {
+    public Offer(int id_stud, String title, String content, String info, int rating) {
         this.id_person = id_stud;
         this.title = title;
         this.content = content;
         this.info = info;
+		this.rating = rating;
     }
 
     public int getIdOffer() {return this.id_offer;}
@@ -30,4 +31,5 @@ public class Offer {
     public String getContent() {return this.content;}
     public String getInfo() {return this.info;}
 	public BigDecimal getSalary() {return this.salary;}
+	public int getRating() {return this.rating;}
 }

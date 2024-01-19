@@ -20,13 +20,13 @@
         <div class="side-panel">
             <div class="search">
                 <input type="text" placeholder="Szukaj ofert" name="offerTitle"  id="sideBarSearch" class = "sidePanelSearch">
-                <input type="button" value ="Szukaj"  id="sideBarNameSearch" class = "sidePanelButton" onclick="searchForOffers('sideBarSearch')">
+                <input type="button" value ="Szukaj"  id="sideBarNameSearch" class = "sidePanelButton" onclick="searchForOffers('sideBarSearch', 0)">
             </div>
             <h1 class = "sideMainHeader">Sort</h1>
             <div class = "sortLabelFrame">
-                <input type="radio" id ="radio8" value = "8" class = "customCheckbox" name = "sort" checked />
+                <input type="radio" id ="radio8" value = "9" class = "customCheckbox" name = "sort" checked />
                 <label for="radio5">Most Recent</label><br>
-                <input type="radio" id ="radio9" value = "9" class = "customCheckbox" name = "sort" />
+                <input type="radio" id ="radio9" value = "8" class = "customCheckbox" name = "sort" />
                 <label for="radio5">Least Recent</label><br>
                 <input type="radio" id ="radio4" value = "4" class = "customCheckbox" name = "sort" />
                 <label for="radio4">Alphabetical ↑</label><br>
@@ -51,7 +51,7 @@
                 <br>
             </div>
             <h1>
-                <button class ="typeButton" onclick="filterAndSortOffers('minIncome', 'maxIncome')">Filter</button>
+                <button class ="typeButton" onclick="filterAndSortOffers('minIncome', 'maxIncome', 'sideBarSearch', 0)">Filter</button>
             </h1>
                 
             </div>
@@ -60,8 +60,8 @@
             <div class = "containersContainer" id = "containersContainerID"></div>
             <div class ="footer">
                 <h1>
-                    <button class ="footerButton" onclick="loadOffers(-1)">Previous</button>
-                    <button class ="footerButton" onclick="loadOffers(1)">Next</button>
+                    <button class ="footerButton" onclick="nextPage(-1, 'sideBarSearch', 'minIncome', 'maxIncome')">Previous</button>
+                    <button class ="footerButton" onclick="nextPage(1, 'sideBarSearch', 'minIncome', 'maxIncome')">Next</button>
                 </h1>
             </div>
         </div>

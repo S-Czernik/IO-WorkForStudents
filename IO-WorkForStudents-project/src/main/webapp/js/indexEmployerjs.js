@@ -3,14 +3,17 @@ window.addEventListener('DOMContentLoaded', function() {
     loadProfiles(0);
 });
 
-function nextPage(pageNumber, sideBar) {
+let searched = false;
+let filtered = false;
+function nextPage(pageNumber, sideBar, min, max) {
     window.scrollTo(0, 0);
 
-	var arg = document.getElementById(sideBar).value.trim();
-	if (arg === '')
+	if (!searched && !filtered)
         loadProfiles(pageNumber);
-    else
-        searchForProfiles(sideBar, pageNumber);
+	else if (filtered)
+		filterAndSortProfiles(min, max, sideBar, pageNumber);
+    else if (searched)
+		searchForProfiles(sideBar, pageNumber);
 }
 
 function loadProfiles(pageNumber) {
@@ -19,6 +22,8 @@ function loadProfiles(pageNumber) {
 
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
+			searched = false;
+			filtered = false;
             var offers = JSON.parse(this.responseText);
             displayOffers(offers);
         }
@@ -34,6 +39,8 @@ function searchForProfiles(title, pageNumber) {
 
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
+			searched = true;
+			filtered = false;
             var offers = JSON.parse(this.responseText);
             displayOffers(offers);
         }
@@ -48,12 +55,13 @@ function searchForProfiles(title, pageNumber) {
     }
 }
 
-function filterAndSortProfiles(min, max) {
+function filterAndSortProfiles(min, max, search, pageNumber) {
     window.scrollTo(0, 0);
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
+			filtered = true;
             var offers = JSON.parse(this.responseText);
             displayOffers(offers);
         }
@@ -61,15 +69,16 @@ function filterAndSortProfiles(min, max) {
 
 	var arg1 = document.getElementById(min).value.trim();
     var arg2 = document.getElementById(max).value.trim();
-    var sort = document.querySelector('input[name="sort"]:checked').value;
+    var arg3 = document.querySelector('input[name="sort"]:checked').value;
+	var arg4 = document.getElementById(search).value.trim();
 
-    if (sort === '-1' && arg1 === '' && arg2 === '')
-        loadProfiles(2);
+    if (arg3 === '9' && arg1 === '' && arg2 === '')
+        loadOffers(0);
     else {
-        if (arg1 === '' || arg2 === '')
+        if (arg1 === '' || arg2 === '' || (arg1 === '0' && arg2 === '0'))
             arg1 = arg2 = -1;
         
-        xhttp.open("GET", "sortAndFilterProf?arg1=" + min + "&arg2=" + max + "&arg3=" + sort, true);
+        xhttp.open("GET", "sortAndFilterProf?arg1=" + arg1 + "&arg2=" + arg2 + "&arg3=" + arg3 + "&arg4=" + arg4 + "&arg5=" + pageNumber, true, true);
 		xhttp.send();
     }
 }
