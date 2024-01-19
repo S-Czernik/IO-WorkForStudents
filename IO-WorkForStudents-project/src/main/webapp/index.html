@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Work4Students</title>
-        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/indexjs.js"></script>
         <link rel="stylesheet" href="css/index.css" type="text/css"/>
         <link rel="stylesheet" href="css/topBar.css" type="text/css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,48 +19,47 @@
             </div>
         </div>
         <div class="side-panel">
-                <input type="text" placeholder="Szukaj ofert" name="offerTitle"  id="sideBarSearch" class = "sidePanelSearch">
-                <input type="button" value ="Szukaj"  id="sideBarNameSearch" class = "sidePanelButton" onclick="searchForOffers('sideBarSearch')">
-            <form action="profile.html">
-                <div class = "sortLabelFrame">
-                    <h1 class = "sideMainHeader">Sort</h1>
-                    <input type="radio" id ="radio8" value = "8" class = "customCheckbox" name = "sort" checked />
-                    <label for="radio5">Most Recent</label><br>
-                    <input type="radio" id ="radio9" value = "9" class = "customCheckbox" name = "sort" />
-                    <label for="radio5">Least Recent</label><br>
-                    <input type="radio" id ="radio4" value = "4" class = "customCheckbox" name = "sort" />
-                    <label for="radio4">Alphabetical ↑</label><br>
-                    <input type="radio" id ="radio5" value = "5" class = "customCheckbox" name = "sort" />
-                    <label for="radio5">Alphabetical ↓</label><br>
-                    <input type="radio" id ="radio6" value = "6" class = "customCheckbox" name = "sort" />
-                    <label for="radio5">Salary ↑</label><br>
-                    <input type="radio" id ="radio7" value = "7" class = "customCheckbox" name = "sort" />
-                    <label for="radio5">Salary ↓</label><br>
-                </div>
-                <div class = "filterLabelFrame">
-                    <h1 class = "sideMainHeader">Filter</h1>
-                    <h2 class = "sideh1">Salary</h2><br>
-                    <label for="minIncome" class = "customNumberLabel">Min</label><br>
-                    <input type="number" id ="minIncome" class = "customNumber" value="0" />
-                    <label for="maxIncome" class = "customNumberLabel">Max</label><br>
-                    <input type="number"  id ="maxIncome" class = "customNumber" value="0" />
-                    <br>
+			<input type="text" placeholder="Szukaj ofert" name="offerTitle"  id="sideBarSearch" class = "sidePanelSearch">
+			<input type="button" value ="Szukaj"  id="sideBarNameSearch" class = "sidePanelButton" onclick="searchForOffers('sideBarSearch', 0)">
+			<div class = "sortLabelFrame">
+				<h1 class = "sideMainHeader">Sort</h1>
+				<input type="radio" id ="radio8" value = "9" class = "customCheckbox" name = "sort" checked />
+				<label for="radio5">Most Recent</label><br>
+				<input type="radio" id ="radio9" value = "8" class = "customCheckbox" name = "sort" />
+				<label for="radio5">Least Recent</label><br>
+				<input type="radio" id ="radio4" value = "4" class = "customCheckbox" name = "sort" />
+				<label for="radio4">Alphabetical ↑</label><br>
+				<input type="radio" id ="radio5" value = "5" class = "customCheckbox" name = "sort" />
+				<label for="radio5">Alphabetical ↓</label><br>
+				<input type="radio" id ="radio6" value = "6" class = "customCheckbox" name = "sort" />
+				<label for="radio5">Salary ↑</label><br>
+				<input type="radio" id ="radio7" value = "7" class = "customCheckbox" name = "sort" />
+				<label for="radio5">Salary ↓</label><br>
+			</div>
+			<div class = "filterLabelFrame">
+				<h1 class = "sideMainHeader">Filter</h1>
+				<h2 class = "sideh1">Salary</h2><br>
+				<label for="minIncome" class="customNumberLabel">Min</label><br>
+				<input type="number" id="minIncome" class="customNumber" value="0" step="0.01" /><br>
 
-                </div>
-                <div class ="type">
-                    <h1>
-                        <button class ="filterButton" onclick="filterAndSortOffers('minIncome', 'maxIncome')">Filter</button><br>
-                    </h1>
-                </div>
-            </form>
+				<label for="maxIncome" class="customNumberLabel">Max</label><br>
+				<input type="number" id="maxIncome" class="customNumber" value="0" step="0.01" />
+				<br>
+
+			</div>
+			<div class ="type">
+				<h1>
+					<button class ="filterButton" onclick="filterAndSortOffers('minIncome', 'maxIncome', 'sideBarSearch', 0)">Filter</button><br>
+				</h1>
+			</div>
         </div>
 
         <div class ="mainDiv">
             <div class = "containersContainer" id = "containersContainerID"></div>
             <div class ="footer">
                 <h1>
-                    <button class ="footerButton" onclick="loadOffers(-1)">Previous</button>
-                    <button class ="footerButton" onclick="loadOffers(1)">Next</button>
+                    <button class ="footerButton" onclick="nextPage(-1, 'sideBarSearch', 'minIncome', 'maxIncome')">Previous</button>
+                    <button class ="footerButton" onclick="nextPage(1, 'sideBarSearch', 'minIncome', 'maxIncome')">Next</button>
                 </h1>
             </div>
         </div>

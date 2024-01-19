@@ -1,4 +1,17 @@
-window.onload = loadProfiles(0);
+window.addEventListener('DOMContentLoaded', function() {
+	window.scrollTo(0, 0);
+    loadProfiles(0);
+});
+
+function nextPage(pageNumber, sideBar) {
+    window.scrollTo(0, 0);
+
+	var arg = document.getElementById(sideBar).value.trim();
+	if (arg === '')
+        loadProfiles(pageNumber);
+    else
+        searchForProfiles(sideBar, pageNumber);
+}
 
 function loadProfiles(pageNumber) {
     window.scrollTo(0, 0);
@@ -15,7 +28,7 @@ function loadProfiles(pageNumber) {
     xhttp.send();
 }
 
-function searchForProfiles(title) {
+function searchForProfiles(title, pageNumber) {
     window.scrollTo(0, 0);
     var xhttp = new XMLHttpRequest();
 
@@ -27,11 +40,10 @@ function searchForProfiles(title) {
     };
 	
 	var arg1 = document.getElementById(title).value.trim();
-
     if (arg1 === '')
-        loadProfiles(2);
+        loadProfiles(0);
     else {
-        xhttp.open("GET", "searchprof?arg1=" + arg1, true);
+        xhttp.open("GET", "searchprof?arg1=" + arg1 + "&arg2=" + pageNumber, true);
 		xhttp.send();
     }
 }

@@ -1,4 +1,4 @@
-window.onload = loadOffers(3);
+window.onload = loadOffers(0);
 
 function loadOffers(pageNumber) {
     window.scrollTo(0, 0);

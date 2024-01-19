@@ -4,65 +4,153 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import model.Interface;
+import java.math.BigDecimal;
 
 public class OfferInterface extends Interface {
-
-	public ArrayList<Offer> getSortedAndFilteredOffers(int min, int max, int type, String searched) {
+	
+	public ArrayList<Offer> getSearchedOffers(String offerTitle, int last, int type) {
 		ArrayList<Offer> searchedoffers = new ArrayList<>();
 
 		try {
-			String sortBy = "title";
-			String sortOrder = "ASC";
-
-			if (type % 2 == 0) {
-				if (type == 2) {
-					sortBy = "content";
-				}
-				else if (type == 4) {
-					sortBy = "percentage";
-				}
-			}
-			else {
-				if (type == 3) {
-					sortBy = "content";
-				}
-				else if (type == 5) {
-					sortBy = "percentage";
-				}
-				sortOrder = "DESC";
-			}
-
-			String query = "SELECT * FROM OFFERS";
-
-			boolean was = false;
-			if (!searched.equals("")) {
-				query += " WHERE title = " + searched;
-				was = true;
-			}
-
-			if (max >= min && max >= 0 && min >= 0) {
-				if (was) {
-					query += " AND content BETWEEN " + min + " AND " + max;
-				}
-				else {
-					query += " WHERE content BETWEEN " + min + " AND " + max;
-				}
-			}
-
-			query += " ORDER BY " + sortBy + " " + sortOrder;
+			String query;
+			
+			if (type == 0)
+				query = "SELECT * FROM OFFERS WHERE id_offer <= ? AND title = ? ORDER BY id_offer DESC LIMIT 10";
+			else
+				query = "SELECT * FROM (SELECT * FROM OFFERS WHERE id_offer > ? AND title = ? LIMIT 10) AS subquery ORDER BY id_offer DESC";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, last);
+			preparedStatement.setString(2, offerTitle);
+
 			ResultSet results = preparedStatement.executeQuery();
 
 			while (results.next()) {
 				int id_offer = results.getInt("id_offer");
-				int id_person = results.getInt("id_empl");
+				int id_empl = results.getInt("id_empl");
 				String title = results.getString("title");
 				String content = results.getString("content");
 				String info = results.getString("info");
+				BigDecimal salary = results.getBigDecimal("salary");
 
-				Offer offer = new Offer(id_offer, id_person, title, content, info);
+				Offer offer = new Offer(id_offer, id_empl, title, content, info, salary);
 				searchedoffers.add(offer);
+			}
+		}
+		catch (Exception exp) {
+			System.out.println(exp);
+		}
+
+		return searchedoffers;
+	}
+
+	public ArrayList<Offer> getSortedAndFilteredOffers(int min, int max, int type, String searched, int last, int number, int type2) {
+		ArrayList<Offer> searchedoffers = new ArrayList<>();
+
+		try {
+			String sortBy = "id_offer";
+			String sortOrder = "ASC";
+
+			if (type % 2 == 0) {
+				if (type == 2)
+					sortBy = "percentage";
+				else if (type == 4)
+					sortBy = "title";
+				else if (type == 6)
+					sortBy = "salary";
+			} else {
+				if (type == 1)
+					sortBy = "id_offer";
+				else if (type == 3)
+					sortBy = "percentage";
+				else if (type == 5)
+					sortBy = "title";
+				else if (type == 7)
+					sortBy = "salary";
+				sortOrder = "DESC";
+			}
+
+			String query = "SELECT * FROM OFFERS";
+			
+			boolean was = false;
+			if (!searched.equals("")) {
+				query += " WHERE title = ?";
+				was = true;
+			}
+
+			if (max >= min && max >= 0 && min >= 0) {
+				if (was)
+					query += " AND salary BETWEEN ? AND ?";
+				else
+					query += " WHERE salary BETWEEN ? AND ?";
+			}
+			
+			query += " ORDER BY " + sortBy + " " + sortOrder;
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			int parameterIndex = 1;
+			if (was)
+				preparedStatement.setString(parameterIndex++, searched);
+
+			if (max >= min && max >= 0 && min >= 0) {
+				preparedStatement.setInt(parameterIndex++, min);
+				preparedStatement.setInt(parameterIndex, max);
+			}
+
+			ResultSet results = preparedStatement.executeQuery();
+
+			int count = 0;
+			while (results.next() && count < 10) {
+				int id_offer = results.getInt("id_offer");
+				if (type2 == 1 && id_offer == last) {
+					if (number == 10) {
+						while (results.next() && count < 10) {
+							id_offer = results.getInt("id_offer");
+							int id_person = results.getInt("id_empl");
+							String title = results.getString("title");
+							String content = results.getString("content");
+							String info = results.getString("info");
+							BigDecimal salary = results.getBigDecimal("salary");
+							Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
+							searchedoffers.add(offer);
+							count++;
+						}
+					} else {
+						while (results.previous() && count <= number) {
+							id_offer = results.getInt("id_offer");
+							int id_person = results.getInt("id_empl");
+							String title = results.getString("title");
+							String content = results.getString("content");
+							String info = results.getString("info");
+							BigDecimal salary = results.getBigDecimal("salary");
+							Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
+							searchedoffers.add(0, offer);
+							count++;
+						}
+					}
+				} else if (type2 == -1 && id_offer == last) {
+					while (results.previous() && count < 10) {
+						id_offer = results.getInt("id_offer");
+						int id_person = results.getInt("id_empl");
+						String title = results.getString("title");
+						String content = results.getString("content");
+						String info = results.getString("info");
+						BigDecimal salary = results.getBigDecimal("salary");
+						Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
+						searchedoffers.add(0, offer);
+						count++;
+					}
+				} else if (type2 == 0) {
+					int id_person = results.getInt("id_empl");
+					String title = results.getString("title");
+					String content = results.getString("content");
+					String info = results.getString("info");
+					BigDecimal salary = results.getBigDecimal("salary");
+					Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
+					searchedoffers.add(offer);
+					count++;
+				}
 			}
 		}
 		catch (Exception exp) {
@@ -71,14 +159,20 @@ public class OfferInterface extends Interface {
 		return searchedoffers;
 	}
 
-	public ArrayList<Offer> getSearchedProfiles(String offerTitle) {
+	public ArrayList<Offer> getSearchedProfiles(String offerTitle, int last, int type) {
 		ArrayList<Offer> searchedoffers = new ArrayList<>();
 
 		try {
-			String query = "SELECT * FROM STUDENT_PROFILES WHERE title = ?";
+			String query;
+			
+			if (type == 0)
+				query = "SELECT * FROM STUDENT_PROFILES WHERE id_stud <= ? AND title = ? ORDER BY id_stud DESC LIMIT 10";
+			else
+				query = "SELECT * FROM (SELECT * FROM STUDENT_PROFILES WHERE id_stud > ? AND title = ? LIMIT 10) AS subquery ORDER BY id_stud DESC";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, offerTitle);
+			preparedStatement.setInt(1, last);
+			preparedStatement.setString(2, offerTitle);
 
 			ResultSet results = preparedStatement.executeQuery();
 
@@ -161,23 +255,21 @@ public class OfferInterface extends Interface {
 		return searchedoffers;
 	}
 
-	public ArrayList<Offer> getOffers(int begin, int end) {
+	public ArrayList<Offer> getOffers(int last, int type) {
 		ArrayList<Offer> offers = new ArrayList<>();
 
-		try {
+		try {			
 			String query;
-			if (end >= begin) {
-				query = "SELECT * FROM OFFERS WHERE id_offer >= ? AND id_offer <= ?";
-			}
-			else {
-				query = "SELECT * FROM OFFERS WHERE id_offer >= ? OR id_offer <= ?";
-			}
+			
+			if (type == 0)
+				query = "SELECT * FROM OFFERS WHERE id_offer <= ? ORDER BY id_offer DESC LIMIT 10";
+			else
+				query = "SELECT * FROM (SELECT * FROM OFFERS WHERE id_offer > ? LIMIT 10) AS subquery ORDER BY id_offer DESC";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, begin);
-			preparedStatement.setInt(2, end);
+			preparedStatement.setInt(1, last);
 
-			ResultSet results = preparedStatement.executeQuery();
+			ResultSet results = preparedStatement.executeQuery();			
 
 			while (results.next()) {
 				int id_offer = results.getInt("id_offer");
@@ -185,8 +277,9 @@ public class OfferInterface extends Interface {
 				String title = results.getString("title");
 				String content = results.getString("content");
 				String info = results.getString("info");
+				BigDecimal salary = results.getBigDecimal("salary");
 
-				Offer offer = new Offer(id_offer, id_person, title, content, info);
+				Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
 				offers.add(offer);
 			}
 		}
@@ -196,21 +289,19 @@ public class OfferInterface extends Interface {
 		return offers;
 	}
 
-	public ArrayList<Offer> getProfiles(int begin, int end) {
+	public ArrayList<Offer> getProfiles(int last, int type) {
 		ArrayList<Offer> offers = new ArrayList<>();
 
 		try {
 			String query;
-			if (end >= begin) {
-				query = "SELECT * FROM STUDENT_PROFILES WHERE id_stud >= ? AND id_stud <= ?";
-			}
-			else {
-				query = "SELECT * FROM STUDENT_PROFILES WHERE id_stud >= ? OR id_stud <= ?";
-			}
+			
+			if (type == 0)
+				query = "SELECT * FROM STUDENT_PROFILES WHERE id_stud <= ? ORDER BY id_stud DESC LIMIT 10";
+			else
+				query = "SELECT * FROM (SELECT * FROM STUDENT_PROFILES WHERE id_stud > ? LIMIT 10) AS subquery ORDER BY id_stud DESC";
 
-			PreparedStatement preparedStatement = model.connection.prepareStatement(query);
-			preparedStatement.setInt(1, begin);
-			preparedStatement.setInt(2, end);
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, last);
 
 			ResultSet results = preparedStatement.executeQuery();
 
@@ -255,8 +346,9 @@ public class OfferInterface extends Interface {
 				String title = results.getString("title");
 				String content = results.getString("content");
 				String info = results.getString("info");
+				BigDecimal salary = results.getBigDecimal("salary");
 
-				Offer offer = new Offer(id_offer, id_empl, title, content, info);
+				Offer offer = new Offer(id_offer, id_empl, title, content, info, salary);
 				offers.add(offer);
 			}
 		}
@@ -282,7 +374,7 @@ public class OfferInterface extends Interface {
 		}
 	}
 
-	int getLastOfferId() {
+	public int getLastOfferId() {
 		try {
 			String query = "SELECT MAX(id_offer) AS last_offer FROM offers";
 			ResultSet results = statement.executeQuery(query);
@@ -297,14 +389,14 @@ public class OfferInterface extends Interface {
 			return -1;
 		}
 	}
-
-	public int getOfferCount() {
+	
+	public int getLastProfileId() {
 		try {
-			String query = "SELECT COUNT(*) AS count FROM OFFERS";
+			String query = "SELECT MAX(id_stud) AS last_offer FROM STUDENT_PROFILES";
 			ResultSet results = statement.executeQuery(query);
 
 			if (results.next()) {
-				return results.getInt("count");
+				return results.getInt("last_offer");
 			}
 			return 0;
 		}
@@ -312,35 +404,6 @@ public class OfferInterface extends Interface {
 			System.out.println(e);
 			return -1;
 		}
-	}
-
-	public ArrayList<Offer> getSearchedOffers(String offerTitle) {
-		ArrayList<Offer> searchedoffers = new ArrayList<>();
-
-		try {
-			String query = "SELECT * FROM OFFERS WHERE title = ?";
-
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, offerTitle);
-
-			ResultSet results = preparedStatement.executeQuery();
-
-			while (results.next()) {
-				int id_offer = results.getInt("id_offer");
-				int id_empl = results.getInt("id_empl");
-				String title = results.getString("title");
-				String content = results.getString("content");
-				String info = results.getString("info");
-
-				Offer offer = new Offer(id_offer, id_empl, title, content, info);
-				searchedoffers.add(offer);
-			}
-		}
-		catch (Exception exp) {
-			System.out.println(exp);
-		}
-
-		return searchedoffers;
 	}
 
 	public boolean addOffer(String id_empl, String title, String content, String info, String salary) {

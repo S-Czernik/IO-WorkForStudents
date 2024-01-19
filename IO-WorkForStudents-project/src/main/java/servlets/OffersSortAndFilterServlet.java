@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,6 +15,7 @@ import model.offers.Offer;
 public class OffersSortAndFilterServlet extends HttpServlet {
 
 	Model model;
+	int first, last, number;
 
 	public OffersSortAndFilterServlet() {
 		model = Model.getModel();
@@ -27,23 +27,21 @@ public class OffersSortAndFilterServlet extends HttpServlet {
 		response.setContentType("text/plaintext;charset=UTF-8");
 
 		try (PrintWriter out = response.getWriter()) {
-			int arg1 = Integer.parseInt(request.getParameter("arg1"));
-			int arg2 = Integer.parseInt(request.getParameter("arg2"));
-			int arg3 = Integer.parseInt(request.getParameter("arg3"));
+			int min = Integer.parseInt(request.getParameter("arg1"));
+			int max = Integer.parseInt(request.getParameter("arg2"));
+			int sort = Integer.parseInt(request.getParameter("arg3"));
+			String search = request.getParameter("arg4");
+			String arg = request.getParameter("arg5");
 			ArrayList<Offer> offers = new ArrayList<>();
 
-			String arg4 = "";
-			Cookie[] cookies = request.getCookies();
-			if (cookies != null) {
-				for (Cookie cookie : cookies) {
-					if (cookie.getName().equals("searchedO")) {
-						arg4 = cookie.getValue();
-						break;
-					}
-				}
+			if (arg.equals("1")) {
+				offers = model.offerInterface.getSortedAndFilteredOffers(min, max, sort, search, last, number, 1);
+			} else if (arg.equals("-1")) {
+				offers = model.offerInterface.getSortedAndFilteredOffers(min, max, sort, search, first, 0, -1);
+			} else {
+				offers = model.offerInterface.getSortedAndFilteredOffers(min, max, sort, search, 0, 0, 0);
 			}
-
-			offers = model.offerInterface.getSortedAndFilteredOffers(arg1, arg2, arg3, arg4);
+			number = offers.size();
 
 			StringBuilder jsonOffers = new StringBuilder("[");
 			if (!offers.isEmpty()) {
@@ -55,14 +53,19 @@ public class OffersSortAndFilterServlet extends HttpServlet {
 							.append("\"id_empl\": \"").append(offer.getIdPerson()).append("\",")
 							.append("\"title\": \"").append(offer.getTitle()).append("\",")
 							.append("\"content\": \"").append(offer.getContent()).append("\",")
-							.append("\"info\": \"").append(offer.getInfo()).append("\"")
+							.append("\"info\": \"").append(offer.getInfo()).append("\",")
+							.append("\"salary\": \"").append(offer.getSalary()).append("\"")
 							.append("}");
 					if (i < offers.size() - 1) {
 						jsonOffers.append(",");
+					} else if (i == offers.size() - 1) {
+						last = offer.getIdOffer();
+					}
+					if (i == 0) {
+						first = offer.getIdOffer();
 					}
 				}
-			}
-			else {
+			} else {
 				jsonOffers.append("{")
 						.append("\"title\": \"").append("Offer not found!").append("\"")
 						.append("}");
@@ -70,8 +73,7 @@ public class OffersSortAndFilterServlet extends HttpServlet {
 			jsonOffers.append("]");
 
 			out.println(jsonOffers.toString());
-		}
-		catch (Exception exp) {
+		} catch (Exception exp) {
 			System.out.println(exp);
 		}
 	}

@@ -1,4 +1,4 @@
-window.onload = loadProfiles(3);
+window.onload = loadProfiles(0);
 
 function loadProfiles(pageNumber) {
     window.scrollTo(0, 0);

@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Work4Students</title>
-        <script type="text/javascript" src="js/indexEmployer.js"></script>
+        <script type="text/javascript" src="js/indexEmployerjs.js"></script>
         <link rel="stylesheet" href="css/index.css" type="text/css"/>
         <link rel="stylesheet" href="css/topBar.css" type="text/css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,7 +21,7 @@
 		
         <div class="side-panel">
                 <input type="text" placeholder="Szukaj ofert" name="offerTitle"  id="sideBarSearch" class = "sidePanelSearch">
-                <input type="button" value ="Szukaj"  id="sideBarNameSearch" class = "sidePanelButton" onclick="searchForProfiles('sideBarSearch')">
+                <input type="button" value ="Szukaj"  id="sideBarNameSearch" class = "sidePanelButton" onclick="searchForProfiles('sideBarSearch', 0)">
             <form action="profile.html">
                 <div class = "sortLabelFrame">
                     <h1 class = "sideMainHeader">Sort</h1>
@@ -60,8 +60,8 @@
             <div class = "containersContainer" id = "containersContainerID"></div>
             <div class ="footer">
                 <h1>
-                    <button class ="footerButton" onclick="loadProfiles(-1)">Previous</button>
-                    <button class ="footerButton" onclick="loadProfiles(1)">Next</button>
+                    <button class ="footerButton" onclick="nextPage(-1, 'sideBarSearch')">Previous</button>
+                    <button class ="footerButton" onclick="nextPage(1, 'sideBarSearch')">Next</button>
                 </h1>
             </div>
         </div>

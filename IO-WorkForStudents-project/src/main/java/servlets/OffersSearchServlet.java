@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,6 +15,7 @@ import model.offers.Offer;
 public class OffersSearchServlet extends HttpServlet {
 
 	Model model;
+	int first, last;
 
 	public OffersSearchServlet() {
 		model = Model.getModel();
@@ -28,9 +28,17 @@ public class OffersSearchServlet extends HttpServlet {
 
 		try (PrintWriter out = response.getWriter()) {
 			String arg1 = request.getParameter("arg1");
+			String arg2 = request.getParameter("arg2");
 			ArrayList<Offer> offers = new ArrayList<>();
-
-			offers = model.offerInterface.getSearchedOffers(arg1);
+			
+			if (arg2.equals("1")) {
+				offers = model.offerInterface.getSearchedOffers(arg1, last, 0);
+			} else if (arg2.equals("-1")) {
+				offers = model.offerInterface.getSearchedOffers(arg1, first, 1);
+			} else {
+				first = model.offerInterface.getLastOfferId();
+				offers = model.offerInterface.getSearchedOffers(arg1, first, 0);
+			}
 
 			StringBuilder jsonOffers = new StringBuilder("[");
 			if (!offers.isEmpty()) {
@@ -42,19 +50,45 @@ public class OffersSearchServlet extends HttpServlet {
 							.append("\"id_person\": \"").append(offer.getIdPerson()).append("\",")
 							.append("\"title\": \"").append(offer.getTitle()).append("\",")
 							.append("\"content\": \"").append(offer.getContent()).append("\",")
-							.append("\"info\": \"").append(offer.getInfo()).append("\"")
+							.append("\"info\": \"").append(offer.getInfo()).append("\",")
+							.append("\"salary\": \"").append(offer.getSalary()).append("\"")
 							.append("}");
 					if (i < offers.size() - 1) {
 						jsonOffers.append(",");
+					} else if (i == offers.size() - 1) {
+						last = offer.getIdOffer() - 1;
+					}
+					if (i == 0) {
+						first = offer.getIdOffer();
 					}
 				}
-				Cookie searchCookie = new Cookie("searchedO", String.valueOf(arg1));
-				response.addCookie(searchCookie);
-			}
-			else {
-				jsonOffers.append("{")
-						.append("\"title\": \"").append("Offer not found!").append("\"")
-						.append("}");
+			} else {
+				offers = model.offerInterface.getSearchedOffers(arg1, first, 0);
+				if (!offers.isEmpty()) {
+					for (int i = 0; i < offers.size(); i++) {
+						Offer offer = offers.get(i);
+
+						jsonOffers.append("{")
+								.append("\"id_offer\": \"").append(offer.getIdOffer()).append("\",")
+								.append("\"id_person\": \"").append(offer.getIdPerson()).append("\",")
+								.append("\"title\": \"").append(offer.getTitle()).append("\",")
+								.append("\"content\": \"").append(offer.getContent()).append("\",")
+								.append("\"info\": \"").append(offer.getInfo()).append("\"")
+								.append("}");
+						if (i < offers.size() - 1) {
+							jsonOffers.append(",");
+						} else if (i == offers.size() - 1) {
+							last = offer.getIdOffer() - 1;
+						}
+						if (i == 0) {
+							first = offer.getIdOffer();
+						}
+					}
+				} else {
+					jsonOffers.append("{")
+							.append("\"title\": \"").append("Offer not found!").append("\"")
+							.append("}");
+				}
 			}
 			jsonOffers.append("]");
 
