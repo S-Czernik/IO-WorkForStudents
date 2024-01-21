@@ -2,7 +2,6 @@
 .side-menu {
     display: flex;
     box-sizing: border-box;
-    position: absolute;
     height: 120%;
     width: 400px;
     overflow-y: auto;
@@ -11,7 +10,20 @@
     padding: 0;
     background: #A14A38;
     transition: 0.3s transform ease-in-out;
+    
+    position: absolute;
+    transform: translateX(-300px);
+    opacity: 0;
+    transition: 0.5s all ease;
+    
 }
+
+.side-menu.active{
+    transform: translateY(0);
+    opacity: 1;
+}
+
+
 
 .side-menu ul {
     position: absolute;
@@ -56,6 +68,7 @@
     background: #E66A50;
     color: white;
     box-sizing: border-box;
+    font-family: 'Lato', cursive;
 }
 
 .side-menu-trigger:focus ~ .side-menu, .side-menu:hover {

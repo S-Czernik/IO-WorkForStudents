@@ -19,8 +19,16 @@
     background-color: white;
     border-radius: 20px;
     padding: 3%;
+    position: relative;
+    transform: translateY(30px);
+    opacity: 0;
+    transition: 0.5s all ease;
     
+}
 
+.container.active{
+    transform: translateY(0);
+    opacity: 1;
 }
 /*
 .container:nth-child(even) {
@@ -167,6 +175,7 @@ h2{
     color: #fff;
     background-color: #007bff;
     transition: background-color 0.3s ease;
+    font-family: 'Lato', cursive;
 }
     
 .side-panel {
@@ -221,6 +230,7 @@ h2{
     color: #fff;
     background-color: #007bff;
     transition: background-color 0.3s ease;
+    font-family: 'Lato', cursive;
     
     
     
@@ -255,6 +265,7 @@ h2{
     margin: 2em;
     padding: 20px 30px;
     background-color: #d9745f;
+    font-family: 'Lato', cursive;
 }
 
 .footerButton:hover{
@@ -273,6 +284,18 @@ h2{
     color: #fff;
     background-color: #007bff;
     transition: background-color 0.3s ease;
+    font-family: 'Lato', cursive;
+}
+.apply{
+    padding: 8px 15px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #007bff;
+    transition: background-color 0.3s ease;
+    font-family: 'Lato', cursive;
 }
 
 .sortLabelFrame, .filterLabelFrame{

@@ -18,10 +18,11 @@ body{
     height: 30px;
     margin-top: 0px;
     top: 0px;
+    position: fixed;
+    z-index: 2;
 }
 .topBarButton{
     padding: 8px 15px;
-    font-size: 1em;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -98,6 +99,7 @@ body{
     position: relative;
     text-decoration: none;
     font-weight: 100;
+    font-family: 'Lato', cursive;
 }
 
 .buttons-topBar {
