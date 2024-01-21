@@ -2,25 +2,19 @@
 .side-menu {
     display: flex;
     box-sizing: border-box;
+    position: fixed;
     height: 120%;
-    width: 400px;
+    width: 360px;
     overflow-y: auto;
     top: 64px;
     right: -400px;
     padding: 0;
     background: #A14A38;
-    transition: 0.3s transform ease-in-out;
-    
-    position: absolute;
-    transform: translateX(-300px);
-    opacity: 0;
-    transition: 0.5s all ease;
-    
+    transition: 0.8s transform ease;
 }
-
 .side-menu.active{
-    transform: translateY(0);
-    opacity: 1;
+    transform: translateX(-400px);
+    
 }
 
 
