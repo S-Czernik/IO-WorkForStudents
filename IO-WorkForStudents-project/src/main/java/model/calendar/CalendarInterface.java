@@ -5,7 +5,7 @@ import model.Model;
 
 public class CalendarInterface extends Interface {
 
-	public String loadStudentCalendarFromDatabase(String userLogin) {
+	public String getStudentCalendarCsv(String userLogin) {
 		Kalyndarz ret = getStudentCalendar(userLogin);
 		if (ret == null) {
 			return null;
@@ -13,12 +13,27 @@ public class CalendarInterface extends Interface {
 		return ret.getCSV();
 	}
 
-	public String loadOfferCalendarFromDatabase(int offerID) {
+	public String getOfferCalendarCsv(int offerID) {
 		Kalyndarz ret = getOfferCalendar(offerID);
 		if (ret == null) {
 			return null;
 		}
 		return ret.getCSV();
+	}
+	public String getStudentCalendarHtml(String userLogin) {
+		Kalyndarz ret = getStudentCalendar(userLogin);
+		if (ret == null) {
+			return null;
+		}
+		return CalendarHTMLBuilder.get(ret);
+	}
+
+	public String getOfferCalendarHtml(int offerID) {
+		Kalyndarz ret = getOfferCalendar(offerID);
+		if (ret == null) {
+			return null;
+		}
+		return CalendarHTMLBuilder.get(ret);
 	}
 
 	public void saveStudentCalendarToDatabase(String login, String csv) {
