@@ -60,8 +60,9 @@ public class OfferInterface extends Interface {
 				String title = results.getString("title");
 				String content = results.getString("content");
 				String info = results.getString("info");
+                                String salary = results.getString("salary");
 
-				Offer offer = new Offer(id_offer, id_person, title, content, info);
+				Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
 				searchedoffers.add(offer);
 			}
 		}
@@ -185,8 +186,9 @@ public class OfferInterface extends Interface {
 				String title = results.getString("title");
 				String content = results.getString("content");
 				String info = results.getString("info");
+                                String salary = results.getString("salary");
 
-				Offer offer = new Offer(id_offer, id_person, title, content, info);
+				Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
 				offers.add(offer);
 			}
 		}
@@ -195,6 +197,30 @@ public class OfferInterface extends Interface {
 		}
 		return offers;
 	}
+        
+        public Offer getOffer(String id) {
+            Offer offer;
+            try {
+            String query = "SELECT * FROM OFFERS WHERE id_offer = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, id);
+            ResultSet results = preparedStatement.executeQuery();
+            while (results.next()) {
+                    int id_offer = results.getInt("id_offer");
+                    int id_person = results.getInt("id_empl");
+                    String title = results.getString("title");
+                    String content = results.getString("content");
+                    String info = results.getString("info");
+                    String salary = results.getString("salary");
+                    return offer = new Offer(id_offer, id_person, title, content, info, salary);
+            }
+            }
+            catch (Exception exp) {
+		System.out.println(exp);
+                offer = new Offer(-1, -1, "", "SQLerror", "SQLerror", "0");
+            }
+            return offer = new Offer(-2, -2, "Skipped try/catch", "Skipped try/catch", "error", "0");
+        }
 
 	public ArrayList<Offer> getProfiles(int begin, int end) {
 		ArrayList<Offer> offers = new ArrayList<>();
@@ -255,8 +281,9 @@ public class OfferInterface extends Interface {
 				String title = results.getString("title");
 				String content = results.getString("content");
 				String info = results.getString("info");
+                                String salary = results.getString("salary");
 
-				Offer offer = new Offer(id_offer, id_empl, title, content, info);
+				Offer offer = new Offer(id_offer, id_empl, title, content, info, salary);
 				offers.add(offer);
 			}
 		}
@@ -270,7 +297,7 @@ public class OfferInterface extends Interface {
 	public boolean deleteOffer(String id_offer) {
 		try {
 
-			String insertQuery = "DELETE FROM offers WHERE offer_id = ?";
+			String insertQuery = "DELETE FROM offers WHERE id_offer= ?";
 			PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
 			insertStatement.setString(1, String.valueOf(id_offer));
 			insertStatement.executeUpdate();
@@ -331,8 +358,9 @@ public class OfferInterface extends Interface {
 				String title = results.getString("title");
 				String content = results.getString("content");
 				String info = results.getString("info");
+                                String salary = results.getString("salary");
 
-				Offer offer = new Offer(id_offer, id_empl, title, content, info);
+				Offer offer = new Offer(id_offer, id_empl, title, content, info, salary);
 				searchedoffers.add(offer);
 			}
 		}
