@@ -5,13 +5,15 @@ public class Offer {
     private String title;
     private String content;
     private String info;
+    private String salary;
 
-    public Offer(int id_offer, int id_empl, String title, String content, String info) {
+    public Offer(int id_offer, int id_empl, String title, String content, String info, String salary) {
         this.id_offer = id_offer;
         this.id_person = id_empl;
         this.title = title;
         this.content = content;
         this.info = info;
+        this.salary = salary;
     }
     
     public Offer(int id_stud, String title, String content, String info) {
@@ -26,4 +28,5 @@ public class Offer {
     public String getTitle() {return this.title;}
     public String getContent() {return this.content;}
     public String getInfo() {return this.info;}
+    public String getSalary() {return this.salary;}
 }
