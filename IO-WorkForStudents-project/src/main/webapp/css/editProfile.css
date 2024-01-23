@@ -1,0 +1,255 @@
+.content {
+    width: 55%;
+    margin: 100px auto;
+    text-align: center;
+    background-color: white;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 80px;
+    padding-bottom: 200px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.form{
+    display:flex;
+    flex-direction:column;
+    align-content: center;
+    align-items: center;
+    gap:20px;
+}
+
+.input_styling{
+    width: 80%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: gray;
+}
+
+.basicInfo{
+    width: 400px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: center;
+    gap:10px;
+}
+.image-and-files{
+    display:flex;
+    flex-direction: row;
+    gap:20px;
+}
+
+.profile-pic-img {
+    height:100%;
+    width:100%;
+    border:inherit;
+    border-radius: inherit;
+}
+
+.image-container {
+    width: 180px;
+    height: 180px;
+    text-align: center;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: gray;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fileEditor{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+}
+
+.uploaded-files-containter{
+    width: 150px;
+    height: 240px;
+    overflow: hidden;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: gray;
+    display:flex;
+    padding:10px;
+    flex-direction: column;
+    align-items: center;
+    gap:5px;
+}
+
+.uploaded-files-list {
+    padding: 10px;
+    overflow-y: scroll;
+    height: auto;
+    width: 100%;
+}
+
+.uploaded-file {
+    background-color: #f2f2f2;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 5px;
+    position: relative;
+    display:flex;
+}
+
+.delete-button {
+    cursor: pointer;
+    color: red;
+    margin-right: 10px;
+    display:flex;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+}
+
+.description-container {
+    width: 90%;
+    color: gray;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.description-input {
+    width: 100%;
+    height: 200px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: gray;
+    box-sizing: border-box;
+    resize:none;
+}
+
+.editButton {
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+
+    label {
+        background-color: #E66A50;
+        width: 100%;
+        color: white;
+        border: #E66A50 1px solid;
+        border-radius: 5px;
+        font-size: 20px;
+        padding: 10px 15px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: white;
+            color: #E66A50;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+    }
+}
+
+.saveButton {
+    width:100px;
+    display:flex;
+    justify-content: center;
+    margin: 10px;
+    cursor: pointer;
+    a {
+        background-color: #E66A50;
+        width:100%;
+        color: white;
+        border: #E66A50 1px solid;
+        border-radius: 5px;
+        font-size: 20px;
+        padding: 10px 15px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+
+        &:hover {
+            width:100%;
+            border: #E66A50 1px solid;
+            border-radius: 5px;
+            background-color: white;
+            color: #E66A50;
+        }
+    }
+}
+.side-menu-trigger {
+
+}
+
+.side-menu {
+    display: flex;
+    box-sizing: border-box;
+    position: absolute;
+    height: 120%;
+    width: 400px;
+    overflow-y: auto;
+    top: 64px;
+    right: -400px;
+    padding: 0;
+    background: #A14A38;
+    transition: 0.3s transform ease-in-out;
+}
+
+.side-menu ul {
+    position: absolute;
+    display: flex;
+    height: calc(100% - 20px);
+    flex-wrap: wrap;
+    margin: 0 10px;
+    padding: 0;
+    list-style-type: none;
+    align-content: flex-start
+}
+
+.side-menu ul li {
+    display: flex;
+    padding: 5px;
+    background: #A14A38;
+    flex-basis: 100%;
+    margin-top: 20px;
+    color: black;
+    border-radius: 5px;
+    overflow: hidden;
+
+}
+
+.side-menu ul li a {
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: #E66A50;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.side-menu ul li notif {
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: #E66A50;
+    color: white;
+    box-sizing: border-box;
+}
+
+.side-menu-trigger:focus ~ .side-menu, .side-menu:hover {
+    transform: translateX(-400px);
+}

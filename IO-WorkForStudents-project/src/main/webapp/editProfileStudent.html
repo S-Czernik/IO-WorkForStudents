@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Profile</title>
+        <script type="text/javascript" src="js/notificationJS.js"></script>
+        <script type="text/javascript" src="js/editProfileStudent.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/editProfile.css">
+        <link rel="stylesheet" type="text/css" href="css/topBar.css">
+    </head>
+    <body>     
+
+        <div class="top-bar" id="startPage">
+            <a class="logo" href = "mainPage.html">Work 4 Students</a>
+            <div class="buttons-topBar">
+                <button class="side-menu-trigger">Notifications</button>
+
+                <aside class="side-menu">
+                    <ul id="notificationList">
+                        <li>
+                        <notif>
+                            Notifications:  
+                        </notif>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+
+        <div class="content">
+            <h1>Edit Your Profile</h1>
+            <div class="form">
+                <div class="basicInfo">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" class ="input_styling"><br>
+                    <label for="surname">Surname:</label>
+                    <input type="text" id="surname" class ="input_styling"><br>
+                    <label for="city">City:</label>
+                    <input type="text" id="city" class ="input_styling"><br>
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" class ="input_styling"><br>
+                </div>
+                <div class="image-and-files">
+                    <div class="fileEditor">
+                        <div class="image-container">
+                            <img id="picture" class='profile-pic-img'>
+                        </div>
+                        <div class="editButton">
+                            <input type="file" id="fileInput" class="editButton" style="display: none;" accept=".jpg, .jpeg, .png">
+                            <label for="fileInput">Edit Picture</label>
+                        </div>
+                    </div>
+                    <div class='uploaded-files-containter'>
+                        <div class="saveButton">
+                            <a onclick='addFile()'>Add</a>
+                        </div>
+                        <div class="uploaded-files-list">
+                            <div class='uploaded-file'>
+                                <span class='delete-button' onclick='deleteFile(this)'>x</span>
+                                <span>cv.pdf</span>
+                            </div>
+                            <div class='uploaded-file'>
+                                <span class='delete-button' onclick='deleteFile(this)'>x</span>
+                                <span>references.pdf</span>
+                            </div>
+                            <div class='uploaded-file'>
+                                <span class='delete-button' onclick='deleteFile(this)'>x</span>
+                                <span>diploma.pdf</span>
+                            </div>
+                            <div class='uploaded-file'>
+                                <span class='delete-button' onclick='deleteFile(this)'>x</span>
+                                <span>diploma2.pdf</span>
+                            </div>
+                            <div class='uploaded-file'>
+                                <span class='delete-button' onclick='deleteFile(this)'>x</span>
+                                <span>diploma2.pdf</span>
+                            </div>      
+                        </div>
+                    </div>
+                </div>
+                <label for="description">Description:</label>
+                <textarea id="description" class="description-input"></textarea>
+                <div class="saveButton" id="saveButton">
+                    <a onclick= "saveProfileChanges()" >Save</a>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>

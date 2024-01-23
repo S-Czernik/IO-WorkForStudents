@@ -1,6 +1,8 @@
 
 
 .uploaded-files{
+    margin-left:10px;
+    margin-right:15px;
     width:200px;
     display:flex;
     flex-direction: column;

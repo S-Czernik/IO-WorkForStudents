@@ -37,7 +37,7 @@ h3 {
 }
 
 .content {
-    width: 50%;
+    width: 55%;
     margin: 100px auto;
     text-align: center;
     background-color: white;
@@ -65,7 +65,7 @@ h3 {
     align-items: center;
     flex-direction: row;
     justify-content: center;
-    gap:40px;
+    gap:30px;
     margin: 30px;
     flex-wrap: wrap;
 }
