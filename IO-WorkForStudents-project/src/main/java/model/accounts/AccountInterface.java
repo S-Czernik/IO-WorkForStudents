@@ -150,11 +150,11 @@ public class AccountInterface extends Interface {
         }
     }
 
-    public String getLogin(String userID) {
+    public String getLogin(int userID) {
         try {
             String query = "SELECT login FROM users WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, userID);
+            preparedStatement.setInt(1, userID);
             ResultSet results = preparedStatement.executeQuery();
             if (results.next()) {
                 String login = results.getString("login");
@@ -166,11 +166,11 @@ public class AccountInterface extends Interface {
         return "No login assigned or no user";
     }
 
-    public String getUserType(String userID) {
+    public String getUserType(int userID) {
         try {
             String query = "SELECT type FROM users WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, userID);
+            preparedStatement.setInt(1, userID);
             ResultSet results = preparedStatement.executeQuery();
 
             if (results.next()) {
@@ -183,12 +183,12 @@ public class AccountInterface extends Interface {
         return "No type assigned or no user";
     }
 
-    public String getName(String userID) {
+    public String getName(int userID) {
 
         try {
             String query = "SELECT name FROM students_profile_details WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, userID);
+            preparedStatement.setInt(1, userID);
             ResultSet results = preparedStatement.executeQuery();
 
             if (results.next()) {
@@ -201,12 +201,12 @@ public class AccountInterface extends Interface {
         return "No name in DB";
     }
 
-    public String getSurname(String userID) {
+    public String getSurname(int userID) {
 
         try {
             String query = "SELECT surname FROM students_profile_details WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, userID);
+            preparedStatement.setInt(1, userID);
             ResultSet results = preparedStatement.executeQuery();
 
             if (results.next()) {
@@ -219,12 +219,12 @@ public class AccountInterface extends Interface {
         return "No surname in DB";
     }
 
-    public String getEmail(String userID) {
+    public String getEmail(int userID) {
 
         try {
             String query = "SELECT email FROM users WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, userID);
+            preparedStatement.setInt(1, userID);
             ResultSet results = preparedStatement.executeQuery();
 
             if (results.next()) {
@@ -237,12 +237,12 @@ public class AccountInterface extends Interface {
         return "No email in DB";
     }
 
-    public String getTitle(String userID) {
+    public String getTitle(int userID) {
 
         try {
             String query = "SELECT title FROM students_profile_details WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, userID);
+            preparedStatement.setInt(1, userID);
             ResultSet results = preparedStatement.executeQuery();
 
             if (results.next()) {
@@ -255,12 +255,12 @@ public class AccountInterface extends Interface {
         return "No title in DB";
     }
 
-    public String getDescription(String userID) {
+    public String getDescription(int userID) {
 
         try {
             String query = "SELECT description FROM users WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, userID);
+            preparedStatement.setInt(1, userID);
             ResultSet results = preparedStatement.executeQuery();
 
             if (results.next()) {
@@ -273,12 +273,12 @@ public class AccountInterface extends Interface {
         return "No description in DB";
     }
 
-    public byte[] getProfilePicture(String userID) {
+    public byte[] getProfilePicture(int userID) {
         byte[] blobData = null;
         try {
             String query = "SELECT picture FROM users WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, userID);
+            preparedStatement.setInt(1, userID);
             ResultSet results = preparedStatement.executeQuery();
 
             if (results.next()) {
@@ -291,11 +291,11 @@ public class AccountInterface extends Interface {
         return blobData;
     }
 
-    public String getCity(String userID) {
+    public String getCity(int userID) {
         try {
             String query = "SELECT city FROM users WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, userID);
+            preparedStatement.setInt(1, userID);
             ResultSet results = preparedStatement.executeQuery();
 
             if (results.next()) {
@@ -308,12 +308,12 @@ public class AccountInterface extends Interface {
         return "No city in DB";
     }
 
-    public String getCompanyName(String userID) {
+    public String getCompanyName(int userID) {
 
         try {
             String query = "SELECT company_name FROM employers_profile_details WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, userID);
+            preparedStatement.setInt(1, userID);
             ResultSet results = preparedStatement.executeQuery();
 
             if (results.next()) {
@@ -326,12 +326,12 @@ public class AccountInterface extends Interface {
         return "No company_name in DB";
     }
 
-    public String getNIP(String userID) {
+    public String getNIP(int userID) {
 
         try {
             String query = "SELECT NIP FROM employers_profile_details WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, userID);
+            preparedStatement.setInt(1, userID);
             ResultSet results = preparedStatement.executeQuery();
 
             if (results.next()) {
@@ -344,36 +344,36 @@ public class AccountInterface extends Interface {
         return "No NIP in DB";
     }
 
-    public void saveName(String userID, String name) {
+    public void saveName(int userID, String name) {
         try {
             String update = "UPDATE students_profile_details SET name = ? WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(update);
             preparedStatement.setString(1, name);
-            preparedStatement.setString(2, userID);
+            preparedStatement.setInt(2, userID);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
 
-    public void saveSurname(String userID, String surname) {
+    public void saveSurname(int userID, String surname) {
         try {
             String update = "UPDATE students_profile_details SET surname = ? WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(update);
             preparedStatement.setString(1, surname);
-            preparedStatement.setString(2, userID);
+            preparedStatement.setInt(2, userID);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
          
-    public void saveCity(String userID, String city) {
+    public void saveCity(int userID, String city) {
         try {
             String update = "UPDATE users SET city = ? WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(update);
             preparedStatement.setString(1, city);
-            preparedStatement.setString(2, userID);
+            preparedStatement.setInt(2, userID);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -384,12 +384,12 @@ public class AccountInterface extends Interface {
 
     
 
-    public void saveDescription(String userID, String description) {
+    public void saveDescription(int userID, String description) {
         try {
             String update = "UPDATE users SET description = ? WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(update);
             preparedStatement.setString(1, description);
-            preparedStatement.setString(2, userID);
+            preparedStatement.setInt(2, userID);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -399,26 +399,26 @@ public class AccountInterface extends Interface {
 
     
 
-    public void saveTitle(String userID, String title) {
+    public void saveTitle(int userID, String title) {
         try {
             String update = "UPDATE students_profile_details SET title = ? WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(update);
             preparedStatement.setString(1, title);
-            preparedStatement.setString(2, userID);
+            preparedStatement.setInt(2, userID);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
     
-        public void savePicture(String userID, String picture) {
+        public void savePicture(int userID, String picture) {
         try {
             byte[] decodedPicture = Base64.getDecoder().decode(picture);
             Blob pictureBlob = new SerialBlob(decodedPicture);
             String update = "UPDATE users SET picture = ? WHERE id_user = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(update);
             preparedStatement.setBlob(1, pictureBlob);
-            preparedStatement.setString(2, userID);
+            preparedStatement.setInt(2, userID);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);

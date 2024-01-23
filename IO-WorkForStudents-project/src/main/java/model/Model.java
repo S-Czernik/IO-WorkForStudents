@@ -1,17 +1,9 @@
 package model;
 
-import model.notifications.Notification;
-import model.offers.Offer;
-import model.calendar.Kalyndarz;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import model.*;
 import model.accounts.AccountInterface;
 import model.calendar.CalendarInterface;
 import model.notifications.NotificationInterface;

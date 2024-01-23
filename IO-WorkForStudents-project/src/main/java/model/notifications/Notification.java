@@ -2,31 +2,31 @@ package model.notifications;
 
 public class Notification {
 
-	private String ID;
+	private int ID;
 	private String messageType;
-        private String IDUser;
+	private int IDUser;
 	private String userLogin;
-        private String IDOffer;
+	private int IDOffer;
 	private String offerTitle;
 
-	public Notification(String ID, String messageType, String userLogin, String offerTitle, String IDUser, String IDOffer) {
+	public Notification(int ID, String messageType, String userLogin, String offerTitle, int IDUser, int IDOffer) {
 		this.ID = ID;
 		this.messageType = messageType;
 		this.userLogin = userLogin;
 		this.offerTitle = offerTitle;
-                this.IDUser= IDUser;
-                this.IDOffer = IDOffer;
+		this.IDUser = IDUser;
+		this.IDOffer = IDOffer;
 	}
-        
-        public Notification(String ID,  String IDUser, String IDOffer, String messageType) {
+
+	public Notification(int ID, int IDUser, int IDOffer, String messageType) {
 		this.ID = ID;
 		this.messageType = messageType;
-                this.IDUser= IDUser;
-                this.IDOffer = IDOffer;
+		this.IDUser = IDUser;
+		this.IDOffer = IDOffer;
 	}
 
 	// Getters and setters if needed
-	public String getID() {
+	public int getID() {
 		return this.ID;
 	}
 
@@ -41,13 +41,13 @@ public class Notification {
 	public String getOfferTitle() {
 		return this.offerTitle;
 	}
-        
-	public String getOfferID() {
+
+	public int getOfferID() {
 		return this.IDOffer;
 	}
-        
-	public String getUserID() {
+
+	public int getUserID() {
 		return this.IDUser;
-	}        
+	}
 
 }

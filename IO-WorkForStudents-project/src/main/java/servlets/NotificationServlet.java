@@ -24,7 +24,8 @@ public class NotificationServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("application/json;charset=UTF-8");
-		String userID = request.getParameter("arg1");
+		String idString = request.getParameter("arg1");
+		int userID = (idString != null ? Integer.parseInt(idString) : -1);
 		try (PrintWriter out = response.getWriter()) {
 			ArrayList<Notification> notifications = model.notificationInterface.getNotifications(userID);
 

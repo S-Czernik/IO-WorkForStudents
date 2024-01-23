@@ -60,8 +60,8 @@ public class CalendarInterface extends Interface {
 		return 0;
 	}
 
-	public String getStudentCalendarCsv(String userLogin) {
-		Kalyndarz ret = getStudentCalendar(userLogin);
+	public String getStudentCalendarCsv(int userID) {
+		Kalyndarz ret = getStudentCalendar(userID);
 		if (ret == null) {
 			return null;
 		}
@@ -76,8 +76,8 @@ public class CalendarInterface extends Interface {
 		return ret.getCSV();
 	}
 
-	public String getStudentCalendarHtml(String userLogin) {
-		Kalyndarz ret = getStudentCalendar(userLogin);
+	public String getStudentCalendarHtml(int userID) {
+		Kalyndarz ret = getStudentCalendar(userID);
 		if (ret == null) {
 			return null;
 		}
@@ -136,7 +136,7 @@ public class CalendarInterface extends Interface {
 		}
 	}
 
-	public float compareCalendars(String userID, int offerID) {
+	public float compareCalendars(int userID, int offerID) {
 		Kalyndarz stud = getStudentCalendar(userID);
 		Kalyndarz offer = getOfferCalendar(offerID);
 
@@ -146,7 +146,7 @@ public class CalendarInterface extends Interface {
 		return 0.0f;
 	}
 
-	Kalyndarz getStudentCalendar(String userID) {
+	Kalyndarz getStudentCalendar(int userID) {
 		try {
 			Kalyndarz k = new Kalyndarz();
 

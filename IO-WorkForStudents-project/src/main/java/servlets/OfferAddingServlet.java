@@ -22,7 +22,7 @@ public class OfferAddingServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/plaintext;charset=UTF-8");
-                
+
 		String logged_user = request.getParameter("arg1");
 		String title = request.getParameter("arg2");
 		String content = request.getParameter("arg3");

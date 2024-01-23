@@ -465,7 +465,7 @@ public class OfferInterface extends Interface {
 	public boolean deleteOffer(String id_offer) {
 		try {
 
-			String insertQuery = "DELETE FROM offers WHERE offer_id = ?";
+			String insertQuery = "DELETE FROM offers WHERE id_offer = ?";
 			PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
 			insertStatement.setString(1, String.valueOf(id_offer));
 			insertStatement.executeUpdate();
