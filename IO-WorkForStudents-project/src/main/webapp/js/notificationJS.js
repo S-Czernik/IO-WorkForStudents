@@ -4,7 +4,13 @@ var actionn;
 
 document.addEventListener("DOMContentLoaded", function() {
     fetchNotifications();
+    
+    document.querySelector('.side-menu-trigger').addEventListener('click', function() {
+        document.querySelector('.side-menu').classList.toggle('active');
 });
+
+});
+
 
 function fetchNotifications(arg1) {
     var xhttp = new XMLHttpRequest();

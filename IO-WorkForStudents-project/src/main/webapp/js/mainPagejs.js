@@ -1,6 +1,7 @@
 window.addEventListener('DOMContentLoaded', function() {
 	window.scrollTo(0, 0);
     loadOffers(0);
+    reveal();
 });
 
 let searched = false;
@@ -115,5 +116,24 @@ function displayOffers(offers) {
         offerDiv.appendChild(showMoreElement);
 
         containersContainer.appendChild(offerDiv);
+        reveal();
     }
 }
+
+function reveal() {
+  var reveals = document.querySelectorAll(".container");
+
+  for (var i = 0; i < reveals.length; i++) {
+    var windowHeight = window.innerHeight;
+    var elementTop = reveals[i].getBoundingClientRect().top;
+    var elementVisible = 50;
+
+    if (elementTop < windowHeight - elementVisible) {
+      reveals[i].classList.add("active");
+    } else {
+      reveals[i].classList.remove("active");
+    }
+  }
+}
+
+window.addEventListener("scroll", reveal);

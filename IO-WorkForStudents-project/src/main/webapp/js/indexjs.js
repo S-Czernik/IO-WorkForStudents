@@ -1,11 +1,13 @@
 window.addEventListener('DOMContentLoaded', function() {
 	window.scrollTo(0, 0);
     loadOffers(0);
+    reveal();
 });
 
 let searched = false;
 let filtered = false;
 function nextPage(pageNumber, sideBar, min, max) {
+    reveal();
     window.scrollTo(0, 0);
 
 	if (!searched && !filtered)
@@ -14,9 +16,12 @@ function nextPage(pageNumber, sideBar, min, max) {
 		filterAndSortOffers(min, max, sideBar, pageNumber);
     else if (searched)
 		searchForOffers(sideBar, pageNumber);
+    reveal();
+            
 }
 
 function loadOffers(pageNumber) {
+    reveal();
     window.scrollTo(0, 0);
     var xhttp = new XMLHttpRequest();
 
@@ -107,13 +112,38 @@ function displayOffers(offers) {
         showMoreElement.value = "show more";
         showMoreElement.className = "showMore";
         //  var showMoreElement = document.createElement("button");
+        
+        var applyElement = document.createElement("button");
+        applyElement.innerText = "apply";
+        applyElement.value = "apply";
+        applyElement.className = "apply";
+        //  var showMoreElement = document.createElement("button");
 
 
 
         offerDiv.appendChild(titleElement);
         offerDiv.appendChild(contentElement);
-        offerDiv.appendChild(showMoreElement);
+      //  offerDiv.appendChild(showMoreElement);
+        offerDiv.appendChild(applyElement);
 
         containersContainer.appendChild(offerDiv);
+        reveal();
     }
 }
+function reveal() {
+  var reveals = document.querySelectorAll(".container");
+
+  for (var i = 0; i < reveals.length; i++) {
+    var windowHeight = window.innerHeight;
+    var elementTop = reveals[i].getBoundingClientRect().top;
+    var elementVisible = 50;
+
+    if (elementTop < windowHeight - elementVisible) {
+      reveals[i].classList.add("active");
+    } else {
+      reveals[i].classList.remove("active");
+    }
+  }
+}
+
+window.addEventListener("scroll", reveal);

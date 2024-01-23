@@ -24,7 +24,6 @@ function fetchProfileInfo() {
 }
 
 function displayProfileInfo(profileInfo) {
-    console.log(profileInfo);
     document.getElementById('login').innerText ="Your profile, " + profileInfo[0].login;
     document.getElementById('name').innerText = profileInfo[0].name;
      document.getElementById('surname').innerText = profileInfo[0].surname;

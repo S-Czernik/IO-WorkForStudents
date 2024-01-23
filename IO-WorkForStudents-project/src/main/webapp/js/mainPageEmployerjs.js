@@ -102,17 +102,24 @@ function displayOffers(offers) {
         contentElement.innerText = offer.content;
         contentElement.className = "offerContent";
 
-        var showMoreElement = document.createElement("button");
-        showMoreElement.innerText = "show more";
-        showMoreElement.value = "show more";
-        showMoreElement.className = "showMore";
+   //     var showMoreElement = document.createElement("button");
+    //    showMoreElement.innerText = "show more";
+    //    showMoreElement.value = "show more";
+     //   showMoreElement.className = "showMore";
         //  var showMoreElement = document.createElement("button");
-
+        
+        var applyElement = document.createElement("button");
+        showMoreElement.innerText = "apply";
+        showMoreElement.value = "apply";
+        showMoreElement.className = "apply";
+        //  var showMoreElement = document.createElement("button");
+        
 
 
         offerDiv.appendChild(titleElement);
         offerDiv.appendChild(contentElement);
-        offerDiv.appendChild(showMoreElement);
+      //  offerDiv.appendChild(showMoreElement);
+        offerDiv.appendChild(applyElement);
 
         containersContainer.appendChild(offerDiv);
     }
