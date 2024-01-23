@@ -1,3 +1,6 @@
+.side-menu-trigger {
+
+}
 
 .side-menu {
     display: flex;
@@ -26,6 +29,7 @@
 
 .side-menu ul li {
     display: flex;
+    flex-direction: column; /* Updated to column layout */
     padding: 5px;
     background: #A14A38;
     flex-basis: 100%;
@@ -33,7 +37,6 @@
     color: black;
     border-radius: 5px;
     overflow: hidden;
-
 }
 
 .side-menu ul li a {
@@ -58,6 +61,40 @@
     box-sizing: border-box;
 }
 
+/* Add styles for the button */
+.side-menu ul li button {
+    padding: 10px;
+    background: #E66A50;
+    align-items: center;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.side-menu ul li .text-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.side-menu ul li .button-container {
+    display: flex;
+    width: 100%;
+    margin-top: 10px; /* Add margin to separate button from text */
+}
+
 .side-menu-trigger:focus ~ .side-menu, .side-menu:hover {
     transform: translateX(-400px);
+}
+
+.confirmation-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000;
 }
