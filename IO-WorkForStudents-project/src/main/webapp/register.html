@@ -17,30 +17,32 @@
             </div>
         </div>
         <br>
-        <div class="container">
-            <h2>Register</h2>
-            <form id="registerPage" onsubmit="return validateRegister('loginInput', 'emailInput', 'passwordInput', 'passwordRepeatInput', 'result')" method="POST">
-                <p id="result" style="color: red; text-align: center;"></p><br>
-                <div class ="radioDiv">
-                    <input type="radio" id="student" name="userType" value="student">
-                    <label for="student">Student</label><br>
-                    <input type="radio" id="employer" name="userType" value="employer">
-                    <label for="employer">Employer</label><br><br>
-                </div>
+        <div class = "mainDiv">
+            <div class="container">
+                <h2>Register</h2>
+                <form id="registerPage" onsubmit="return validateRegister('loginInput', 'emailInput', 'passwordInput', 'passwordRepeatInput', 'result')" method="POST">
+                    <p id="result" style="color: red; text-align: center;"></p><br>
+                    <div class ="radioDiv">
+                        <input type="radio" id="student" name="userType" value="student">
+                        <label for="student">Student</label><br>
+                        <input type="radio" id="employer" name="userType" value="employer">
+                        <label for="employer">Employer</label><br><br>
+                    </div>
 
-                <div class ="inputsDiv">
-                    <label for="login">Login:</label>
-                    <input type="text" id="loginInput" class ="input_styling"><br>
-                    <label for="email">Email:</label>
-                    <input type="text" id="emailInput" class ="input_styling"><br>
-                    <label for="password">Password:</label>
-                    <input type="password" id="passwordInput" class ="input_styling"><br>
-                    <label for="passwordRepeat">Repeat password:</label>
-                    <input type="password" id="passwordRepeatInput" class ="input_styling"><br>
-                </div>
-                <input type="submit" value="Register" class = "button-styling">
-                <h1> <a href="login.html" class="loginLink">Already have an account? Log-in instead</a></h1>
-            </form>
+                    <div class ="inputsDiv">
+                        <label for="login">Login:</label>
+                        <input type="text" id="loginInput" class ="input_styling"><br>
+                        <label for="email">Email:</label>
+                        <input type="text" id="emailInput" class ="input_styling"><br>
+                        <label for="password">Password:</label>
+                        <input type="password" id="passwordInput" class ="input_styling"><br>
+                        <label for="passwordRepeat">Repeat password:</label>
+                        <input type="password" id="passwordRepeatInput" class ="input_styling"><br>
+                    </div>
+                    <input type="submit" value="Register" class = "button-styling">
+                    <h1> <a href="login.html" class="loginLink">Already have an account? Log-in instead</a></h1>
+                </form>
+            </div>
         </div>
     </body>
 </html>

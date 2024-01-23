@@ -1,22 +1,27 @@
 
+
+.mainDiv{
+    padding-bottom: 100px;
+    
+}
+
 .container {
     max-width: 500px;
     width: 60%;
     max-height: 600px;
-    margin-top: 100px;
-    margin-left: auto;
-    margin-right: auto;
     text-align: justify;
     background-color: white;
     padding: 80px;
     border-radius: 20px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
 
 }
 
 .loginLink{
     margin: 5px;
     font-size: 16px;
-    font-family: 'Arial', cursive;
     position: relative;
     text-decoration: none;
     font-weight: 100;
@@ -35,18 +40,6 @@ h2{
     font-size: 40px;
 }
 
-.button-styling{
-    display: flex;
-    background-color: #E66A50;
-    color: white;
-    font-size: 20px;
-    border-radius: 5px;
-    height: 40px;
-    width: 70%;
-    margin: auto;
-    border: #E66A50 1px solid;
-    transition: background-color 0.3s;
-}
 
 .button-styling:hover{
     background-color: white;
@@ -90,4 +83,17 @@ h2{
     border: 1px solid #ccc;
     border-radius: 5px;
     color: gray;
+}
+.button-styling{
+    display: flex;
+    background-color: #E66A50;
+    color: white;
+    font-size: 20px;
+    border-radius: 5px;
+    height: 40px;
+    width: 50%;
+    margin: auto;
+    border: #E66A50 1px solid;
+    transition: background-color 0.3s;
+    flex-basis: 70%;
 }
