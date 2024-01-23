@@ -73,14 +73,14 @@ public class CalendarServlet extends HttpServlet {
 
 		String requestType = request.getHeader("rqtype");
 
-		String login = request.getHeader("login");
+		int studID = Integer.parseInt(request.getHeader("studID"));
 		int offerID = Integer.parseInt(request.getHeader("offerid"));
 		String csv = request.getHeader("csv");
 
 		PrintWriter out = response.getWriter();
 		switch (requestType) {
 			case "setuser" -> {
-				model.calendarInterface.saveStudentCalendarToDatabase(login, csv);
+				model.calendarInterface.saveStudentCalendarToDatabase(studID, csv);
 			}
 			case "setoffer" -> {
 				model.calendarInterface.saveOfferCalendarToDatabase(offerID, csv);

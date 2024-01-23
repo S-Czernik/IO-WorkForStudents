@@ -1,23 +1,63 @@
 package model.calendar;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.HashMap;
-import java.util.Map;
 import model.Interface;
 
 public class CalendarInterface extends Interface {
 
-	Map<String, Integer> daysDictionary;
+	String getDayFromIdx(int v) {
+		switch (v) {
+			case 0 -> {
+				return "mon";
+			}
+			case 1 -> {
+				return "tue";
+			}
+			case 2 -> {
+				return "wed";
+			}
+			case 3 -> {
+				return "thu";
+			}
+			case 4 -> {
+				return "fri";
+			}
+			case 5 -> {
+				return "sat";
+			}
+			case 6 -> {
+				return "sun";
+			}
+		}
+		return "";
+	}
 
-	public CalendarInterface() {
-		daysDictionary = new HashMap<>();
-		daysDictionary.put("mon", 0);
-		daysDictionary.put("tue", 1);
-		daysDictionary.put("wen", 2);
-		daysDictionary.put("thu", 3);
-		daysDictionary.put("fri", 4);
-		daysDictionary.put("sat", 5);
-		daysDictionary.put("sun", 6);
+	int getIdxFromDay(String v) {
+		switch (v) {
+			case "mon" -> {
+				return 0;
+			}
+			case "tue" -> {
+				return 1;
+			}
+			case "wed" -> {
+				return 2;
+			}
+			case "thu" -> {
+				return 3;
+			}
+			case "fri" -> {
+				return 4;
+			}
+			case "sat" -> {
+				return 5;
+			}
+			case "sun" -> {
+				return 6;
+			}
+		}
+		return 0;
 	}
 
 	public String getStudentCalendarCsv(String userLogin) {
@@ -52,21 +92,47 @@ public class CalendarInterface extends Interface {
 		return CalendarHTMLBuilder.get(ret);
 	}
 
-	public void saveStudentCalendarToDatabase(String userID, String csv) {
+	public boolean saveStudentCalendarToDatabase(int userID, String csv) {
 		try {
-			String query = "SELECT * FROM hours";
+			Kalyndarz k = new Kalyndarz();
+			k.loadCSV(csv);
+
+			statement.execute("DELETE FROM student_hours WHERE id_stud = '" + userID + "'");
+			for (var i : k.intervals) {
+				PreparedStatement stmt = model.connection.prepareStatement("INSERT INTO student_hours(id_hour, id_stud, begin, end, day) VALUES (?,?,?,?)");
+				stmt.setInt(0, getLastStudHourId());
+				stmt.setInt(1, userID);
+				stmt.setInt(2, i.begin);
+				stmt.setInt(3, i.end);
+				stmt.setString(3, getDayFromIdx(i.day));
+			}
+			return true;
 		}
 		catch (Exception e) {
 			System.out.println(e);
+			return false;
 		}
 	}
 
-	public void saveOfferCalendarToDatabase(int offerID, String csv) {
+	public boolean saveOfferCalendarToDatabase(int offerID, String csv) {
 		try {
-			String query = "SELECT * FROM hours";
+			Kalyndarz k = new Kalyndarz();
+			k.loadCSV(csv);
+
+			statement.execute("DELETE FROM offer_hours WHERE id_stud = '" + offerID + "'");
+			for (var i : k.intervals) {
+				PreparedStatement stmt = model.connection.prepareStatement("INSERT INTO offer_hours(id_hour, id_offer, begin, end, day) VALUES (?,?,?,?)");
+				stmt.setInt(0, getLastStudHourId());
+				stmt.setInt(1, offerID);
+				stmt.setInt(2, i.begin);
+				stmt.setInt(3, i.end);
+				stmt.setString(3, getDayFromIdx(i.day));
+			}
+			return true;
 		}
 		catch (Exception e) {
 			System.out.println(e);
+			return false;
 		}
 	}
 
@@ -90,7 +156,7 @@ public class CalendarInterface extends Interface {
 			while (results.next()) {
 				int begin = results.getInt("begin");
 				int end = results.getInt("end");
-				int day = daysDictionary.get(results.getString("day"));
+				int day = getIdxFromDay(results.getString("day"));
 
 				k.intervals.add(new Interval(begin, end, day));
 			}
@@ -111,5 +177,37 @@ public class CalendarInterface extends Interface {
 			System.out.println(e);
 		}
 		return null;
+	}
+
+	int getLastStudHourId() {
+		try {
+			String query = "SELECT MAX(id_hour) AS max FROM student_hours";
+			ResultSet results = statement.executeQuery(query);
+
+			if (results.next()) {
+				return results.getInt("max");
+			}
+			return 0;
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			return -1;
+		}
+	}
+
+	int getLastOfferHourId() {
+		try {
+			String query = "SELECT MAX(id_hour) AS max FROM offer_hours";
+			ResultSet results = statement.executeQuery(query);
+
+			if (results.next()) {
+				return results.getInt("max");
+			}
+			return 0;
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			return -1;
+		}
 	}
 }
