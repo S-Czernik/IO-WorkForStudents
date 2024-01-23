@@ -53,7 +53,7 @@ public class Model {
 
 	public void connect() {
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ioio?useSSL=false", "root", "1234");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ioio?useSSL=false", "root", "szyman");
 			statement = connection.createStatement();
 		}
 		catch (SQLException e) {
