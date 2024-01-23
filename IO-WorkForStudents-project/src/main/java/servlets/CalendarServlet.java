@@ -36,22 +36,23 @@ public class CalendarServlet extends HttpServlet {
 			switch (requestType) {
 				case "getusercsv" -> {
 					response.setContentType("text/plaintext;charset=UTF-8");
-					out.print(model.calendarInterface.loadStudentCalendarFromDatabase(login));
+					out.print(model.calendarInterface.getStudentCalendarCsv(login));
 				}
 				case "getoffercsv" -> {
 					response.setContentType("text/plaintext;charset=UTF-8");
-					out.print(model.calendarInterface.loadOfferCalendarFromDatabase(offerID));
+					out.print(model.calendarInterface.getOfferCalendarCsv(offerID));
 				}
 				case "getuserhtml" -> {
 					response.setContentType("text/html;charset=UTF-8");
-					out.print(model.calendarInterface.loadStudentCalendarFromDatabase(login));
+					out.print(model.calendarInterface.getStudentCalendarHtml(login));
 				}
 				case "getofferhtml" -> {
 					response.setContentType("text/html;charset=UTF-8");
-					out.print(model.calendarInterface.loadOfferCalendarFromDatabase(offerID));
+					out.print(model.calendarInterface.getOfferCalendarHtml(offerID));
 				}
 				case "compare" -> {
-
+					response.setContentType("text/plaintext;charset=UTF-8");
+					out.print(model.calendarInterface.compareCalendars(login, offerID));
 				}
 			}
 		}
@@ -72,14 +73,14 @@ public class CalendarServlet extends HttpServlet {
 
 		String requestType = request.getHeader("rqtype");
 
-		String login = request.getHeader("login");
+		int studID = Integer.parseInt(request.getHeader("studID"));
 		int offerID = Integer.parseInt(request.getHeader("offerid"));
 		String csv = request.getHeader("csv");
 
 		PrintWriter out = response.getWriter();
 		switch (requestType) {
 			case "setuser" -> {
-				model.calendarInterface.saveStudentCalendarToDatabase(login, csv);
+				model.calendarInterface.saveStudentCalendarToDatabase(studID, csv);
 			}
 			case "setoffer" -> {
 				model.calendarInterface.saveOfferCalendarToDatabase(offerID, csv);
