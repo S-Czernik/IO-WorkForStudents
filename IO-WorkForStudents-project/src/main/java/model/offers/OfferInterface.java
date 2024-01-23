@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import model.Interface;
-import java.math.BigDecimal;
 
 public class OfferInterface extends Interface {
 	
@@ -31,7 +30,7 @@ public class OfferInterface extends Interface {
 				String title = results.getString("title");
 				String content = results.getString("content");
 				String info = results.getString("info");
-				BigDecimal salary = results.getBigDecimal("salary");
+				int salary = results.getInt("salary");
 
 				Offer offer = new Offer(id_offer, id_empl, title, content, info, salary);
 				searchedoffers.add(offer);
@@ -107,7 +106,7 @@ public class OfferInterface extends Interface {
 					String title = results.getString("title");
 					String content = results.getString("content");
 					String info = results.getString("info");
-					BigDecimal salary = results.getBigDecimal("salary");
+					int salary = results.getInt("salary");
 					Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
 					searchedoffers.add(offer);
 					count++;
@@ -123,7 +122,7 @@ public class OfferInterface extends Interface {
 							String title = results.getString("title");
 							String content = results.getString("content");
 							String info = results.getString("info");
-							BigDecimal salary = results.getBigDecimal("salary");
+							int salary = results.getInt("salary");
 							Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
 							searchedoffers.add(offer);
 							count++;
@@ -137,7 +136,7 @@ public class OfferInterface extends Interface {
 						String title = results.getString("title");
 						String content = results.getString("content");
 						String info = results.getString("info");
-						BigDecimal salary = results.getBigDecimal("salary");
+						int salary = results.getInt("salary");
 						Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
 						searchedoffers.add(0, offer);
 						count++;
@@ -154,7 +153,7 @@ public class OfferInterface extends Interface {
 						String title = results.getString("title");
 						String content = results.getString("content");
 						String info = results.getString("info");
-						BigDecimal salary = results.getBigDecimal("salary");
+						int salary = results.getInt("salary");
 						Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
 						searchedoffers.add(0, offer);
 						count++;
@@ -167,7 +166,7 @@ public class OfferInterface extends Interface {
 						String title = results.getString("title");
 						String content = results.getString("content");
 						String info = results.getString("info");
-						BigDecimal salary = results.getBigDecimal("salary");
+						int salary = results.getInt("salary");
 						Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
 						searchedoffers.add(offer);
 						count++;
@@ -380,7 +379,7 @@ public class OfferInterface extends Interface {
 				String title = results.getString("title");
 				String content = results.getString("content");
 				String info = results.getString("info");
-				BigDecimal salary = results.getBigDecimal("salary");
+				int salary = results.getInt("salary");
 
 				Offer offer = new Offer(id_offer, id_person, title, content, info, salary);
 				offers.add(offer);
@@ -450,7 +449,7 @@ public class OfferInterface extends Interface {
 				String title = results.getString("title");
 				String content = results.getString("content");
 				String info = results.getString("info");
-				BigDecimal salary = results.getBigDecimal("salary");
+				int salary = results.getInt("salary");
 
 				Offer offer = new Offer(id_offer, id_empl, title, content, info, salary);
 				offers.add(offer);
@@ -565,4 +564,26 @@ public class OfferInterface extends Interface {
 		}
 	}
 
+	public Offer getOffer(String id) {
+		Offer offer;
+		try {
+			String query = "SELECT * FROM OFFERS WHERE id_offer = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, id);
+			ResultSet results = preparedStatement.executeQuery();
+			while (results.next()) {
+				int id_offer = results.getInt("id_offer");
+				int id_person = results.getInt("id_empl");
+				String title = results.getString("title");
+				String content = results.getString("content");
+				String info = results.getString("info");
+				int salary = results.getInt("salary");
+				return offer = new Offer(id_offer, id_person, title, content, info, salary);
+			}
+		} catch (Exception exp) {
+			System.out.println(exp);
+			offer = new Offer(-1, -1, "", "SQLerror", "SQLerror", 0);
+		}
+		return offer = new Offer(-2, -2, "Skipped try/catch", "Skipped try/catch", "error", 0);
+	}
 }
