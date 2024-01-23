@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Work4Students</title>
-        <script type="text/javascript" src="js/indexEmployer.js"></script>
+        <script type="text/javascript" src="js/indexEmployerjs.js"></script>
         <link rel="stylesheet" href="css/index.css" type="text/css"/>
         <link rel="stylesheet" href="css/topBar.css" type="text/css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,13 +21,12 @@
 		
         <div class="side-panel">
                 <input type="text" placeholder="Szukaj ofert" name="offerTitle"  id="sideBarSearch" class = "sidePanelSearch">
-                <input type="button" value ="Szukaj"  id="sideBarNameSearch" class = "sidePanelButton" onclick="searchForProfiles('sideBarSearch')">
-            <form action="profile.html">
+                <input type="button" value ="Szukaj"  id="sideBarNameSearch" class = "sidePanelButton" onclick="searchForProfiles('sideBarSearch', 0)">
                 <div class = "sortLabelFrame">
                     <h1 class = "sideMainHeader">Sort</h1>
-                    <input type="radio" id ="radio8" value = "8" class = "customCheckbox" name = "sort" checked />
+                    <input type="radio" id ="radio8" value = "9" class = "customCheckbox" name = "sort" checked />
                     <label for="radio5">Most Recent</label><br>
-                    <input type="radio" id ="radio9" value = "9" class = "customCheckbox" name = "sort" />
+                    <input type="radio" id ="radio9" value = "8" class = "customCheckbox" name = "sort" />
                     <label for="radio5">Least Recent</label><br>
                     <input type="radio" id ="radio4" value = "4" class = "customCheckbox" name = "sort" />
                     <label for="radio4">Alphabetical ↑</label><br>
@@ -50,18 +49,17 @@
 
             <div class ="type">
                 <h1>
-                    <button class ="filterButton" onclick="filterAndSortProfiles(('minIncome', 'maxIncome')">Filter</button><br>
+                    <button class ="filterButton" onclick="filterAndSortProfiles('minScore', 'maxScore', 'sideBarSearch', 0)">Filter</button><br>
                 </h1>
             </div>
-            </form>
         </div>
 
         <div class ="mainDiv">
             <div class = "containersContainer" id = "containersContainerID"></div>
             <div class ="footer">
                 <h1>
-                    <button class ="footerButton" onclick="loadProfiles(-1)">Previous</button>
-                    <button class ="footerButton" onclick="loadProfiles(1)">Next</button>
+                    <button class ="footerButton" onclick="nextPage(-1, 'sideBarSearch', 'minScore', 'maxScore')">Previous</button>
+                    <button class ="footerButton" onclick="nextPage(1, 'sideBarSearch', 'minScore', 'maxScore')">Next</button>
                 </h1>
             </div>
         </div>

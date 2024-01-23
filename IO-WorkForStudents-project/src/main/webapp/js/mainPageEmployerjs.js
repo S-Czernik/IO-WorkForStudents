@@ -1,4 +1,20 @@
-window.onload = loadProfiles(3);
+window.addEventListener('DOMContentLoaded', function() {
+	window.scrollTo(0, 0);
+    loadProfiles(0);
+});
+
+let searched = false;
+let filtered = false;
+function nextPage(pageNumber, sideBar, min, max) {
+    window.scrollTo(0, 0);
+
+	if (!searched && !filtered)
+        loadProfiles(pageNumber);
+	else if (filtered)
+		filterAndSortProfiles(min, max, sideBar, pageNumber);
+    else if (searched)
+		searchForProfiles(sideBar, pageNumber);
+}
 
 function loadProfiles(pageNumber) {
     window.scrollTo(0, 0);
@@ -6,6 +22,8 @@ function loadProfiles(pageNumber) {
 
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
+			searched = false;
+			filtered = false;
             var offers = JSON.parse(this.responseText);
             displayOffers(offers);
         }
@@ -15,50 +33,53 @@ function loadProfiles(pageNumber) {
     xhttp.send();
 }
 
-function searchForProfiles(title) {
+function searchForProfiles(title, pageNumber) {
     window.scrollTo(0, 0);
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
+			searched = true;
+			filtered = false;
             var offers = JSON.parse(this.responseText);
             displayOffers(offers);
         }
     };
 	
 	var arg1 = document.getElementById(title).value.trim();
-
     if (arg1 === '')
-        loadProfiles(2);
+        loadProfiles(0);
     else {
-        xhttp.open("GET", "searchprof?arg1=" + arg1, true);
+        xhttp.open("GET", "searchprof?arg1=" + arg1 + "&arg2=" + pageNumber, true);
 		xhttp.send();
     }
 }
 
-function filterAndSortProfiles(min, max) {
+function filterAndSortProfiles(min, max, search, pageNumber) {
     window.scrollTo(0, 0);
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
+			filtered = true;
             var offers = JSON.parse(this.responseText);
             displayOffers(offers);
         }
     };
-	
+
 	var arg1 = document.getElementById(min).value.trim();
     var arg2 = document.getElementById(max).value.trim();
-    var sort = document.querySelector('input[name="sort"]:checked').value;
+    var arg3 = document.querySelector('input[name="sort"]:checked').value;
+	var arg4 = document.getElementById(search).value.trim();
 
-    if (sort === '-1' && arg1 === '' && arg2 === '')
-        loadProfiles(2);
+    if (arg3 === '9' && arg1 === '' && arg2 === '')
+        loadOffers(0);
     else {
-        if (arg1 === '' || arg2 === '')
+        if (arg1 === '' || arg2 === '' || (arg1 === '0' && arg2 === '0'))
             arg1 = arg2 = -1;
         
-        xhttp.open("GET", "sortAndFilterProf?arg1=" + min + "&arg2=" + max + "&arg3=" + sort, true);
-    xhttp.send();
+        xhttp.open("GET", "sortAndFilterProf?arg1=" + arg1 + "&arg2=" + arg2 + "&arg3=" + arg3 + "&arg4=" + arg4 + "&arg5=" + pageNumber, true, true);
+		xhttp.send();
     }
 }
 
