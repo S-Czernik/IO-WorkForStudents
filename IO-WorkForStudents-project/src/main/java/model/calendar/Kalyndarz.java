@@ -5,23 +5,6 @@ import java.util.List;
 
 public class Kalyndarz {
 
-	class Interval {
-
-		int begin;
-		int end;
-		int day;
-
-		Interval(int bg, int nd, int d) {
-			begin = bg;
-			end = nd;
-			day = d;
-		}
-
-		private boolean ok() {
-			return day >= 0 && day < 7 && begin >= 0 && begin < end && end < 60 * 24;
-		}
-	}
-
 	List<Interval> intervals;
 
 	public Kalyndarz() {
