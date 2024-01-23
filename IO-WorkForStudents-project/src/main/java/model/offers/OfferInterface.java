@@ -462,12 +462,12 @@ public class OfferInterface extends Interface {
 		return offers;
 	}
 
-	public boolean deleteOffer(String id_offer) {
+	public boolean deleteOffer(int id_offer) {
 		try {
 
 			String insertQuery = "DELETE FROM offers WHERE id_offer = ?";
 			PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
-			insertStatement.setString(1, String.valueOf(id_offer));
+			insertStatement.setInt(1, id_offer);
 			insertStatement.executeUpdate();
 			return true;
 		}
@@ -509,14 +509,14 @@ public class OfferInterface extends Interface {
 		}
 	}
 
-	public boolean addOffer(String id_empl, String title, String content, String info, String salary) {
+	public boolean addOffer(int id_empl, String title, String content, String info, String salary) {
 		try {
 			int newMax = getLastOfferId() + 1;
 			String dotSalary = salary;
 			String insertQuery = "INSERT INTO offers (id_offer, id_empl, title, content, info, salary) VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
 			insertStatement.setString(1, String.valueOf(newMax));
-			insertStatement.setString(2, id_empl);
+			insertStatement.setInt(2, id_empl);
 			insertStatement.setString(3, title);
 			insertStatement.setString(4, content);
 			insertStatement.setString(5, info);
@@ -537,7 +537,7 @@ public class OfferInterface extends Interface {
 		}
 	}
 
-	public boolean editOffer(String id_offer, String title, String content, String info, String salary) {
+	public boolean editOffer(int id_offer, String title, String content, String info, String salary) {
 		try {
 			String dotSalary;
 			String insertQuery = "UPDATE offers SET title = ?, content = ?, info = ?, salary = ? WHERE (id_offer = ?)";
@@ -553,7 +553,7 @@ public class OfferInterface extends Interface {
 				dotSalary = salary;
 			}
 			insertStatement.setString(4, dotSalary);
-			insertStatement.setString(5, String.valueOf(id_offer));
+			insertStatement.setInt(5, id_offer);
 
 			insertStatement.executeUpdate();
 			return true;
@@ -564,12 +564,12 @@ public class OfferInterface extends Interface {
 		}
 	}
 
-	public Offer getOffer(String id) {
+	public Offer getOffer(int id) {
 		Offer offer;
 		try {
 			String query = "SELECT * FROM OFFERS WHERE id_offer = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, id);
+			preparedStatement.setInt(1, id);
 			ResultSet results = preparedStatement.executeQuery();
 			while (results.next()) {
 				int id_offer = results.getInt("id_offer");

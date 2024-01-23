@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Base64;
 import model.Model;
+import servlets.helper.Helper;
 
 @WebServlet(name = "editProfileStudentServlet", urlPatterns = {"/editProfileStudentServlet"})
 @MultipartConfig
@@ -25,8 +26,7 @@ public class editProfileStudentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("application/json;charset=UTF-8");
-		String idString = request.getParameter("arg1");
-		int userID = (idString != null ? Integer.parseInt(idString) : -1);
+		int userID = Helper.getIntValueOf(request.getParameter("arg1"));
 		try (PrintWriter out = response.getWriter()) {
 
 			byte[] picture = model.accountInterface.getProfilePicture(userID);
@@ -57,8 +57,7 @@ public class editProfileStudentServlet extends HttpServlet {
 
 		try {
 			// Pobierz dane z żądania
-			String idString = request.getParameter("userID");
-			int userID = (idString != null ? Integer.parseInt(idString) : -1);
+			int userID = Helper.getIntValueOf(request.getParameter("userID"));
 			String name = request.getParameter("name");
 			String surname = request.getParameter("surname");
 			String city = request.getParameter("city");

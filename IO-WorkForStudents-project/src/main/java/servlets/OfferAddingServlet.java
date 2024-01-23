@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Model;
+import servlets.helper.Helper;
 
 @WebServlet(name = "OfferAddingServlet", urlPatterns = {"/offerAddingServlet"})
 public class OfferAddingServlet extends HttpServlet {
@@ -23,13 +24,13 @@ public class OfferAddingServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/plaintext;charset=UTF-8");
 
-		String logged_user = request.getParameter("arg1");
+		int userID = Helper.getIntValueOf(request.getParameter("arg1"));
 		String title = request.getParameter("arg2");
 		String content = request.getParameter("arg3");
 		String info = request.getParameter("arg4");
 		String salary = request.getParameter("arg5");
 
-		boolean created = model.offerInterface.addOffer(logged_user, title, content, info, salary);
+		boolean created = model.offerInterface.addOffer(userID, title, content, info, salary);
 
 		PrintWriter out = response.getWriter();
 		out.print(created);

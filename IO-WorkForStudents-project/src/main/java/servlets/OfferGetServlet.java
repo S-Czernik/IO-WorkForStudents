@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Model;
 import model.offers.Offer;
+import servlets.helper.Helper;
 
 @WebServlet(name = "OfferGetServlet", urlPatterns = {"/OfferGetServlet"})
 public class OfferGetServlet extends HttpServlet {
@@ -24,7 +25,7 @@ public class OfferGetServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try (PrintWriter out = response.getWriter()) {
 			response.setContentType("text/html;charset=UTF-8");
-			String id_offer = request.getParameter("arg1");
+			int id_offer = Helper.getIntValueOf(request.getParameter("arg1"));
 			Offer offer = model.offerInterface.getOffer(id_offer);
 
 			if (offer != null) {

@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.Model;
 import model.offers.Offer;
+import servlets.helper.Helper;
 
 @WebServlet(name = "ProfilesSortAndFilterServlet", urlPatterns = {"/sortAndFilterProf"})
 public class ProfilesSortAndFilterServlet extends HttpServlet {
@@ -27,9 +28,9 @@ public class ProfilesSortAndFilterServlet extends HttpServlet {
 		response.setContentType("text/plaintext;charset=UTF-8");
 
 		try (PrintWriter out = response.getWriter()) {
-			int min = Integer.parseInt(request.getParameter("arg1"));
-			int max = Integer.parseInt(request.getParameter("arg2"));
-			int sort = Integer.parseInt(request.getParameter("arg3"));
+			int min = Helper.getIntValueOf(request.getParameter("arg1"));
+			int max = Helper.getIntValueOf(request.getParameter("arg2"));
+			int sort = Helper.getIntValueOf(request.getParameter("arg3"));
 			String search = request.getParameter("arg4");
 			String arg = request.getParameter("arg5");
 			ArrayList<Offer> offers = new ArrayList<>();

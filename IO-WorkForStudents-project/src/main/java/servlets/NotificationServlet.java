@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.Model;
 import model.notifications.Notification;
+import servlets.helper.Helper;
 
 @WebServlet(name = "NotificationServlet", urlPatterns = {"/NotificationServlet"})
 public class NotificationServlet extends HttpServlet {
@@ -24,8 +25,7 @@ public class NotificationServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("application/json;charset=UTF-8");
-		String idString = request.getParameter("arg1");
-		int userID = (idString != null ? Integer.parseInt(idString) : -1);
+		int userID = Helper.getIntValueOf(request.getParameter("arg1"));
 		try (PrintWriter out = response.getWriter()) {
 			ArrayList<Notification> notifications = model.notificationInterface.getNotifications(userID);
 

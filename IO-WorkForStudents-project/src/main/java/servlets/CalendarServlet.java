@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.*;
+import servlets.helper.Helper;
 
 @WebServlet(name = "CalendarServlet", urlPatterns = {"/calendar"})
 public class CalendarServlet extends HttpServlet {
@@ -26,10 +27,8 @@ public class CalendarServlet extends HttpServlet {
 
 		String requestType = request.getParameter("rqtype");
 
-		String idString = request.getParameter("userid");
-		int userID = (idString != null ? Integer.parseInt(idString) : -1);
-		idString = request.getParameter("offerid");
-		int offerID = (idString != null ? Integer.parseInt(idString) : -1);
+		int userID = Helper.getIntValueOf(request.getParameter("userid"));
+		int offerID = Helper.getIntValueOf(request.getParameter("offerid"));
 
 		PrintWriter out = response.getWriter();
 
@@ -74,10 +73,8 @@ public class CalendarServlet extends HttpServlet {
 
 		String requestType = request.getHeader("rqtype");
 
-		String idString = request.getParameter("userid");
-		int userID = (idString != null ? Integer.parseInt(idString) : -1);
-		idString = request.getParameter("offerid");
-		int offerID = (idString != null ? Integer.parseInt(idString) : -1);
+		int userID = Helper.getIntValueOf(request.getHeader("userid"));
+		int offerID = Helper.getIntValueOf(request.getHeader("offerid"));
 		String csv = request.getHeader("csv");
 
 		PrintWriter out = response.getWriter();

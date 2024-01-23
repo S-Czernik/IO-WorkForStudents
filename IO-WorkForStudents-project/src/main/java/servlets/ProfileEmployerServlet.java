@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Base64;
 import model.Model;
+import servlets.helper.Helper;
 
 @WebServlet(name = "ProfileEmployerServlet", urlPatterns = {"/ProfileEmployerServlet"})
 public class ProfileEmployerServlet extends HttpServlet {
@@ -24,8 +25,7 @@ public class ProfileEmployerServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		response.setContentType("application/json;charset=UTF-8");
-		String idString = request.getParameter("arg1");
-		int userID = (idString != null ? Integer.parseInt(idString) : -1);
+		int userID = Helper.getIntValueOf(request.getParameter("arg1"));
 		try (PrintWriter out = response.getWriter()) {
 			byte[] picture = model.accountInterface.getProfilePicture(userID);
 			String base64Image = Base64.getEncoder().encodeToString(picture);

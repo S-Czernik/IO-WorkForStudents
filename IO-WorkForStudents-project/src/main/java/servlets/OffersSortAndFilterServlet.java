@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.Model;
 import model.offers.Offer;
+import servlets.helper.Helper;
 
 @WebServlet(name = "OffersSortAndFilterServlet", urlPatterns = {"/sortAndFilterOff"})
 public class OffersSortAndFilterServlet extends HttpServlet {
@@ -27,18 +28,20 @@ public class OffersSortAndFilterServlet extends HttpServlet {
 		response.setContentType("text/plaintext;charset=UTF-8");
 
 		try (PrintWriter out = response.getWriter()) {
-			int min = Integer.parseInt(request.getParameter("arg1"));
-			int max = Integer.parseInt(request.getParameter("arg2"));
-			int sort = Integer.parseInt(request.getParameter("arg3"));
+			int min = Helper.getIntValueOf(request.getParameter("arg1"));
+			int max = Helper.getIntValueOf(request.getParameter("arg2"));
+			int sort = Helper.getIntValueOf(request.getParameter("arg3"));
 			String search = request.getParameter("arg4");
 			String arg = request.getParameter("arg5");
 			ArrayList<Offer> offers = new ArrayList<>();
 
 			if (arg.equals("1")) {
 				offers = model.offerInterface.getSortedAndFilteredOffers(min, max, sort, search, last, number, 1);
-			} else if (arg.equals("-1")) {
+			}
+			else if (arg.equals("-1")) {
 				offers = model.offerInterface.getSortedAndFilteredOffers(min, max, sort, search, first, 0, -1);
-			} else {
+			}
+			else {
 				offers = model.offerInterface.getSortedAndFilteredOffers(min, max, sort, search, 0, 0, 0);
 			}
 			number = offers.size();
@@ -58,14 +61,16 @@ public class OffersSortAndFilterServlet extends HttpServlet {
 							.append("}");
 					if (i < offers.size() - 1) {
 						jsonOffers.append(",");
-					} else if (i == offers.size() - 1) {
+					}
+					else if (i == offers.size() - 1) {
 						last = offer.getIdOffer();
 					}
 					if (i == 0) {
 						first = offer.getIdOffer();
 					}
 				}
-			} else {
+			}
+			else {
 				jsonOffers.append("{")
 						.append("\"title\": \"").append("Offer not found!").append("\"")
 						.append("}");
@@ -73,7 +78,8 @@ public class OffersSortAndFilterServlet extends HttpServlet {
 			jsonOffers.append("]");
 
 			out.println(jsonOffers.toString());
-		} catch (Exception exp) {
+		}
+		catch (Exception exp) {
 			System.out.println(exp);
 		}
 	}

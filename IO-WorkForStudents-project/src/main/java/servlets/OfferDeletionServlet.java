@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Model;
+import servlets.helper.Helper;
 
 @WebServlet(name = "OfferDeletionServlet", urlPatterns = {"/OfferDeletionServlet"})
 public class OfferDeletionServlet extends HttpServlet {
@@ -17,11 +18,12 @@ public class OfferDeletionServlet extends HttpServlet {
 		model = Model.getModel();
 	}
 
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/plain;charset=UTF-8");
 		try {
-			String id_offer = request.getParameter("arg1");
+			int id_offer = Helper.getIntValueOf(request.getParameter("arg1"));
 			boolean deleted = model.offerInterface.deleteOffer(id_offer);
 
 			// Send a response to the client
@@ -30,22 +32,5 @@ public class OfferDeletionServlet extends HttpServlet {
 		catch (Exception e) {
 			System.out.println(e);
 		}
-	}
-
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		processRequest(request, response);
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		processRequest(request, response);
-	}
-
-	@Override
-	public String getServletInfo() {
-		return "Short description";
 	}
 }
