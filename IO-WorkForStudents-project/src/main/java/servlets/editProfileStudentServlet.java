@@ -70,7 +70,6 @@ public class editProfileStudentServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            // Pobierz dane z żądania
             String userID = request.getParameter("userID");
             String name = request.getParameter("name");
             String surname = request.getParameter("surname");
@@ -78,21 +77,14 @@ public class editProfileStudentServlet extends HttpServlet {
             String description = request.getParameter("description");
             String title = request.getParameter("title");
             String picture = request.getParameter("picture");
-            // Pobierz plik obrazu profilowego z żądania
-            //Part filePart = request.getPart("picture");
-            //InputStream fileInputStream = filePart.getInputStream();
-            //byte[] profilePicture = fileInputStream.toString().getBytes(StandardCharsets.UTF_8);
-            // Wywołaj metody modelu do aktualizacji danych
-             model.accountInterface.saveName(userID, name);
+            model.accountInterface.saveName(userID, name);
             model.accountInterface.saveSurname(userID, surname);
             model.accountInterface.saveCity(userID, city);
             model.accountInterface.saveTitle(userID, title);
             model.accountInterface.saveDescription(userID, description);
             model.accountInterface.savePicture(userID, picture);
-            // Odpowiedz klientowi, że zapisano zmiany
             out.println("Changes saved successfully.");
         } catch (Exception e) {
-            // Wystąpił błąd, odpowiedz klientowi z informacją o błędzie
             out.println("Error saving changes.");
             e.printStackTrace();
         } finally {

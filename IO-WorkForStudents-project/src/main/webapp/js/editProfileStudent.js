@@ -42,10 +42,8 @@ function handleFileSelect(event) {
     const file = input.files[0];
 
     if (file) {
-        // Tutaj możesz przekazać plik do bazy danych lub innych operacji
         console.log('Selected file:', file);
 
-        // Aktualizuj obrazek (możesz użyć FileReader do odczytu pliku i wyświetlenia go)
         const picture = document.getElementById('picture');
         const reader = new FileReader();
         reader.onload = function (e) {
@@ -64,26 +62,21 @@ function saveProfileChanges() {
     var description = document.getElementById('description').value;
 
     var fileInput = document.getElementById('fileInput');
-    // Utwórz obiekt XMLHttpRequest
     var xhr = new XMLHttpRequest();
     // Ustaw metodę HTTP i adres URL serwletu
     xhr.open("POST", "editProfileStudentServlet?"+"userID="+userID+"&name="+name+"&surname="+surname+"&city="+city+"&title="+title
             +"&description="+description, true);
 
-    // Dodaj funkcję obsługi zdarzenia po zakończeniu żądania
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-                // Zakończono pomyślnie, możesz dodać kod obsługi sukcesu
                 console.log("Zapisano zmiany pomyślnie.");
             } else {
-                // Wystąpił błąd, możesz dodać kod obsługi błędu
                 console.error("Błąd podczas zapisywania zmian.");
             }
         }
     };
 
-    // Wysłij żądanie z danymi
     xhr.send();
     window.location.href = "profileStudent.html";
 }
