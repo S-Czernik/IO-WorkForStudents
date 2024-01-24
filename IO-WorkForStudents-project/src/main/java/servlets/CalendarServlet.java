@@ -59,7 +59,7 @@ public class CalendarServlet extends HttpServlet {
 		else {
 			response.setContentType("text/html;charset=UTF-8");
 			Kalyndarz test = new Kalyndarz();
-			test.loadCSV("945,1040,1,450,900,2,360,720,6,270,840,4");
+			test.loadCSV("762,863,1");
 			out.print(CalendarHTMLBuilder.get(test));
 		}
 		out.close();
