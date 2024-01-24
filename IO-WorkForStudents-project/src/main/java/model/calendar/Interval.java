@@ -21,7 +21,7 @@ public class Interval {
 	}
 
 	public int getEndHour() {
-		return (end + 59) / 60;
+		return end / 60;
 	}
 
 	public int getBeginMinute() {
@@ -30,5 +30,9 @@ public class Interval {
 
 	public int getEndMinute() {
 		return end - 60 * getEndHour();
+	}
+	
+	public int getLength(){
+		return end - begin;
 	}
 }
