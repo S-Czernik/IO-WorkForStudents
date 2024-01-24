@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.*;
-import servlets.helper.Helper;
 
 @WebServlet(name = "CalendarServlet", urlPatterns = {"/calendar"})
 public class CalendarServlet extends HttpServlet {
@@ -27,8 +26,9 @@ public class CalendarServlet extends HttpServlet {
 
 		String requestType = request.getParameter("rqtype");
 
-		int userID = Helper.getIntValueOf(request.getParameter("userid"));
-		int offerID = Helper.getIntValueOf(request.getParameter("offerid"));
+		String login = request.getParameter("login");
+		String idString = request.getParameter("offerid");
+		int offerID = (idString != null ? Integer.parseInt(idString) : -1);
 
 		PrintWriter out = response.getWriter();
 
@@ -36,7 +36,7 @@ public class CalendarServlet extends HttpServlet {
 			switch (requestType) {
 				case "getusercsv" -> {
 					response.setContentType("text/plaintext;charset=UTF-8");
-					out.print(model.calendarInterface.getStudentCalendarCsv(userID));
+					out.print(model.calendarInterface.getStudentCalendarCsv(login));
 				}
 				case "getoffercsv" -> {
 					response.setContentType("text/plaintext;charset=UTF-8");
@@ -44,7 +44,7 @@ public class CalendarServlet extends HttpServlet {
 				}
 				case "getuserhtml" -> {
 					response.setContentType("text/html;charset=UTF-8");
-					out.print(model.calendarInterface.getStudentCalendarHtml(userID));
+					out.print(model.calendarInterface.getStudentCalendarHtml(login));
 				}
 				case "getofferhtml" -> {
 					response.setContentType("text/html;charset=UTF-8");
@@ -52,14 +52,14 @@ public class CalendarServlet extends HttpServlet {
 				}
 				case "compare" -> {
 					response.setContentType("text/plaintext;charset=UTF-8");
-					out.print(model.calendarInterface.compareCalendars(userID, offerID));
+					out.print(model.calendarInterface.compareCalendars(login, offerID));
 				}
 			}
 		}
 		else {
 			response.setContentType("text/html;charset=UTF-8");
 			Kalyndarz test = new Kalyndarz();
-			test.loadCSV("45,1380,1,450,1200,2,360,1020,3,270,840,4");
+			test.loadCSV("945,1040,1,450,900,2,360,720,6,270,840,4");
 			out.print(CalendarHTMLBuilder.get(test));
 		}
 		out.close();
@@ -73,14 +73,14 @@ public class CalendarServlet extends HttpServlet {
 
 		String requestType = request.getHeader("rqtype");
 
-		int userID = Helper.getIntValueOf(request.getHeader("userid"));
-		int offerID = Helper.getIntValueOf(request.getHeader("offerid"));
+		int studID = Integer.parseInt(request.getHeader("studID"));
+		int offerID = Integer.parseInt(request.getHeader("offerid"));
 		String csv = request.getHeader("csv");
 
 		PrintWriter out = response.getWriter();
 		switch (requestType) {
 			case "setuser" -> {
-				model.calendarInterface.saveStudentCalendarToDatabase(userID, csv);
+				model.calendarInterface.saveStudentCalendarToDatabase(studID, csv);
 			}
 			case "setoffer" -> {
 				model.calendarInterface.saveOfferCalendarToDatabase(offerID, csv);
