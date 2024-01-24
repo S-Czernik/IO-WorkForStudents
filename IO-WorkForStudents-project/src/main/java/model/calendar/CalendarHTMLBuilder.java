@@ -3,6 +3,17 @@ package model.calendar;
 public class CalendarHTMLBuilder {
 
 	public static String get(Kalyndarz k) {
+
+		int minTime = 1339, maxTime = 0;
+		for (Interval i : k.intervals) {
+			if (minTime > i.begin) {
+				minTime = i.begin;
+			}
+			if (maxTime < i.end) {
+				maxTime = i.end;
+			}
+		}
+
 		String ret = "<!DOCTYPE html>\n"
 				+ "<html>\n"
 				+ "<head>\n"
@@ -12,17 +23,25 @@ public class CalendarHTMLBuilder {
 				+ "<script type=\"text/javascript\" language=\"JavaScript\" src=\"js/js.js\"></script>\n"
 				+ "</head>\n"
 				+ "<body>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 0%; width: 8%; height: 20px;\">Day</div>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 8%; width: 12%; height: 20px;\">Monday</div>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 20%; width: 12%; height: 20px;\">Tuesday</div>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 32%; width: 12%; height: 20px;\">Wednesday</div>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 44%; width: 12%; height: 20px;\">Thursday</div>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 56%; width: 12%; height: 20px;\">Friday</div>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 68%; width: 12%; height: 20px;\">Saturday</div>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 80%; width: 12%; height: 20px;\">Sunday</div>"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 92%; width: 7.9%; height: 20px;\">Day</div>\n";
+				+ "<div id=\"calendar\" style=\"position: relative;\">";
 
-		for (int hour = 0; hour <= 23; hour++) {
+		int minHour = minTime / 60;
+		int maxHour = (maxTime + 59) / 60;
+		int hourCount = maxHour - minHour + 1;
+		float hourHeight = 99.9f / (hourCount + 1);
+
+		ret += "<div class=\"frame\" style=\"top: 0%; left: 0%; width: 10%; height: " + hourHeight + "%;\">Day</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 10%; width: 11%; height: " + hourHeight + "%;\">Monday</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 21%; width: 11%; height: " + hourHeight + "%;\">Tuesday</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 32%; width: 11%; height: " + hourHeight + "%;\">Wednesday</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 43%; width: 11%; height: " + hourHeight + "%;\">Thursday</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 54%; width: 11%; height: " + hourHeight + "%;\">Friday</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 65%; width: 11%; height: " + hourHeight + "%;\">Saturday</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 76%; width: 11%; height: " + hourHeight + "%;\">Sunday</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 87%; width: 10%; height: " + hourHeight + "%;\">Day</div>\n";
+
+		float verticalPos = hourHeight;
+		for (int hour = minHour; hour <= maxHour; hour++) {
 			// <editor-fold desc="Sidebar hour display text">
 			String hourText = "";
 			if (hour < 10) {
@@ -40,34 +59,29 @@ public class CalendarHTMLBuilder {
 			}
 			hourText += ":00";
 			// </editor-fold>
-			int topPosition = hour * 45 + 22;
 
-			ret += "<div class=\"frame\" style=\"top: " + topPosition + "px; left: 0%; width: 8%; height: 43px; line-height: 43px;\">" + hourText + "</div>\n";
+			ret += "<div class=\"frame\" style=\"top: " + verticalPos + "%; left: 0%; width: 10%; height: " + hourHeight + "%;\">" + hourText + "</div>\n";
 
 			for (int day = 0; day < 7; day++) {
-				int leftPosiiton = 8 + 12 * day;
-
-				for (int quarter = 0; quarter < 4; quarter++) {
-					int curTopPosition = topPosition + quarter * 11 + 1;
-					ret += "<div class=\"block\" style=\"top: " + curTopPosition + "px; left: " + leftPosiiton + "%; width: 12%; height: 10px;\"></div>\n";
-				}
+				float horizontalPos = 10 + 11 * day;
+				ret += "<div class=\"block\" style=\"top: " + verticalPos + "%; left: " + horizontalPos + "%; width: 11%; height: " + hourHeight + "%;\"></div>\n";
 			}
 
-			ret += "<div class=\"frame\" style=\"top: " + topPosition + "px; left: 92%; width: 7.9%; height: 43px; line-height: 43px;\">" + hourText + "</div>\n";
+			ret += "<div class=\"frame\" style=\"top: " + verticalPos + "%; left: 87%; width: 10%; height: " + hourHeight + "%;\">" + hourText + "</div>\n";
+
+			verticalPos += hourHeight;
 		}
 
 		for (var entry : k.intervals) {
-			int hourBegin = entry.begin / 60;
-			int hourEnd = (entry.end + 59) / 60;
+			verticalPos = ((entry.getBeginHour() - minHour) + entry.getBeginMinute() / 60.0f + 1.0f) * hourHeight;
+			float height = ((entry.getEndHour() - minHour) + entry.getEndMinute() / 60.0f + 1.0f) * hourHeight - verticalPos;
 
-			int topPosition = hourBegin * 45 + 23 + (entry.begin - 60 * hourBegin) * 44 / 60;
-			int height = hourEnd * 45 + 13 + (entry.end - 60 * hourEnd) / 15 * 11 - topPosition;
+			float horizontalPos = 10 + 11 * entry.day;
 
-			int leftPosition = 8 + 12 * entry.day;
-
-			ret += "<div class=\"fill\" style=\"width: 11.58%; height: " + height + "px; top: " + topPosition + "px; left: " + leftPosition + "%; background-color: #696969; z-index: 1;\"></div>\n";
+			ret += "<div class=\"fill\" style=\"width: 11%; height: " + height + "%; top: " + verticalPos + "%; left: " + horizontalPos + "%;\"></div>\n";
 		}
-		ret += "</body>\n"
+		ret += "</div>"
+				+ "</body>\n"
 				+ "</html>";
 		return ret;
 	}
