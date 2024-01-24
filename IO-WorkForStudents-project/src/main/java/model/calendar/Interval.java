@@ -15,4 +15,20 @@ public class Interval {
 	public boolean ok() {
 		return day >= 0 && day < 7 && begin >= 0 && begin < end && end < 60 * 24;
 	}
+
+	public int getBeginHour() {
+		return begin / 60;
+	}
+
+	public int getEndHour() {
+		return (end + 59) / 60;
+	}
+
+	public int getBeginMinute() {
+		return begin - 60 * getBeginHour();
+	}
+
+	public int getEndMinute() {
+		return end - 60 * getEndHour();
+	}
 }
