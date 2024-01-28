@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.stream.Collectors;
 import model.*;
 import servlets.helper.Helper;
 
@@ -29,7 +30,6 @@ public class CalendarServlet extends HttpServlet {
 
 		int userID = Helper.getIntValueOf(request.getParameter("userid"));
 		int offerID = Helper.getIntValueOf(request.getParameter("offerid"));
-
 		PrintWriter out = response.getWriter();
 
 		if (requestType != null) {
@@ -75,7 +75,8 @@ public class CalendarServlet extends HttpServlet {
 
 		int userID = Helper.getIntValueOf(request.getHeader("userid"));
 		int offerID = Helper.getIntValueOf(request.getHeader("offerid"));
-		String csv = request.getHeader("csv");
+
+		String csv = request.getReader().lines().collect(Collectors.joining(""));
 
 		PrintWriter out = response.getWriter();
 		switch (requestType) {
@@ -84,6 +85,11 @@ public class CalendarServlet extends HttpServlet {
 			}
 			case "setoffer" -> {
 				model.calendarInterface.saveOfferCalendarToDatabase(offerID, csv);
+			}
+			case "gethtml" -> {
+				Kalyndarz k = new Kalyndarz();
+				k.loadCSV(csv);
+				out.print(CalendarHTMLBuilder.get(k));
 			}
 		}
 		out.close();

@@ -14,16 +14,7 @@ public class CalendarHTMLBuilder {
 			}
 		}
 
-		String ret = "<!DOCTYPE html>\n"
-				+ "<html>\n"
-				+ "<head>\n"
-				+ "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-2\">  \n"
-				+ "<title>kek</title>  \n"
-				+ "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/kalendarz.css\">\n"
-				+ "<script type=\"text/javascript\" language=\"JavaScript\" src=\"js/js.js\"></script>\n"
-				+ "</head>\n"
-				+ "<body>\n"
-				+ "<div id=\"calendar\" style=\"position: relative;\">";
+		String ret = "<div id=\"calendar\" style=\"position: relative;\">";
 
 		int mexTimeDelta = maxTime - minTime;
 
@@ -86,9 +77,7 @@ public class CalendarHTMLBuilder {
 
 			ret += "<div class=\"fill\" style=\"width: 11%; height: " + height + "%; top: " + verticalPos + "%; left: " + horizontalPos + "%;\"></div>\n";
 		}
-		ret += "</div>"
-				+ "</body>\n"
-				+ "</html>";
+		ret += "</div>";
 		return ret;
 	}
 
