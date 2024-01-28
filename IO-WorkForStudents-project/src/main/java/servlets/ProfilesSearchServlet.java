@@ -49,7 +49,6 @@ public class ProfilesSearchServlet extends HttpServlet {
 							.append("\"id_person\": \"").append(offer.getIdPerson()).append("\",")
 							.append("\"title\": \"").append(offer.getTitle()).append("\",")
 							.append("\"content\": \"").append(offer.getContent()).append("\",")
-							.append("\"info\": \"").append(offer.getInfo()).append("\",")
 							.append("\"rating\": \"").append(offer.getRating()).append("\"")
 							.append("}");
 					if (i < offers.size() - 1) {
@@ -71,7 +70,6 @@ public class ProfilesSearchServlet extends HttpServlet {
 								.append("\"id_person\": \"").append(offer.getIdPerson()).append("\",")
 								.append("\"title\": \"").append(offer.getTitle()).append("\",")
 								.append("\"content\": \"").append(offer.getContent()).append("\",")
-								.append("\"info\": \"").append(offer.getInfo()).append("\",")
 								.append("\"rating\": \"").append(offer.getRating()).append("\"")
 								.append("}");
 						if (i < offers.size() - 1) {

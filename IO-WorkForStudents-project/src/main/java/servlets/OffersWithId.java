@@ -10,15 +10,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.Model;
 import model.offers.Offer;
-import servlets.helper.Helper;
 
-@WebServlet(name = "ProfilesSortAndFilterServlet", urlPatterns = {"/sortAndFilterProf"})
-public class ProfilesSortAndFilterServlet extends HttpServlet {
+@WebServlet(name = "OffersWithId", urlPatterns = {"/offersWithId"})
+public class OffersWithId extends HttpServlet {
 
 	Model model;
 	int first, last, number;
 
-	public ProfilesSortAndFilterServlet() {
+	public OffersWithId() {
 		model = Model.getModel();
 	}
 
@@ -28,19 +27,18 @@ public class ProfilesSortAndFilterServlet extends HttpServlet {
 		response.setContentType("text/plaintext;charset=UTF-8");
 
 		try (PrintWriter out = response.getWriter()) {
-			int min = Helper.getIntValueOf(request.getParameter("arg1"));
-			int max = Helper.getIntValueOf(request.getParameter("arg2"));
-			int sort = Helper.getIntValueOf(request.getParameter("arg3"));
-			String search = request.getParameter("arg4");
-			String arg = request.getParameter("arg5");
+			String id = request.getParameter("arg1");
+			String arg = request.getParameter("arg2");
 			ArrayList<Offer> offers = new ArrayList<>();
 
 			if (arg.equals("1")) {
-				offers = model.offerInterface.getSortedAndFilteredProfiles(min, max, sort, search, last, number, 1);
-			} else if (arg.equals("-1")) {
-				offers = model.offerInterface.getSortedAndFilteredProfiles(min, max, sort, search, first, 0, -1);
-			} else {
-				offers = model.offerInterface.getSortedAndFilteredProfiles(min, max, sort, search, 0, 0, 0);
+				offers = model.offerInterface.getOffersWithId(id, last, number, 1);
+			}
+			else if (arg.equals("-1")) {
+				offers = model.offerInterface.getOffersWithId( id, first, 0, -1);
+			}
+			else {
+				offers = model.offerInterface.getOffersWithId( id, 0, 0, 0);
 			}
 			number = offers.size();
 
@@ -50,14 +48,16 @@ public class ProfilesSortAndFilterServlet extends HttpServlet {
 					Offer offer = offers.get(i);
 
 					jsonOffers.append("{")
-							.append("\"id_person\": \"").append(offer.getIdPerson()).append("\",")
+							.append("\"id_offer\": \"").append(offer.getIdOffer()).append("\",")
+							.append("\"id_empl\": \"").append(offer.getIdPerson()).append("\",")
 							.append("\"title\": \"").append(offer.getTitle()).append("\",")
 							.append("\"content\": \"").append(offer.getContent()).append("\",")
-							.append("\"rating\": \"").append(offer.getRating()).append("\"")
+							.append("\"salary\": \"").append(offer.getSalary()).append("\"")
 							.append("}");
 					if (i < offers.size() - 1) {
 						jsonOffers.append(",");
-					} else if (i == offers.size() - 1) {
+					}
+					else if (i == offers.size() - 1) {
 						last = offer.getIdOffer();
 					}
 					if (i == 0) {

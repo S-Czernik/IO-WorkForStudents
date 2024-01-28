@@ -1,11 +1,13 @@
 window.addEventListener('DOMContentLoaded', function() {
 	window.scrollTo(0, 0);
     loadProfiles(0);
+	reveal();
 });
 
 let searched = false;
 let filtered = false;
 function nextPage(pageNumber, sideBar, min, max) {
+	reveal();
     window.scrollTo(0, 0);
 
 	if (!searched && !filtered)
@@ -14,6 +16,7 @@ function nextPage(pageNumber, sideBar, min, max) {
 		filterAndSortProfiles(min, max, sideBar, pageNumber);
     else if (searched)
 		searchForProfiles(sideBar, pageNumber);
+	reveal();
 }
 
 function loadProfiles(pageNumber) {
@@ -31,6 +34,7 @@ function loadProfiles(pageNumber) {
 
     xhttp.open("GET", "profilesdisplay?arg1=" + pageNumber, true);
     xhttp.send();
+	reveal();
 }
 
 function searchForProfiles(title, pageNumber) {
@@ -53,6 +57,7 @@ function searchForProfiles(title, pageNumber) {
         xhttp.open("GET", "searchprof?arg1=" + arg1 + "&arg2=" + pageNumber, true);
 		xhttp.send();
     }
+	reveal();
 }
 
 function filterAndSortProfiles(min, max, search, pageNumber) {
@@ -81,6 +86,7 @@ function filterAndSortProfiles(min, max, search, pageNumber) {
         xhttp.open("GET", "sortAndFilterProf?arg1=" + arg1 + "&arg2=" + arg2 + "&arg3=" + arg3 + "&arg4=" + arg4 + "&arg5=" + pageNumber, true, true);
 		xhttp.send();
     }
+	reveal();
 }
 
 function displayOffers(offers) {
@@ -102,25 +108,37 @@ function displayOffers(offers) {
         contentElement.innerText = offer.content;
         contentElement.className = "offerContent";
 
-   //     var showMoreElement = document.createElement("button");
-    //    showMoreElement.innerText = "show more";
-    //    showMoreElement.value = "show more";
-     //   showMoreElement.className = "showMore";
+        var showMoreElement = document.createElement("button");
+        showMoreElement.innerText = "show more";
+        showMoreElement.value = "show more";
+        showMoreElement.className = "showMore";
         //  var showMoreElement = document.createElement("button");
-        
-        var applyElement = document.createElement("button");
-        showMoreElement.innerText = "apply";
-        showMoreElement.value = "apply";
-        showMoreElement.className = "apply";
-        //  var showMoreElement = document.createElement("button");
-        
+
 
 
         offerDiv.appendChild(titleElement);
         offerDiv.appendChild(contentElement);
-      //  offerDiv.appendChild(showMoreElement);
-        offerDiv.appendChild(applyElement);
+        offerDiv.appendChild(showMoreElement);
 
         containersContainer.appendChild(offerDiv);
     }
+	reveal();
 }
+
+function reveal() {
+  var reveals = document.querySelectorAll(".container");
+
+  for (var i = 0; i < reveals.length; i++) {
+    var windowHeight = window.innerHeight;
+    var elementTop = reveals[i].getBoundingClientRect().top;
+    var elementVisible = 50;
+
+    if (elementTop < windowHeight - elementVisible) {
+      reveals[i].classList.add("active");
+    } else {
+      reveals[i].classList.remove("active");
+    }
+  }
+}
+
+window.addEventListener("scroll", reveal);

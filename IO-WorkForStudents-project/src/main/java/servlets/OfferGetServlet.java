@@ -36,7 +36,6 @@ public class OfferGetServlet extends HttpServlet {
 						.append("\"id_person\": \"").append(offer.getIdPerson()).append("\",")
 						.append("\"title\": \"").append(offer.getTitle()).append("\",")
 						.append("\"content\": \"").append(offer.getContent()).append("\",")
-						.append("\"info\": \"").append(offer.getInfo()).append("\",")
 						.append("\"salary\": \"").append(offer.getSalary()).append("\"")
 						.append("}");
 				jsonOffers.append("]");

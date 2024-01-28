@@ -16,8 +16,7 @@ function nextPage(pageNumber, sideBar, min, max) {
 		filterAndSortOffers(min, max, sideBar, pageNumber);
     else if (searched)
 		searchForOffers(sideBar, pageNumber);
-    reveal();
-            
+    reveal();      
 }
 
 function loadOffers(pageNumber) {
@@ -123,8 +122,8 @@ function displayOffers(offers) {
 
         offerDiv.appendChild(titleElement);
         offerDiv.appendChild(contentElement);
-      //  offerDiv.appendChild(showMoreElement);
-        offerDiv.appendChild(applyElement);
+		offerDiv.appendChild(showMoreElement);
+        //offerDiv.appendChild(applyElement);
 
         containersContainer.appendChild(offerDiv);
         reveal();

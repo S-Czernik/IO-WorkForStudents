@@ -56,7 +56,6 @@ public class OffersSortAndFilterServlet extends HttpServlet {
 							.append("\"id_empl\": \"").append(offer.getIdPerson()).append("\",")
 							.append("\"title\": \"").append(offer.getTitle()).append("\",")
 							.append("\"content\": \"").append(offer.getContent()).append("\",")
-							.append("\"info\": \"").append(offer.getInfo()).append("\",")
 							.append("\"salary\": \"").append(offer.getSalary()).append("\"")
 							.append("}");
 					if (i < offers.size() - 1) {

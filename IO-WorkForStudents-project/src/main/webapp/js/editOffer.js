@@ -62,7 +62,7 @@ function fillTextFieldsData(offer) {
 }
 
 
-function editOffer(arg2, arg3, arg4, arg5, result) {
+function editOffer(arg2, arg3, arg5, result) {
     event.preventDefault();
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -72,7 +72,6 @@ function editOffer(arg2, arg3, arg4, arg5, result) {
             if (correct === "true") {
                 document.getElementById("titleInput").value = "";
                 document.getElementById("contentInput").value = "";
-                document.getElementById("infoInput").value = "";
                 document.getElementById("salaryInput").value = "";
                 resultElem.innerHTML = "";
                 
@@ -87,13 +86,11 @@ function editOffer(arg2, arg3, arg4, arg5, result) {
     var resultElem = document.getElementById(result);  
     var title = document.getElementById(arg2).value;
     var content = document.getElementById(arg3).value;
-    var info = document.getElementById(arg4).value;
     var salary = document.getElementById(arg5).value;
-    if (!title.trim() || !content.trim() || !info.trim() || !salary.trim()) {
+    if (!title.trim() || !content.trim() || !salary.trim()) {
         resultElem.innerHTML = "Addition of an offer failed. Please complete all fields.";
     } else {
-        xhttp.open("GET", "OfferEditServlet?arg1=" + id_offer + "&arg2=" + title + "&arg3=" + content + 
-                "&arg4=" + info + "&arg5=" + salary , true);
+        xhttp.open("GET", "OfferEditServlet?arg1=" + id_offer + "&arg2=" + title + "&arg3=" + content + "&arg5=" + salary , true);
         xhttp.send();
     }
 }
