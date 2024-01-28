@@ -8,7 +8,7 @@ function getStudentCalendarCsv() {
 			}
 		}
 	};
-	xhttp.open("GET", "CalendarServlet?rqtype=getusercsv&userid=" + id_stud, true);
+	xhttp.open("GET", "calendar?rqtype=getusercsv&userid=" + id_stud, false);
 	xhttp.send();
 }
 function getOfferCalendarCsv() {
@@ -21,7 +21,7 @@ function getOfferCalendarCsv() {
 			}
 		}
 	};
-	xhttp.open("GET", "CalendarServlet?rqtype=getoffercsv&offerid=" + id_offer, true);
+	xhttp.open("GET", "calendar?rqtype=getoffercsv&offerid=" + id_offer, false);
 	xhttp.send();
 }
 function getStudentCalendarHtml(id_stud) {
@@ -29,11 +29,11 @@ function getStudentCalendarHtml(id_stud) {
 	xhttp.onreadystatechange = function () {
 		if (this.readyState === 4) {
 			if (this.status === 200) {
-				document.getElementById("calendar").innerHTML = this.responseText;
+				document.getElementById("calendar" + id_stud).innerHTML = this.responseText;
 			}
 		}
 	};
-	xhttp.open("GET", "CalendarServlet?rqtype=getuserhtml&userid=" + id_stud, true);
+	xhttp.open("GET", "calendar?rqtype=getuserhtml&userid=" + id_stud, false);
 	xhttp.send();
 }
 function getOfferCalendarHtml(id_offer) {
@@ -41,11 +41,11 @@ function getOfferCalendarHtml(id_offer) {
 	xhttp.onreadystatechange = function () {
 		if (this.readyState === 4) {
 			if (this.status === 200) {
-				//load html into div
+				document.getElementById("calendar" + id_offer).innerHTML = this.responseText;
 			}
 		}
 	};
-	xhttp.open("GET", "CalendarServlet?rqtype=getofferhtml&offerid=" + id_offer, true);
+	xhttp.open("GET", "calendar?rqtype=getofferhtml&offerid=" + id_offer, false);
 	xhttp.send();
 }
 function getCalendarCompatibility() {
@@ -58,7 +58,7 @@ function getCalendarCompatibility() {
 			}
 		}
 	};
-	xhttp.open("GET", "CalendarServlet?rqtype=compare&userid=" + id_stud + "&offerid=" + id_offer, true);
+	xhttp.open("GET", "calendar?rqtype=compare&userid=" + id_stud + "&offerid=" + id_offer, false);
 	xhttp.send();
 }
 
@@ -75,7 +75,7 @@ function getHtmlFromCsv() {
 			}
 		}
 	};
-	xhttp.open("POST", "CalendarServlet");
+	xhttp.open("POST", "calendar");
 	xhttp.setRequestHeader("Content-Type", "application/plaintext; charset=UTF-8");
 	xhttp.setRequestHeader("rqtype", "gethtml");
 	xhttp.send(getEditorCsv());
@@ -91,7 +91,7 @@ function updateStudentCalendar() {
 			}
 		}
 	};
-	xhttp.open("POST", "CalendarServlet");
+	xhttp.open("POST", "calendar");
 	xhttp.setRequestHeader("Content-Type", "application/plaintext; charset=UTF-8");
 	xhttp.setRequestHeader("rqtype", "setuser");
 	xhttp.setRequestHeader("userid", "setoffer");
@@ -107,7 +107,7 @@ function updateOfferCalendar() {
 			}
 		}
 	};
-	xhttp.open("POST", "CalendarServlet");
+	xhttp.open("POST", "calendar");
 	xhttp.setRequestHeader("Content-Type", "application/plaintext; charset=UTF-8");
 	xhttp.setRequestHeader("rqtype", "setoffer");
 	xhttp.setRequestHeader("offerid", "setoffer");

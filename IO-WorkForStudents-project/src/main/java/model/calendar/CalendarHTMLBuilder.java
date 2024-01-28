@@ -5,16 +5,22 @@ public class CalendarHTMLBuilder {
 	public static String get(Kalyndarz k) {
 
 		int minTime = 1339, maxTime = 0;
-		for (Interval i : k.intervals) {
-			if (minTime > i.begin) {
-				minTime = i.begin;
-			}
-			if (maxTime < i.end) {
-				maxTime = i.end;
+		if (k.intervals.size() > 0) {
+			for (Interval i : k.intervals) {
+				if (minTime > i.begin) {
+					minTime = i.begin;
+				}
+				if (maxTime < i.end) {
+					maxTime = i.end;
+				}
 			}
 		}
+		else {
+			minTime = 510;
+			maxTime = 900;
+		}
 
-		String ret = "<div id=\"calendar\" style=\"position: relative;\">";
+		String ret = "<div style=\"height: 400px; width: 800px; position: relative;position: relative;\">";
 
 		int mexTimeDelta = maxTime - minTime;
 
@@ -34,15 +40,15 @@ public class CalendarHTMLBuilder {
 		else {
 			d = 6.0f;
 		}
-		
+
 		int timeStep = (int) (60 / d);
 
 		int minStep = Integer.max(minTime - (minTime % timeStep) - timeStep, 0);
 		int maxStep = Integer.min(maxTime - (minTime % timeStep) + 2 * timeStep, 1440);
-		
+
 		int timeCount = (maxStep - minStep) / timeStep;
 
-		float timeHeight = 99.9f / (timeCount + 1);
+		float timeHeight = 99.9f / (timeCount + 2);
 
 		ret += "<div class=\"frame\" style=\"top: 0%; left: 0%; width: 10%; height: " + timeHeight + "%;\">Day</div>\n"
 				+ "<div class=\"frame\" style=\"top: 0%; left: 10%; width: 11%; height: " + timeHeight + "%;\">Monday</div>\n"
