@@ -3,72 +3,105 @@ package model.calendar;
 public class CalendarHTMLBuilder {
 
 	public static String get(Kalyndarz k) {
-		String ret = "<!DOCTYPE html>\n"
-				+ "<html>\n"
-				+ "<head>\n"
-				+ "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-2\">  \n"
-				+ "<title>kek</title>  \n"
-				+ "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/kalendarz.css\">\n"
-				+ "<script type=\"text/javascript\" language=\"JavaScript\" src=\"js/js.js\"></script>\n"
-				+ "</head>\n"
-				+ "<body>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 0%; width: 8%; height: 20px;\">Day</div>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 8%; width: 12%; height: 20px;\">Monday</div>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 20%; width: 12%; height: 20px;\">Tuesday</div>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 32%; width: 12%; height: 20px;\">Wednesday</div>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 44%; width: 12%; height: 20px;\">Thursday</div>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 56%; width: 12%; height: 20px;\">Friday</div>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 68%; width: 12%; height: 20px;\">Saturday</div>\n"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 80%; width: 12%; height: 20px;\">Sunday</div>"
-				+ "<div class=\"frame\" style=\"top: 0px; left: 92%; width: 7.9%; height: 20px;\">Day</div>\n";
 
-		for (int hour = 0; hour <= 23; hour++) {
-			// <editor-fold desc="Sidebar hour display text">
-			String hourText = "";
-			if (hour < 10) {
-				hourText += "0" + hour;
-			}
-			else {
-				hourText += hour;
-			}
-			hourText += ":00-";
-			if (hour < 9) {
-				hourText += "0" + (hour + 1);
-			}
-			else {
-				hourText += (hour + 1);
-			}
-			hourText += ":00";
-			// </editor-fold>
-			int topPosition = hour * 45 + 22;
-
-			ret += "<div class=\"frame\" style=\"top: " + topPosition + "px; left: 0%; width: 8%; height: 43px; line-height: 43px;\">" + hourText + "</div>\n";
-
-			for (int day = 0; day < 7; day++) {
-				int leftPosiiton = 8 + 12 * day;
-
-				for (int quarter = 0; quarter < 4; quarter++) {
-					int curTopPosition = topPosition + quarter * 11 + 1;
-					ret += "<div class=\"block\" style=\"top: " + curTopPosition + "px; left: " + leftPosiiton + "%; width: 12%; height: 10px;\"></div>\n";
+		int minTime = 1339, maxTime = 0;
+		if (k.intervals.size() > 0) {
+			for (Interval i : k.intervals) {
+				if (minTime > i.begin) {
+					minTime = i.begin;
+				}
+				if (maxTime < i.end) {
+					maxTime = i.end;
 				}
 			}
+		}
+		else {
+			minTime = 510;
+			maxTime = 900;
+		}
 
-			ret += "<div class=\"frame\" style=\"top: " + topPosition + "px; left: 92%; width: 7.9%; height: 43px; line-height: 43px;\">" + hourText + "</div>\n";
+		String ret = "<div style=\"height: 400px; width: 800px; position: relative;position: relative;\">";
+
+		int mexTimeDelta = maxTime - minTime;
+
+		float d;
+		if (mexTimeDelta > 1080) {
+			d = 0.5f;
+		}
+		else if (mexTimeDelta > 540) {
+			d = 1.0f;
+		}
+		else if (mexTimeDelta > 360) {
+			d = 2.0f;
+		}
+		else if (mexTimeDelta > 180) {
+			d = 3.0f;
+		}
+		else {
+			d = 6.0f;
+		}
+
+		int timeStep = (int) (60 / d);
+
+		int minStep = Integer.max(minTime - (minTime % timeStep) - timeStep, 0);
+		int maxStep = Integer.min(maxTime - (minTime % timeStep) + 2 * timeStep, 1440);
+
+		int timeCount = (maxStep - minStep) / timeStep;
+
+		float timeHeight = 99.9f / (timeCount + 2);
+
+		ret += "<div class=\"frame\" style=\"top: 0%; left: 0%; width: 10%; height: " + timeHeight + "%;\">Day</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 10%; width: 11%; height: " + timeHeight + "%;\">Monday</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 21%; width: 11%; height: " + timeHeight + "%;\">Tuesday</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 32%; width: 11%; height: " + timeHeight + "%;\">Wednesday</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 43%; width: 11%; height: " + timeHeight + "%;\">Thursday</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 54%; width: 11%; height: " + timeHeight + "%;\">Friday</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 65%; width: 11%; height: " + timeHeight + "%;\">Saturday</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 76%; width: 11%; height: " + timeHeight + "%;\">Sunday</div>\n"
+				+ "<div class=\"frame\" style=\"top: 0%; left: 87%; width: 10%; height: " + timeHeight + "%;\">Day</div>\n";
+
+		float verticalPos = timeHeight;
+		for (int time = minStep; time < maxStep; time += timeStep) {
+			String hourText = formatTime(time, time + timeStep);
+			ret += "<div class=\"frame\" style=\"top: " + verticalPos + "%; left: 0%; width: 10%; height: " + timeHeight + "%;\">" + hourText + "</div>\n";
+
+			for (int day = 0; day < 7; day++) {
+				float horizontalPos = 10 + 11 * day;
+				ret += "<div class=\"block\" style=\"top: " + verticalPos + "%; left: " + horizontalPos + "%; width: 11%; height: " + timeHeight + "%;\"></div>\n";
+			}
+
+			ret += "<div class=\"frame\" style=\"top: " + verticalPos + "%; left: 87%; width: 10%; height: " + timeHeight + "%;\">" + hourText + "</div>\n";
+
+			verticalPos += timeHeight;
 		}
 
 		for (var entry : k.intervals) {
-			int hourBegin = entry.begin / 60;
-			int hourEnd = (entry.end + 59) / 60;
+			verticalPos = timeHeight + (entry.getBeginHour() * 60.0f + entry.getBeginMinute() - minStep) / timeStep * timeHeight;
+			float height = (float) (entry.getLength()) / (float) (timeStep) * timeHeight;
 
-			int topPosition = hourBegin * 45 + 23 + (entry.begin - 60 * hourBegin) * 44 / 60;
-			int height = hourEnd * 45 + 13 + (entry.end - 60 * hourEnd) / 15 * 11 - topPosition;
+			float horizontalPos = 10 + 11 * entry.day;
 
-			int leftPosition = 8 + 12 * entry.day;
-
-			ret += "<div class=\"fill\" style=\"width: 11.58%; height: " + height + "px; top: " + topPosition + "px; left: " + leftPosition + "%; background-color: #696969; z-index: 1;\"></div>\n";
+			ret += "<div class=\"fill\" style=\"width: 11%; height: " + height + "%; top: " + verticalPos + "%; left: " + horizontalPos + "%;\"></div>\n";
 		}
-		ret += "</body>\n"
-				+ "</html>";
+		ret += "</div>";
 		return ret;
+	}
+
+	static String formatTime(int timeBegin, int timeEnd) {
+		String hourBegin = format2(timeBegin / 60);
+		String hourEnd = format2(timeEnd / 60);
+		String minuteBegin = format2(timeBegin % 60);
+		String minuteEnd = format2(timeEnd % 60);
+
+		return hourBegin + ":" + minuteBegin + "-" + hourEnd + ":" + minuteEnd;
+	}
+
+	static String format2(int val) {
+		if (val < 10) {
+			return "0" + val;
+		}
+		else {
+			return "" + val;
+		}
 	}
 }

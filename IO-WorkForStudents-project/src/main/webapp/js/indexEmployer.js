@@ -114,13 +114,16 @@ function displayOffers(offers) {
         showMoreElement.className = "showMore";
         // var showMoreElement = document.createElement("button");
 
-
+		var calendarDiv = document.createElement("div");
+		calendarDiv.id = "calendar" + offer.id_person;
 
         offerDiv.appendChild(titleElement);
         offerDiv.appendChild(contentElement);
         offerDiv.appendChild(showMoreElement);
+		offerDiv.appendChild(calendarDiv);
 
         containersContainer.appendChild(offerDiv);
+		getStudentCalendarHtml(offer.id_person);
     }
 	reveal();
 }

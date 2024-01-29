@@ -171,12 +171,25 @@ public class CalendarInterface extends Interface {
 
 	Kalyndarz getOfferCalendar(int offerID) {
 		try {
-			String query = "SELECT * FROM hours";
+			Kalyndarz k = new Kalyndarz();
+
+			String query = "SELECT * FROM offer_hours WHERE id_offer = '" + offerID + "'";
+			ResultSet results = statement.executeQuery(query);
+
+			while (results.next()) {
+				int begin = results.getInt("begin");
+				int end = results.getInt("end");
+				int day = getIdxFromDay(results.getString("day"));
+
+				k.intervals.add(new Interval(begin, end, day));
+			}
+
+			return k;
 		}
 		catch (Exception e) {
 			System.out.println(e);
+			return null;
 		}
-		return null;
 	}
 
 	int getLastStudHourId() {

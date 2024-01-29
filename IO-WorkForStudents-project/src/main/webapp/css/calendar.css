@@ -1,0 +1,23 @@
+.frame {
+	background-color: #eee;
+	border: 2px solid #666666;
+	font-family: verdana, helvetica;
+	font-weight: normal;
+	font-size: 10px;
+	text-align: center;
+	line-height: 20px;
+	position: absolute;
+}
+
+.block {
+	background-color: #fff;
+	border: 2px solid #666666;
+	position: absolute;
+}
+
+.fill {
+	overflow: hidden;
+	position: absolute;
+	background-color: #696969;
+	z-index: 1;
+}
