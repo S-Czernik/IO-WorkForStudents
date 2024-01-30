@@ -33,17 +33,16 @@ public class OffersSortAndFilterServlet extends HttpServlet {
 			int sort = Helper.getIntValueOf(request.getParameter("arg3"));
 			String search = request.getParameter("arg4");
 			String arg = request.getParameter("arg5");
-			ArrayList<Offer> offers = new ArrayList<>();
+			ArrayList<Offer> offers;
 
-			if (arg.equals("1")) {
-				offers = model.offerInterface.getSortedAndFilteredOffers(min, max, sort, search, last, number, 1);
-			}
-			else if (arg.equals("-1")) {
-				offers = model.offerInterface.getSortedAndFilteredOffers(min, max, sort, search, first, 0, -1);
-			}
-			else {
-				offers = model.offerInterface.getSortedAndFilteredOffers(min, max, sort, search, 0, 0, 0);
-			}
+			offers = switch (arg) {
+				case "1" ->
+					model.offerInterface.getSortedAndFilteredOffers(min, max, sort, search, last, number, 1);
+				case "-1" ->
+					model.offerInterface.getSortedAndFilteredOffers(min, max, sort, search, first, 0, -1);
+				default ->
+					model.offerInterface.getSortedAndFilteredOffers(min, max, sort, search, 0, 0, 0);
+			};
 			number = offers.size();
 
 			StringBuilder jsonOffers = new StringBuilder("[");

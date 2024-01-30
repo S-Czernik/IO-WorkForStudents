@@ -28,15 +28,17 @@ public class ProfilesDisplayServlet extends HttpServlet {
 
 		try (PrintWriter out = response.getWriter()) {
 			String arg = request.getParameter("arg1");
-			ArrayList<Offer> offers = new ArrayList<>();
-			
-			if (arg.equals("1")) {
-				offers = model.offerInterface.getProfiles(last, 0);
-			} else if (arg.equals("-1")) {
-				offers = model.offerInterface.getProfiles(first, 1);
-			} else {
-				first = model.offerInterface.getLastProfileId();
-				offers = model.offerInterface.getProfiles(first, 0);
+			ArrayList<Offer> offers;
+
+			switch (arg) {
+				case "1" ->
+					offers = model.offerInterface.getProfiles(last, 0);
+				case "-1" ->
+					offers = model.offerInterface.getProfiles(first, 1);
+				default -> {
+					first = model.offerInterface.getLastProfileId();
+					offers = model.offerInterface.getProfiles(first, 0);
+				}
 			}
 
 			StringBuilder jsonOffers = new StringBuilder("[");
@@ -52,14 +54,16 @@ public class ProfilesDisplayServlet extends HttpServlet {
 							.append("}");
 					if (i < offers.size() - 1) {
 						jsonOffers.append(",");
-					} else if (i == offers.size() - 1) {
+					}
+					else if (i == offers.size() - 1) {
 						last = offer.getIdPerson() - 1;
 					}
 					if (i == 0) {
 						first = offer.getIdPerson();
 					}
 				}
-			} else {
+			}
+			else {
 				offers = model.offerInterface.getProfiles(first, 0);
 				if (!offers.isEmpty()) {
 					for (int i = 0; i < offers.size(); i++) {
@@ -73,14 +77,16 @@ public class ProfilesDisplayServlet extends HttpServlet {
 								.append("}");
 						if (i < offers.size() - 1) {
 							jsonOffers.append(",");
-						} else if (i == offers.size() - 1) {
+						}
+						else if (i == offers.size() - 1) {
 							last = offer.getIdPerson() - 1;
 						}
 						if (i == 0) {
 							first = offer.getIdPerson();
 						}
 					}
-				} else {
+				}
+				else {
 					jsonOffers.append("{")
 							.append("\"title\": \"").append("Profile not found!").append("\"")
 							.append("}");
@@ -89,7 +95,8 @@ public class ProfilesDisplayServlet extends HttpServlet {
 			jsonOffers.append("]");
 
 			out.println(jsonOffers.toString());
-		} catch (Exception exp) {
+		}
+		catch (Exception exp) {
 			System.out.println(exp);
 		}
 	}

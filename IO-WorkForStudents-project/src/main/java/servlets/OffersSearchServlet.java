@@ -29,15 +29,17 @@ public class OffersSearchServlet extends HttpServlet {
 		try (PrintWriter out = response.getWriter()) {
 			String arg1 = request.getParameter("arg1");
 			String arg2 = request.getParameter("arg2");
-			ArrayList<Offer> offers = new ArrayList<>();
-			
-			if (arg2.equals("1")) {
-				offers = model.offerInterface.getSearchedOffers(arg1, last, 0);
-			} else if (arg2.equals("-1")) {
-				offers = model.offerInterface.getSearchedOffers(arg1, first, 1);
-			} else {
-				first = model.offerInterface.getLastOfferId();
-				offers = model.offerInterface.getSearchedOffers(arg1, first, 0);
+			ArrayList<Offer> offers;
+
+			switch (arg2) {
+				case "1" ->
+					offers = model.offerInterface.getSearchedOffers(arg1, last, 0);
+				case "-1" ->
+					offers = model.offerInterface.getSearchedOffers(arg1, first, 1);
+				default -> {
+					first = model.offerInterface.getLastOfferId();
+					offers = model.offerInterface.getSearchedOffers(arg1, first, 0);
+				}
 			}
 
 			StringBuilder jsonOffers = new StringBuilder("[");
@@ -54,14 +56,16 @@ public class OffersSearchServlet extends HttpServlet {
 							.append("}");
 					if (i < offers.size() - 1) {
 						jsonOffers.append(",");
-					} else if (i == offers.size() - 1) {
+					}
+					else if (i == offers.size() - 1) {
 						last = offer.getIdOffer() - 1;
 					}
 					if (i == 0) {
 						first = offer.getIdOffer();
 					}
 				}
-			} else {
+			}
+			else {
 				offers = model.offerInterface.getSearchedOffers(arg1, first, 0);
 				if (!offers.isEmpty()) {
 					for (int i = 0; i < offers.size(); i++) {
@@ -75,14 +79,16 @@ public class OffersSearchServlet extends HttpServlet {
 								.append("}");
 						if (i < offers.size() - 1) {
 							jsonOffers.append(",");
-						} else if (i == offers.size() - 1) {
+						}
+						else if (i == offers.size() - 1) {
 							last = offer.getIdOffer() - 1;
 						}
 						if (i == 0) {
 							first = offer.getIdOffer();
 						}
 					}
-				} else {
+				}
+				else {
 					jsonOffers.append("{")
 							.append("\"title\": \"").append("Offer not found!").append("\"")
 							.append("}");

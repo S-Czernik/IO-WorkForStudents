@@ -2,7 +2,7 @@ package model.calendar;
 
 public class CalendarHTMLBuilder {
 
-	public static String get(Kalyndarz k) {
+	public static String get(Calendar k) {
 
 		int minTime = 1339, maxTime = 0;
 		if (k.intervals.size() > 0) {
