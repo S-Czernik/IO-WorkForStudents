@@ -106,9 +106,9 @@ function loadCsv(csv) {
 	for (var i = 0; i < count; i++) {
 		addRow();
 
-		table.rows[i].cells[0].childNodes[0].value = convertMinuteToTime(parseInt(vals[3 * i + 0]));
-		table.rows[i].cells[1].childNodes[0].value = convertMinuteToTime(parseInt(vals[3 * i + 1]));
-		table.rows[i].cells[2].childNodes[0].value = convertMinuteToTime(parseInt(vals[3 * i + 2]));
+		table.rows[i + 1].cells[0].childNodes[0].value = convertMinuteToTime(parseInt(vals[3 * i + 0]));
+		table.rows[i + 1].cells[1].childNodes[0].value = convertMinuteToTime(parseInt(vals[3 * i + 1]));
+		table.rows[i + 1].cells[2].childNodes[0].value = vals[3 * i + 2];
 	}
 
 	addRow();
