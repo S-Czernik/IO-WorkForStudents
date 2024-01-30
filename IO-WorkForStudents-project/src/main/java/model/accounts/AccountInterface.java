@@ -93,7 +93,7 @@ public class AccountInterface extends Interface {
     int getLastUserId() {
         try {
             String query = "SELECT MAX(id_user) AS max FROM USERS";
-            ResultSet results = statement.executeQuery(query);
+            ResultSet results = connection.createStatement().executeQuery(query);
 
             if (results.next()) {
                 return results.getInt("max");
@@ -108,7 +108,7 @@ public class AccountInterface extends Interface {
     int getLastDetailID(String type) {
         try {
             String query = "SELECT MAX(id_" + type + ") AS max FROM " + type;
-            ResultSet results = statement.executeQuery(query);
+            ResultSet results = connection.createStatement().executeQuery(query);
 
             if (results.next()) {
                 return results.getInt("max");
@@ -123,7 +123,7 @@ public class AccountInterface extends Interface {
     public int getUserCount() {
         try {
             String query = "SELECT COUNT(*) AS count FROM users";
-            ResultSet results = statement.executeQuery(query);
+            ResultSet results = connection.createStatement().executeQuery(query);
 
             if (results.next()) {
                 return results.getInt("count");
@@ -138,7 +138,7 @@ public class AccountInterface extends Interface {
     public int getUserCount(String type) {
         try {
             String query = "SELECT COUNT(*) AS count FROM USERS WHERE type = '" + type + "'";
-            ResultSet results = statement.executeQuery(query);
+            ResultSet results = connection.createStatement().executeQuery(query);
 
             if (results.next()) {
                 return results.getInt("count");

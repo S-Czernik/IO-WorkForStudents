@@ -554,7 +554,7 @@ public class OfferInterface extends Interface {
 	public int getLastOfferId() {
 		try {
 			String query = "SELECT MAX(id_offer) AS last_offer FROM offers";
-			ResultSet results = statement.executeQuery(query);
+			ResultSet results = connection.createStatement().executeQuery(query);
 
 			if (results.next()) {
 				return results.getInt("last_offer");
@@ -570,7 +570,7 @@ public class OfferInterface extends Interface {
 	public int getLastProfileId() {
 		try {
 			String query = "SELECT MAX(id_stud) AS last_offer FROM STUDENT_PROFILES";
-			ResultSet results = statement.executeQuery(query);
+			ResultSet results = connection.createStatement().executeQuery(query);
 
 			if (results.next()) {
 				return results.getInt("last_offer");

@@ -6,7 +6,7 @@ import model.Interface;
 
 public class CalendarInterface extends Interface {
 
-	String getDayFromIdx(int v) {
+	public static String getDayFromIdx(int v) {
 		switch (v) {
 			case 0 -> {
 				return "mon";
@@ -33,7 +33,7 @@ public class CalendarInterface extends Interface {
 		return "";
 	}
 
-	int getIdxFromDay(String v) {
+	public static int getIdxFromDay(String v) {
 		switch (v) {
 			case "mon" -> {
 				return 0;
@@ -97,14 +97,16 @@ public class CalendarInterface extends Interface {
 			Kalyndarz k = new Kalyndarz();
 			k.loadCSV(csv);
 
-			statement.execute("DELETE FROM student_hours WHERE id_stud = '" + userID + "'");
+			connection.createStatement().execute("DELETE FROM student_hours WHERE id_stud = '" + userID + "'");
 			for (var i : k.intervals) {
-				PreparedStatement stmt = model.connection.prepareStatement("INSERT INTO student_hours(id_hour, id_stud, begin, end, day) VALUES (?,?,?,?)");
-				stmt.setInt(0, getLastStudHourId());
-				stmt.setInt(1, userID);
-				stmt.setInt(2, i.begin);
-				stmt.setInt(3, i.end);
-				stmt.setString(3, getDayFromIdx(i.day));
+				PreparedStatement stmt = model.connection.prepareStatement("INSERT INTO student_hours(id_hour, id_stud, begin, end, day) VALUES (?,?,?,?,?)");
+				stmt.setInt(1, getLastStudHourId() + 1);
+				stmt.setInt(2, userID);
+				stmt.setInt(3, i.begin);
+				stmt.setInt(4, i.end);
+				stmt.setString(5, getDayFromIdx(i.day));
+				
+				stmt.execute();
 			}
 			return true;
 		}
@@ -119,14 +121,16 @@ public class CalendarInterface extends Interface {
 			Kalyndarz k = new Kalyndarz();
 			k.loadCSV(csv);
 
-			statement.execute("DELETE FROM offer_hours WHERE id_stud = '" + offerID + "'");
+			connection.createStatement().execute("DELETE FROM offer_hours WHERE id_stud = '" + offerID + "'");
 			for (var i : k.intervals) {
-				PreparedStatement stmt = model.connection.prepareStatement("INSERT INTO offer_hours(id_hour, id_offer, begin, end, day) VALUES (?,?,?,?)");
-				stmt.setInt(0, getLastStudHourId());
-				stmt.setInt(1, offerID);
-				stmt.setInt(2, i.begin);
-				stmt.setInt(3, i.end);
-				stmt.setString(3, getDayFromIdx(i.day));
+				PreparedStatement stmt = model.connection.prepareStatement("INSERT INTO offer_hours(id_hour, id_offer, begin, end, day) VALUES (?,?,?,?,?)");
+				stmt.setInt(1, getLastStudHourId() + 1);
+				stmt.setInt(2, offerID);
+				stmt.setInt(3, i.begin);
+				stmt.setInt(4, i.end);
+				stmt.setString(5, getDayFromIdx(i.day));
+				
+				stmt.execute();
 			}
 			return true;
 		}
@@ -151,7 +155,7 @@ public class CalendarInterface extends Interface {
 			Kalyndarz k = new Kalyndarz();
 
 			String query = "SELECT * FROM student_hours WHERE id_stud = '" + userID + "'";
-			ResultSet results = statement.executeQuery(query);
+			ResultSet results = connection.createStatement().executeQuery(query);
 
 			while (results.next()) {
 				int begin = results.getInt("begin");
@@ -174,7 +178,7 @@ public class CalendarInterface extends Interface {
 			Kalyndarz k = new Kalyndarz();
 
 			String query = "SELECT * FROM offer_hours WHERE id_offer = '" + offerID + "'";
-			ResultSet results = statement.executeQuery(query);
+			ResultSet results = connection.createStatement().executeQuery(query);
 
 			while (results.next()) {
 				int begin = results.getInt("begin");
@@ -195,7 +199,7 @@ public class CalendarInterface extends Interface {
 	int getLastStudHourId() {
 		try {
 			String query = "SELECT MAX(id_hour) AS max FROM student_hours";
-			ResultSet results = statement.executeQuery(query);
+			ResultSet results = connection.createStatement().executeQuery(query);
 
 			if (results.next()) {
 				return results.getInt("max");
@@ -211,7 +215,7 @@ public class CalendarInterface extends Interface {
 	int getLastOfferHourId() {
 		try {
 			String query = "SELECT MAX(id_hour) AS max FROM offer_hours";
-			ResultSet results = statement.executeQuery(query);
+			ResultSet results = connection.createStatement().executeQuery(query);
 
 			if (results.next()) {
 				return results.getInt("max");
