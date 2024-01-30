@@ -93,7 +93,7 @@ public class NotificationInterface extends Interface {
 	public int getLastEmpNotification() {
 		try {
 			String query = "SELECT MAX(id_box_emp) AS max FROM mailbox_employer";
-			ResultSet results = statement.executeQuery(query);
+			ResultSet results = connection.createStatement().executeQuery(query);
 
 			if (results.next()) {
 				return results.getInt("max");
@@ -109,7 +109,7 @@ public class NotificationInterface extends Interface {
 	public int getLastStudNotification() {
 		try {
 			String query = "SELECT MAX(id_box_stud) AS max FROM mailbox_student";
-			ResultSet results = statement.executeQuery(query);
+			ResultSet results = connection.createStatement().executeQuery(query);
 
 			if (results.next()) {
 				return results.getInt("max");
