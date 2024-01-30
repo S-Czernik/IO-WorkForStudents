@@ -33,29 +33,25 @@ public class NotificationHandlerServlet extends HttpServlet {
 			Notification notif = model.notificationInterface.getNotification(notif_id, userType);
 			String recieverType;
 
-			if (userType.equals("student")) {
-				recieverType = "employer";
-			}
-			else if (userType.equals("employer")) {
-				recieverType = "student";
-			}
-			else {
-				recieverType = "unknown";
-			}
+			recieverType = switch (userType) {
+				case "student" ->
+					"employer";
+				case "employer" ->
+					"student";
+				default ->
+					"unknown";
+			};
 
-			//need to delete notification from users list ASAP 
-			if (action.equals("accept")) {
-				model.notificationInterface.createNotification(notif, recieverType, action);
-				model.notificationInterface.deleteNotification(notif_id, userType);
-			}
-			else if (action.equals("reject")) {
-				model.notificationInterface.deleteNotification(notif_id, userType);
-			}
-			else if (action.equals("delete")) {
-				model.notificationInterface.deleteNotification(notif_id, userType);
-			}
-			else {
-				// Something else
+			//need to delete notification from users list ASAP
+			switch (action) {
+				case "accept" -> {
+					model.notificationInterface.createNotification(notif, recieverType, action);
+					model.notificationInterface.deleteNotification(notif_id, userType);
+				}
+				case "reject" ->
+					model.notificationInterface.deleteNotification(notif_id, userType);
+				case "delete" ->
+					model.notificationInterface.deleteNotification(notif_id, userType);
 			}
 
 		}

@@ -1,6 +1,6 @@
 package servlets;
 
-import model.calendar.Kalyndarz;
+import model.calendar.Calendar;
 import model.calendar.CalendarHTMLBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -58,7 +58,7 @@ public class CalendarServlet extends HttpServlet {
 		}
 		else {
 			response.setContentType("text/html;charset=UTF-8");
-			Kalyndarz test = new Kalyndarz();
+			Calendar test = new Calendar();
 			test.loadCSV("762,863,1");
 			out.print(CalendarHTMLBuilder.get(test));
 		}
@@ -87,10 +87,11 @@ public class CalendarServlet extends HttpServlet {
 				model.calendarInterface.saveOfferCalendarToDatabase(offerID, csv);
 			}
 			case "gethtml" -> {
-				Kalyndarz k = new Kalyndarz();
+				Calendar k = new Calendar();
 				k.loadCSV(csv);
 				out.print(CalendarHTMLBuilder.get(k));
 			}
+
 		}
 		out.close();
 	}

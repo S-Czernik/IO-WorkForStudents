@@ -29,17 +29,16 @@ public class OffersWithId extends HttpServlet {
 		try (PrintWriter out = response.getWriter()) {
 			String id = request.getParameter("arg1");
 			String arg = request.getParameter("arg2");
-			ArrayList<Offer> offers = new ArrayList<>();
+			ArrayList<Offer> offers;
 
-			if (arg.equals("1")) {
-				offers = model.offerInterface.getOffersWithId(id, last, number, 1);
-			}
-			else if (arg.equals("-1")) {
-				offers = model.offerInterface.getOffersWithId( id, first, 0, -1);
-			}
-			else {
-				offers = model.offerInterface.getOffersWithId( id, 0, 0, 0);
-			}
+			offers = switch (arg) {
+				case "1" ->
+					model.offerInterface.getOffersWithId(id, last, number, 1);
+				case "-1" ->
+					model.offerInterface.getOffersWithId(id, first, 0, -1);
+				default ->
+					model.offerInterface.getOffersWithId(id, 0, 0, 0);
+			};
 			number = offers.size();
 
 			StringBuilder jsonOffers = new StringBuilder("[");

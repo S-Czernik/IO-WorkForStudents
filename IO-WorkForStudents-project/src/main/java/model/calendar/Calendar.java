@@ -3,11 +3,11 @@ package model.calendar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Kalyndarz {
+public class Calendar {
 
 	List<Interval> intervals;
 
-	public Kalyndarz() {
+	public Calendar() {
 		intervals = new ArrayList<>();
 	}
 
@@ -38,7 +38,7 @@ public class Kalyndarz {
 		}
 	}
 
-	float compare(final Kalyndarz cmp) {
+	float compare(final Calendar cmp) {
 		return 0.0f;
 	}
 }

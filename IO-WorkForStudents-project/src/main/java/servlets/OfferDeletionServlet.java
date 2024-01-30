@@ -29,7 +29,7 @@ public class OfferDeletionServlet extends HttpServlet {
 			// Send a response to the client
 			response.getWriter().write(deleted ? "true" : "false");
 		}
-		catch (Exception e) {
+		catch (IOException e) {
 			System.out.println(e);
 		}
 	}

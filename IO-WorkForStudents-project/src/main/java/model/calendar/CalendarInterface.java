@@ -61,7 +61,7 @@ public class CalendarInterface extends Interface {
 	}
 
 	public String getStudentCalendarCsv(int userID) {
-		Kalyndarz ret = getStudentCalendar(userID);
+		Calendar ret = getStudentCalendar(userID);
 		if (ret == null) {
 			return null;
 		}
@@ -69,7 +69,7 @@ public class CalendarInterface extends Interface {
 	}
 
 	public String getOfferCalendarCsv(int offerID) {
-		Kalyndarz ret = getOfferCalendar(offerID);
+		Calendar ret = getOfferCalendar(offerID);
 		if (ret == null) {
 			return null;
 		}
@@ -77,7 +77,7 @@ public class CalendarInterface extends Interface {
 	}
 
 	public String getStudentCalendarHtml(int userID) {
-		Kalyndarz ret = getStudentCalendar(userID);
+		Calendar ret = getStudentCalendar(userID);
 		if (ret == null) {
 			return null;
 		}
@@ -85,7 +85,7 @@ public class CalendarInterface extends Interface {
 	}
 
 	public String getOfferCalendarHtml(int offerID) {
-		Kalyndarz ret = getOfferCalendar(offerID);
+		Calendar ret = getOfferCalendar(offerID);
 		if (ret == null) {
 			return null;
 		}
@@ -94,7 +94,7 @@ public class CalendarInterface extends Interface {
 
 	public boolean saveStudentCalendarToDatabase(int userID, String csv) {
 		try {
-			Kalyndarz k = new Kalyndarz();
+			Calendar k = new Calendar();
 			k.loadCSV(csv);
 
 			connection.createStatement().execute("DELETE FROM student_hours WHERE id_stud = '" + userID + "'");
@@ -118,7 +118,7 @@ public class CalendarInterface extends Interface {
 
 	public boolean saveOfferCalendarToDatabase(int offerID, String csv) {
 		try {
-			Kalyndarz k = new Kalyndarz();
+			Calendar k = new Calendar();
 			k.loadCSV(csv);
 
 			connection.createStatement().execute("DELETE FROM offer_hours WHERE id_stud = '" + offerID + "'");
@@ -141,8 +141,8 @@ public class CalendarInterface extends Interface {
 	}
 
 	public float compareCalendars(int userID, int offerID) {
-		Kalyndarz stud = getStudentCalendar(userID);
-		Kalyndarz offer = getOfferCalendar(offerID);
+		Calendar stud = getStudentCalendar(userID);
+		Calendar offer = getOfferCalendar(offerID);
 
 		if (stud != null && offer != null) {
 			return stud.compare(offer);
@@ -150,9 +150,9 @@ public class CalendarInterface extends Interface {
 		return 0.0f;
 	}
 
-	Kalyndarz getStudentCalendar(int userID) {
+	Calendar getStudentCalendar(int userID) {
 		try {
-			Kalyndarz k = new Kalyndarz();
+			Calendar k = new Calendar();
 
 			String query = "SELECT * FROM student_hours WHERE id_stud = '" + userID + "'";
 			ResultSet results = connection.createStatement().executeQuery(query);
@@ -173,9 +173,9 @@ public class CalendarInterface extends Interface {
 		}
 	}
 
-	Kalyndarz getOfferCalendar(int offerID) {
+	Calendar getOfferCalendar(int offerID) {
 		try {
-			Kalyndarz k = new Kalyndarz();
+			Calendar k = new Calendar();
 
 			String query = "SELECT * FROM offer_hours WHERE id_offer = '" + offerID + "'";
 			ResultSet results = connection.createStatement().executeQuery(query);

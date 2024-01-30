@@ -31,7 +31,7 @@ h1 {
     text-align: center;
 }
 .container.text {
-  overflow-wrap: break-word; /* Automatyczne zawijanie słów na końcu linii */
+	overflow-wrap: break-word; /* Automatyczne zawijanie słów na końcu linii */
 }
 h2{
     text-align: center;
@@ -40,9 +40,9 @@ h2{
 }
 
 .mainDiv{
-    
+
     margin: 100px auto;
-    
+
 }
 
 .confirmation-modal {

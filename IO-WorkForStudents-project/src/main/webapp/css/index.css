@@ -1,6 +1,6 @@
 
 .containersContainer {
-    
+
     flex-basis: 70%;
     float: right;
     display: flex;
@@ -23,7 +23,7 @@
     transform: translateY(30px);
     opacity: 0;
     transition: 0.5s all ease;
-    
+
 }
 
 .container.active{
@@ -39,7 +39,7 @@
     text-align: justify;
     background-color: white;
     border-radius: 20px;
-    
+	
 
 }
 .container:nth-child(odd) {
@@ -50,7 +50,7 @@
     text-align: justify;
     background-color: white;
     border-radius: 20px;
-    
+	
 
 }
 */
@@ -62,7 +62,7 @@
     float: left;
     width: 55%;
     margin-left: 20px;
-    
+
 }
 
 .offerTags{
@@ -71,21 +71,21 @@
     overflow: auto;
     margin: auto;
     margin-top: 10px;
-    
+
 }
 
 .offerPercentage{
     text-align: right;
     width: 35%;
     float: left;
-    
+
 }
 .offerContent{
     width: 95%;
     overflow: auto;
     margin: auto;
     padding: 2em;
-    
+
 }
 
 h1 {
@@ -134,7 +134,7 @@ h2{
     width: 90%;
     float: right;
     margin-top: 60px;
-    
+
 }
 
 .input_styling{
@@ -177,7 +177,7 @@ h2{
     transition: background-color 0.3s ease;
     font-family: 'Lato', cursive;
 }
-    
+
 .side-panel {
     position: fixed;
     margin-top: 60px;
@@ -187,12 +187,12 @@ h2{
     background-color: #fff;
     border: #E66A50 1px solid;
     border-radius: 10px;
-    padding: 10px; 
+    padding: 10px;
 }
 .side-panel >*{
-    
+
     color: #5a5a5a;
-    
+
 }
 
 .side-panel input[type="submit"] {
@@ -231,10 +231,10 @@ h2{
     background-color: #007bff;
     transition: background-color 0.3s ease;
     font-family: 'Lato', cursive;
-    
-    
-    
-    
+
+
+
+
 }
 
 .side-panel input[type="submit"]:hover {
@@ -248,12 +248,12 @@ h2{
 .footer{
     height: 200px;
     flex-basis: 100%;
-    
-    
-    
+
+
+
 }
 .footerButton{
-    
+
     background-color: #E66A50;
     color: white;
     font-size: 20px;
@@ -310,16 +310,16 @@ h2{
 .sideMainHeader{
     color: #1f1f1f;
     font-size: 26px;
-    
-    
-    
+
+
+
 }
 .sideh1{
     font-size: 20px;
 
 }
 .sortLabelFrame > *{
-    margin: 5px; 
+    margin: 5px;
 }
 
 .filterLabelFrame{
@@ -345,7 +345,7 @@ h2{
     border-radius: 5px;
     transition: background-color 0.3s ease;
     border: #E66A50 1px solid;
-    
+
 }
 .customNumberLabel{
     width: 10%;
@@ -356,5 +356,5 @@ h2{
     border: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    
+
 }

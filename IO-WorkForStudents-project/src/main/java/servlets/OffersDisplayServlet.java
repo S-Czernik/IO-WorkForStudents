@@ -28,15 +28,17 @@ public class OffersDisplayServlet extends HttpServlet {
 
 		try (PrintWriter out = response.getWriter()) {
 			String arg = request.getParameter("arg1");
-			ArrayList<Offer> offers = new ArrayList<>();
+			ArrayList<Offer> offers;
 
-			if (arg.equals("1")) {
-				offers = model.offerInterface.getOffers(last, 0);
-			} else if (arg.equals("-1")) {
-				offers = model.offerInterface.getOffers(first, 1);
-			} else {
-				first = model.offerInterface.getLastOfferId();
-				offers = model.offerInterface.getOffers(first, 0);
+			switch (arg) {
+				case "1" ->
+					offers = model.offerInterface.getOffers(last, 0);
+				case "-1" ->
+					offers = model.offerInterface.getOffers(first, 1);
+				default -> {
+					first = model.offerInterface.getLastOfferId();
+					offers = model.offerInterface.getOffers(first, 0);
+				}
 			}
 
 			StringBuilder jsonOffers = new StringBuilder("[");
@@ -53,14 +55,16 @@ public class OffersDisplayServlet extends HttpServlet {
 							.append("}");
 					if (i < offers.size() - 1) {
 						jsonOffers.append(",");
-					} else if (i == offers.size() - 1) {
+					}
+					else if (i == offers.size() - 1) {
 						last = offer.getIdOffer() - 1;
 					}
 					if (i == 0) {
 						first = offer.getIdOffer();
 					}
 				}
-			} else {
+			}
+			else {
 				offers = model.offerInterface.getOffers(first, 0);
 				if (!offers.isEmpty()) {
 					for (int i = 0; i < offers.size(); i++) {
@@ -74,23 +78,26 @@ public class OffersDisplayServlet extends HttpServlet {
 								.append("}");
 						if (i < offers.size() - 1) {
 							jsonOffers.append(",");
-						} else if (i == offers.size() - 1) {
+						}
+						else if (i == offers.size() - 1) {
 							last = offer.getIdOffer() - 1;
 						}
 						if (i == 0) {
 							first = offer.getIdOffer();
 						}
 					}
-				} else {
+				}
+				else {
 					jsonOffers.append("{")
 							.append("\"title\": \"").append("Offer not found!").append("\"")
 							.append("}");
 				}
 			}
 			jsonOffers.append("]");
-			
+
 			out.println(jsonOffers.toString());
-		} catch (Exception exp) {
+		}
+		catch (Exception exp) {
 			System.out.println(exp);
 		}
 	}
