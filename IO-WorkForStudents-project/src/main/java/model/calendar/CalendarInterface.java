@@ -105,7 +105,7 @@ public class CalendarInterface extends Interface {
 				stmt.setInt(3, i.begin);
 				stmt.setInt(4, i.end);
 				stmt.setString(5, getDayFromIdx(i.day));
-				
+
 				stmt.execute();
 			}
 			return true;
@@ -129,7 +129,7 @@ public class CalendarInterface extends Interface {
 				stmt.setInt(3, i.begin);
 				stmt.setInt(4, i.end);
 				stmt.setString(5, getDayFromIdx(i.day));
-				
+
 				stmt.execute();
 			}
 			return true;
@@ -140,7 +140,17 @@ public class CalendarInterface extends Interface {
 		}
 	}
 
-	public float compareCalendars(int userID, int offerID) {
+	public float compareToStudent(int userID, int offerID) {
+		Calendar stud = getStudentCalendar(userID);
+		Calendar offer = getOfferCalendar(offerID);
+
+		if (stud != null && offer != null) {
+			return offer.compare(stud);
+		}
+		return 0.0f;
+	}
+
+	public float compareToOffer(int userID, int offerID) {
 		Calendar stud = getStudentCalendar(userID);
 		Calendar offer = getOfferCalendar(offerID);
 

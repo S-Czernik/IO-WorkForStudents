@@ -54,17 +54,32 @@ function getOfferCalendarHtml(id_offer, div_name = "") {
 	xhttp.open("GET", "calendar?rqtype=getofferhtml&offerid=" + id_offer);
 	xhttp.send();
 }
-function getCalendarCompatibility() {
+
+function getStudentCalendarCompatibility(id_stud) {
 	var xhttp = new XMLHttpRequest();
 	id_offer = sessionStorage.getItem('found_id_offer');
 	xhttp.onreadystatechange = function () {
 		if (this.readyState === 4) {
 			if (this.status === 200) {
-				//load number into display
+				document.getElementById("calendarmatching" + id_stud).innerHTML = this.responseText.substring(0, 4) + '%';
 			}
 		}
 	};
-	xhttp.open("GET", "calendar?rqtype=compare&userid=" + id_stud + "&offerid=" + id_offer);
+	xhttp.open("GET", "calendar?rqtype=cmpstud&userid=" + id_stud + "&offerid=" + id_offer);
+	xhttp.send();
+}
+
+function getOfferCalendarCompatibility(id_offer) {
+	var xhttp = new XMLHttpRequest();
+	id_stud = sessionStorage.getItem('found_id');
+	xhttp.onreadystatechange = function () {
+		if (this.readyState === 4) {
+			if (this.status === 200) {
+				document.getElementById("calendarmatching" + id_offer).innerHTML = this.responseText.substring(0, 4) + '%';
+			}
+		}
+	};
+	xhttp.open("GET", "calendar?rqtype=cmpoffer&userid=" + id_stud + "&offerid=" + id_offer);
 	xhttp.send();
 }
 

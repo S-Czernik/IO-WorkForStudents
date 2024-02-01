@@ -98,29 +98,30 @@ function displayOffers(offers) {
 		var titleElement = document.createElement("h2");
 		titleElement.innerText = offer.title;
 		titleElement.className = "offerTitle";
+		offerDiv.appendChild(titleElement);
 
 		var contentElement = document.createElement("p");
 		contentElement.innerText = offer.content;
 		contentElement.className = "offerContent";
+		offerDiv.appendChild(contentElement);
 
 		var showMoreElement = document.createElement("button");
 		showMoreElement.innerText = "show more";
 		showMoreElement.value = "show more";
 		showMoreElement.className = "showMore";
-		//  var showMoreElement = document.createElement("button");
+		offerDiv.appendChild(showMoreElement);
 
 		var calendarDiv = document.createElement("div");
 		calendarDiv.id = "calendar" + offer.id_offer;
-
-
-
-		offerDiv.appendChild(titleElement);
-		offerDiv.appendChild(contentElement);
-		offerDiv.appendChild(showMoreElement);
 		offerDiv.appendChild(calendarDiv);
+
+		var calendarMatchingDiv = document.createElement("div");
+		calendarMatchingDiv.id = "calendarmatching" + offer.id_offer;
+		offerDiv.appendChild(calendarMatchingDiv);
 
 		containersContainer.appendChild(offerDiv);
 		getOfferCalendarHtml(offer.id_offer);
+		getOfferCalendarCompatibility(offer.id_offer);
 	}
 	reveal();
 }

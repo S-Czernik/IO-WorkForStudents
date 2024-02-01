@@ -50,17 +50,15 @@ public class CalendarServlet extends HttpServlet {
 					response.setContentType("text/html;charset=UTF-8");
 					out.print(model.calendarInterface.getOfferCalendarHtml(offerID));
 				}
-				case "compare" -> {
+				case "cmpstud" -> {
 					response.setContentType("text/plaintext;charset=UTF-8");
-					out.print(model.calendarInterface.compareCalendars(userID, offerID));
+					out.print(model.calendarInterface.compareToStudent(userID, offerID));
+				}
+				case "cmpoffer" -> {
+					response.setContentType("text/plaintext;charset=UTF-8");
+					out.print(model.calendarInterface.compareToOffer(userID, offerID));
 				}
 			}
-		}
-		else {
-			response.setContentType("text/html;charset=UTF-8");
-			Calendar test = new Calendar();
-			test.loadCSV("762,863,1");
-			out.print(CalendarHTMLBuilder.get(test));
 		}
 		out.close();
 	}

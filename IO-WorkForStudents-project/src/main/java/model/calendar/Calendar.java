@@ -20,7 +20,16 @@ public class Calendar {
 			var d = CalendarInterface.getIdxFromDay(values[i + 2]);
 			var interval = new Interval(bg, nd, d);
 			if (interval.ok()) {
-				intervals.add(interval);
+				boolean doesntIntersect = true;
+				for (var j : intervals) {
+					if (j.sum(interval)) {
+						doesntIntersect = false;
+						break;
+					}
+				}
+				if (doesntIntersect) {
+					intervals.add(interval);
+				}
 			}
 		}
 	}
@@ -38,7 +47,17 @@ public class Calendar {
 		}
 	}
 
-	float compare(final Calendar cmp) {
-		return 0.0f;
+	float compare(Calendar cmp) {
+		int totalArea = 0;
+		for (var i : intervals) {
+			totalArea += i.getLength();
+		}
+
+		int subArea = 0;
+		for (var i : intervals) {
+			subArea += i.sub(cmp.intervals);
+		}
+
+		return 1.0f - ((float) (totalArea) / (float) (subArea));
 	}
 }
