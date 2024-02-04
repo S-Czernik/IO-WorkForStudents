@@ -58,6 +58,6 @@ public class Calendar {
 			subArea += i.sub(cmp.intervals);
 		}
 
-		return 1.0f - ((float) (totalArea) / (float) (subArea));
+		return 1.0f - ((float) (subArea) / (float) (totalArea));
 	}
 }

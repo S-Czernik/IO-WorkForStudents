@@ -108,7 +108,7 @@ function updateStudentCalendar(csv) {
 			}
 		}
 	};
-	xhttp.open("POST", "calendar");
+	xhttp.open("POST", "calendar", false);
 	xhttp.setRequestHeader("Content-Type", "application/plaintext; charset=UTF-8");
 	xhttp.setRequestHeader("rqtype", "setuser");
 	xhttp.setRequestHeader("userid", id_stud);
@@ -124,7 +124,7 @@ function updateOfferCalendar(csv) {
 			}
 		}
 	};
-	xhttp.open("POST", "calendar");
+	xhttp.open("POST", "calendar", false);
 	xhttp.setRequestHeader("Content-Type", "application/plaintext; charset=UTF-8");
 	xhttp.setRequestHeader("rqtype", "setoffer");
 	xhttp.setRequestHeader("offerid", id_offer);

@@ -52,11 +52,13 @@ public class CalendarServlet extends HttpServlet {
 				}
 				case "cmpstud" -> {
 					response.setContentType("text/plaintext;charset=UTF-8");
-					out.print(model.calendarInterface.compareToStudent(userID, offerID));
+					float result = model.calendarInterface.compareToStudent(userID, offerID);
+					out.print(result != Float.NEGATIVE_INFINITY ? String.valueOf(result * 100) : "no");
 				}
 				case "cmpoffer" -> {
 					response.setContentType("text/plaintext;charset=UTF-8");
-					out.print(model.calendarInterface.compareToOffer(userID, offerID));
+					float result = model.calendarInterface.compareToOffer(userID, offerID);
+					out.print(result != Float.NEGATIVE_INFINITY ? String.valueOf(result * 100) : "no");
 				}
 			}
 		}

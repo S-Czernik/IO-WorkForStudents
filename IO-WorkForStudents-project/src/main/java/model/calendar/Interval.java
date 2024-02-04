@@ -75,8 +75,10 @@ public class Interval {
 						}
 					}
 				}
+				else
+					next.add(c);
 			}
-			cur = next;
+			cur = new ArrayList<>(next);
 			next.clear();
 		}
 
