@@ -94,9 +94,12 @@
         </div>
 		<div class="confirmation-modal" id="confirmationModal">
 			<p>Are you sure you want to perform this action?</p>
+                       
 			<p>Action: <span id="modalAction"></span></p>
-			<button onclick="confirmAction(true, '')">Yes</button>
-			<button onclick="confirmAction(false)">No</button>
+                        <div class="button-container"> 
+			<button class="button-styling" onclick="confirmAction(true, '')">Yes</button>
+			<button class="button-styling" onclick="confirmAction(false)">No</button>
+                        </div>
 		</div>
 		<div id="calendar">
 		</div>

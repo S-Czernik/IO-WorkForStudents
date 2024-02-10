@@ -54,6 +54,7 @@
     right: -400px;
     padding: 0;
     background: #A14A38;
+    color: white;
     transition: 0.8s transform ease;
 }
 .side-menu.active{
@@ -81,7 +82,7 @@
     background: #A14A38;
     flex-basis: 100%;
     margin-top: 20px;
-    color: black;
+    color: white;
     border-radius: 5px;
     overflow: hidden;
 }
@@ -93,40 +94,49 @@
     width: 100%;
     height: 100%;
     background: #E66A50;
+    color: white;
+    border: 3px solid #A14A38;
+    border-radius: 10px;
     text-decoration: none;
     box-sizing: border-box;
 }
 
 .side-menu ul li notif {
+    background-color: #E66A50;
+    color: white; 
     display: flex;
     padding: 10px;
     align-items: center;
     width: 100%;
     height: 100%;
-    background: #E66A50;
-    color: white;
+
     box-sizing: border-box;
 }
 
 /* Add styles for the button */
 .side-menu ul li button {
     padding: 10px;
-    background: #E66A50;
-    align-items: center;
+   background-color: #E66A50;
     color: white;
-    border: none;
+    align-items: center;
+    margin: 10px;
+    border: #A14A38 2px solid;
+     border-radius: 4px;
+    transition: background-color 0.3s;
     cursor: pointer;
 }
 
 .side-menu ul li .text-container {
     display: flex;
     flex-direction: column;
+    color: white;
     width: 100%;
 }
 
 .side-menu ul li .button-container {
     display: flex;
     width: 100%;
+    margin: 10px;
     margin-top: 10px; /* Add margin to separate button from text */
 }
 
@@ -139,10 +149,32 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-53%, -190%);
     background: white;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 40px;
+    border: 3px solid #A14A38;
+    border-radius: 10px;
     z-index: 1000;
+}
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.button-styling{
+   background-color: #E66A50;
+    color: white;
+    font-size: 17px;
+    border-radius: 5px;
+    height: 40px;
+    width: 60px; 
+    margin: 10px; 
+    border: #A14A38 2px solid;
+    transition: background-color 0.3s;
+}
+.button-styling:hover{
+    background-color: white;
+    color: #E66A50;
+    border-radius: 3px;
+    cursor: pointer;
 }
