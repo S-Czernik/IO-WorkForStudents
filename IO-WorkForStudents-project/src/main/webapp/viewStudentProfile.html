@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Profile</title>
+        <script type="text/javascript" src="js/viewStudentProfile.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/profileStudent.css">
+        <link rel="stylesheet" type="text/css" href="css/profile.css">
+        <link rel="stylesheet" type="text/css" href="css/topBar.css">
+    </head>
+    <body>
+        <div class="top-bar" id="startPage">
+            <a class="logo" href = "profileEmployer.html">Return</a>         
+        </div>
+        
+        <div class="content">
+            <div class="title-basicInfo-pic-files">
+                <h1 id="login"></h1>
+                <div class="under_title">
+                    <div class="basicInfo">
+                        <h3>Name:</h3> <h2 id="name"></h2>
+                        <h3>Surname:</h3> <h2 id="surname"></h2>
+                        <h3>Email:</h3> <h2 id="email"> </h2>
+                        <h3>City:</h3> <h2 id="city"> </h2>
+                       
+                    </div>
+                    <div class="image-container">
+                        <img id="picture" class='profile-pic-img'>
+                    </div>
+                    <div class='uploaded-files'>
+                        <h3> My uploaded files:</h3>
+                        <div class='uploaded-files-containter'>
+                            <div class="uploaded-files-list">
+                                <div class='uploaded-file'>cv.pdf</div>
+                                <div class='uploaded-file'>references.pdf</div>
+                                <div class='uploaded-file'>diploma.pdf</div>
+                                <div class='uploaded-file'>diploma2.pdf</div>
+                                <div class='uploaded-file'>certificate.pdf</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="description-and-ratings">
+                <h3 id="title"> </h3>
+                <div class="description-container">
+                    <p id="description"></p>
+                </div>
+                <h3>My Ratings:</h3>
+                <div class="ratings-container" id = "ratings-container"></div>
+            </div>
+                    <div>
+                    <h3>Opinion</h3><h1> <input type="text" id="contentInput" name="Short description" size=30 placeholder="Shortly describe the work" class ="input_styling"> </h1>
+                    <h3>Number of stars</h3><h1><input type="number" min="1" max="5" step="1" id="starsInput" name="salary" placeholder="Ammount of stars" class ="input_styling_number"></h1>
+                    <h1> <input type="submit" id="button" class="button-styling" name="Submit" value="Submit" onclick="validateRating('contentInput', 'starsInput')"/></h1>
+            </div> 
+        </div>
+    </body>
+</html>

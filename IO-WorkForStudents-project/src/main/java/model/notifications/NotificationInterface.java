@@ -19,7 +19,8 @@ public class NotificationInterface extends Interface {
 			if (userType.equals("student")) {
 				String query = """
             SELECT 
-                mailbox_student.id_box_stud,  
+                mailbox_student.id_box_stud,
+                mailbox_employer.id_stud,
                 mailbox_student.mess_type, 
                 users_login.login AS employee_login, 
                 offers.title,
@@ -43,19 +44,21 @@ public class NotificationInterface extends Interface {
 					String employeeLogin = results.getString("employee_login");
 					String offerTitle = results.getString("title");
 					int IDOffer = results.getInt("id_offer");
+                                        int IDStudent = results.getInt("id_stud");
 
-					Notification notification = new Notification(notificationID, messageType, employeeLogin, offerTitle, userID, IDOffer);
+					Notification notification = new Notification(notificationID, messageType, employeeLogin, offerTitle, userID, IDOffer, IDStudent);
 					notifications.add(notification);
 				}
 			}
 			else if (userType.equals("employer")) {
 				String query = """
             SELECT
-                mailbox_employer.id_box_emp, 
+                mailbox_employer.id_box_emp,
+                mailbox_employer.id_stud,
                 users.login AS student_login,
                 mailbox_employer.mess_type,
                 offers.title,
-                offers.id_offer
+                offers.id_offer                
             FROM users
             INNER JOIN 
                 mailbox_employer ON users.id_user = mailbox_employer.id_stud
@@ -75,8 +78,9 @@ public class NotificationInterface extends Interface {
 					String messageType = results.getString("mess_type");
 					String offerTitle = results.getString("title");
 					int IDOffer = results.getInt("id_offer");
+                                        int IDStudent = results.getInt("id_stud");
 
-					Notification notification = new Notification(notificationID, messageType, studentLogin, offerTitle, userID, IDOffer);
+					Notification notification = new Notification(notificationID, messageType, studentLogin, offerTitle, userID, IDOffer, IDStudent);
 					notifications.add(notification);
 				}
 			}

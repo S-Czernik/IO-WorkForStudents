@@ -191,3 +191,18 @@ h3 {
     width:auto;
     height: 20px;
 }
+
+.container {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.container p {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.ratingStar {
+    width: 250px;
+    height: 40px; 
+}

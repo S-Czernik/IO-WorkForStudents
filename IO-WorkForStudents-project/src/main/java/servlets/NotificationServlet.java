@@ -1,12 +1,13 @@
+
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import model.Model;
 import model.notifications.Notification;
@@ -36,6 +37,9 @@ public class NotificationServlet extends HttpServlet {
 						.append("\"ID\": \"").append(notification.getID()).append("\",")
 						.append("\"messageType\": \"").append(notification.getMessageType()).append("\",")
 						.append("\"userLogin\": \"").append(notification.getUserLogin()).append("\",")
+                                                .append("\"offerID\": \"").append(notification.getOfferID()).append("\",")
+                                                .append("\"userID\": \"").append(notification.getUserID()).append("\",")
+                                                .append("\"studentID\": \"").append(notification.getStudentID()).append("\",")
 						.append("\"offerTitle\": \"").append(notification.getOfferTitle()).append("\"")
 						.append("}");
 				if (i < notifications.size() - 1) {
@@ -48,3 +52,4 @@ public class NotificationServlet extends HttpServlet {
 		}
 	}
 }
+

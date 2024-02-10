@@ -313,6 +313,35 @@ public class OfferInterface extends Interface {
 		}
 		return searchedoffers;
 	}
+        
+        public ArrayList<Offer> getStudentOffer(int userID) {
+		ArrayList<Offer> searchedoffers = new ArrayList<>();
+
+		try {
+			String query;
+
+				query = "SELECT * FROM  STUDENT_PROFILES WHERE id_stud = ?";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, userID);
+
+			ResultSet results = preparedStatement.executeQuery();
+
+			while (results.next()) {
+				int id_person = results.getInt("id_stud");
+				String title = results.getString("title");
+				String content = results.getString("content");
+				int rating = results.getInt("rating");
+
+				Offer offer = new Offer(id_person, title, content, rating);
+				searchedoffers.add(offer);
+			}
+		}
+		catch (SQLException exp) {
+			System.out.println(exp);
+		}
+		return searchedoffers;
+	}
 
 	public ArrayList<Offer> getSortedAndFilteredProfiles(int min, int max, int type, String searched, int last, int number, int type2) {
 		ArrayList<Offer> searchedoffers = new ArrayList<>();

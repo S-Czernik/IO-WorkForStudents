@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Work4Students</title>
+        <link rel="stylesheet" href="css/offers.css" type="text/css"/>
+        <link rel="stylesheet" href="css/topBar.css" type="text/css"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="js/makingOffer.js"></script>
+    </head>
+    <body>
+        <div class="top-bar" id="startPage">
+            <a class="logo" href = "mainPageEmployer.html">Work 4 Students</a>
+            <div class="button-container">
+                <a class = "topBarButton" href ="profileEmployer.html"  >Profile</a>
+                <a class = "topBarButton" href ="offerWorkspace.html"  >New Offer</a>
+            </div>
+        </div>
+        
+    <div class ="mainDiv">
+        <div class = "containersContainer" id = "containersContainerID">
+            </div>
+            <div class ="footer">
+                <h1>
+                    <button class ="footerButton" onclick="startPage(-1)">Previous</button>
+                    <button class ="footerButton" onclick="startPage(-1)">Next</button>
+                </h1>
+            </div>
+        </div>
+    <div class="confirmation-modal" id="confirmationModal">
+        <p>Are you sure you want to perform this action?</p>
+        <p>Action: <span id="modalAction"></span></p>
+        <button onclick="confirmAction(true)">Yes</button>
+        <button onclick="confirmAction(false)">No</button>
+    </div>
+    </body>
+</html>

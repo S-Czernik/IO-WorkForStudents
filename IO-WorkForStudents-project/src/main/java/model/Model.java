@@ -7,6 +7,7 @@ import model.accounts.AccountInterface;
 import model.calendar.CalendarInterface;
 import model.notifications.NotificationInterface;
 import model.offers.OfferInterface;
+import model.rating.RatingInterface;
 
 public class Model {
 
@@ -17,6 +18,7 @@ public class Model {
 	public OfferInterface offerInterface;
 	public NotificationInterface notificationInterface;
 	public AccountInterface accountInterface;
+        public RatingInterface ratingInterface;
 
     public static Model getModel() {
         if (singleton == null) {
@@ -26,6 +28,7 @@ public class Model {
             singleton.offerInterface = new OfferInterface();
             singleton.notificationInterface = new NotificationInterface();
             singleton.accountInterface = new AccountInterface();
+            singleton.ratingInterface = new RatingInterface();
         }
 
         return singleton;
