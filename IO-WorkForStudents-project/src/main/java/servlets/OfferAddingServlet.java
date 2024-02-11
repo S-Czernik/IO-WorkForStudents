@@ -27,9 +27,10 @@ public class OfferAddingServlet extends HttpServlet {
 		int userID = Helper.getIntValueOf(request.getParameter("arg1"));
 		String title = request.getParameter("arg2");
 		String content = request.getParameter("arg3");
-		String salary = request.getParameter("arg5");
+		String salary = request.getParameter("arg4");
+		String tags = request.getParameter("arg5");
 
-		boolean created = model.offerInterface.addOffer(userID, title, content, salary);
+		boolean created = model.offerInterface.addOffer(userID, title, content, salary, tags);
 
 		PrintWriter out = response.getWriter();
 		out.print(created);

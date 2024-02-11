@@ -88,8 +88,10 @@ function displayNotifications(notifications) {
             });
             viewOfferButt.addEventListener('click', function() {
                 actionn = 'viewOffer';
-                showConfirmationModal('viewOffer', notification);  
+                sessionStorage.setItem('showOffer_id', notification.offerID);                
+                window.location.href = 'viewEmployerOffer.html';
             });
+			
             buttonContainer.appendChild(viewOfferButt);
             buttonContainer.appendChild(acceptButt);
             buttonContainer.appendChild(rejectButt);
@@ -104,7 +106,8 @@ function displayNotifications(notifications) {
             });
             viewProfileButt.addEventListener('click', function () {
                 actionn = 'viewProfile';
-                showConfirmationModal('viewProfile',notification);
+                sessionStorage.setItem('showProfile_id', notification.studentID);
+                window.location.href = 'viewEmployerProfile.html';
             });
             
             buttonContainer.appendChild(viewProfileButt);

@@ -46,7 +46,7 @@ function fillTextFieldsData(offer) {
 		var offerDetails = {
 			title: offerEdit.title,
 			content: offerEdit.content,
-			info: offerEdit.info,
+			tags: offerEdit.tags,
 			salary: offerEdit.salary
 					// Add other properties as needed
 		};
@@ -54,6 +54,7 @@ function fillTextFieldsData(offer) {
 		// Fill the text fields with offer details
 		document.getElementById('titleInput').value = offerDetails.title;
         document.getElementById('contentInput').value = offerDetails.content;
+		document.getElementById('tagsInput').value = "#" + offerDetails.tags;
         document.getElementById('salaryInput').value = offerDetails.salary;
 	} else {
 		console.error('Error: Empty or invalid offer array');
@@ -61,7 +62,7 @@ function fillTextFieldsData(offer) {
 }
 
 
-function editOffer(arg2, arg3, arg5, result) {
+function editOffer(arg2, arg3, arg5, arg6, result) {
 	event.preventDefault();
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function () {
@@ -72,6 +73,7 @@ function editOffer(arg2, arg3, arg5, result) {
 				document.getElementById("titleInput").value = "";
 				document.getElementById("contentInput").value = "";
 				document.getElementById("salaryInput").value = "";
+				document.getElementById("tagsInput").value = "";
 				resultElem.innerHTML = "";
 
 				document.getElementById("offersPage").action = "offers.html";
@@ -86,10 +88,12 @@ function editOffer(arg2, arg3, arg5, result) {
 	var title = document.getElementById(arg2).value;
 	var content = document.getElementById(arg3).value;
 	var salary = document.getElementById(arg5).value;
+	var tags = document.getElementById(arg6).value;
+	tags = tags.replace(/#/g, '');
 	if (!title.trim() || !content.trim() || !salary.trim()) {
 		resultElem.innerHTML = "Addition of an offer failed. Please complete all fields.";
 	} else {
-		xhttp.open("GET", "OfferEditServlet?arg1=" + id_offer + "&arg2=" + title + "&arg3=" + content + "&arg5=" + salary, true);
+		xhttp.open("GET", "OfferEditServlet?arg1=" + id_offer + "&arg2=" + title + "&arg3=" + content + "&arg5=" + salary + "&arg6=" + tags, true);
 		xhttp.send();
 	}
 }

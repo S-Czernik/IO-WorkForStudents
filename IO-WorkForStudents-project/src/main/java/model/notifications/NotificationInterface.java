@@ -17,14 +17,15 @@ public class NotificationInterface extends Interface {
 
 		try {
 			if (userType.equals("student")) {
-				String query = """
-            SELECT 
+				String query = """			
+			SELECT 
                 mailbox_student.id_box_stud,
-                mailbox_employer.id_stud,
+                mailbox_student.id_stud,
                 mailbox_student.mess_type, 
                 users_login.login AS employee_login, 
                 offers.title,
-                offers.id_offer
+                offers.id_offer,
+                offers.id_empl
             FROM offers
             INNER JOIN 
                 mailbox_student ON offers.id_offer = mailbox_student.id_offer
@@ -44,9 +45,9 @@ public class NotificationInterface extends Interface {
 					String employeeLogin = results.getString("employee_login");
 					String offerTitle = results.getString("title");
 					int IDOffer = results.getInt("id_offer");
-                                        int IDStudent = results.getInt("id_stud");
+					int IDEmployer = results.getInt("id_empl");
 
-					Notification notification = new Notification(notificationID, messageType, employeeLogin, offerTitle, userID, IDOffer, IDStudent);
+					Notification notification = new Notification(notificationID, messageType, employeeLogin, offerTitle, userID, IDOffer, IDEmployer);
 					notifications.add(notification);
 				}
 			}
@@ -78,7 +79,7 @@ public class NotificationInterface extends Interface {
 					String messageType = results.getString("mess_type");
 					String offerTitle = results.getString("title");
 					int IDOffer = results.getInt("id_offer");
-                                        int IDStudent = results.getInt("id_stud");
+                    int IDStudent = results.getInt("id_stud");
 
 					Notification notification = new Notification(notificationID, messageType, studentLogin, offerTitle, userID, IDOffer, IDStudent);
 					notifications.add(notification);

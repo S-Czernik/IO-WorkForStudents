@@ -51,6 +51,9 @@ function searchForOffers(title, pageNumber) {
 	if (arg1 === '')
 		loadOffers(0);
 	else {
+		if (arg1.charAt(0) === '#')
+			arg1 = arg1.replace(/#/g, '_');
+		
 		xhttp.open("GET", "searchoff?arg1=" + arg1 + "&arg2=" + pageNumber, true);
 		xhttp.send();
 	}
@@ -78,6 +81,9 @@ function filterAndSortOffers(min, max, search, pageNumber) {
 	else {
 		if (arg1 === '' || arg2 === '' || (arg1 === '0' && arg2 === '0'))
 			arg1 = arg2 = -1;
+
+		if (arg4.charAt(0) === '#')
+			arg4 = arg4.replace(/#/g, '_');
 
 		xhttp.open("GET", "sortAndFilterOff?arg1=" + arg1 + "&arg2=" + arg2 + "&arg3=" + arg3 + "&arg4=" + arg4 + "&arg5=" + pageNumber, true);
 		xhttp.send();

@@ -129,7 +129,7 @@ function confirmAction(confirmation) {
 	}
 }
 
-function validateOffer(arg2, arg3, arg5, result) {
+function validateOffer(arg2, arg3, arg4, arg5, result) {
 	event.preventDefault();
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function () {
@@ -153,11 +153,13 @@ function validateOffer(arg2, arg3, arg5, result) {
 	var resultElem = document.getElementById(result);
 	var title = document.getElementById(arg2).value;
 	var content = document.getElementById(arg3).value;
-	var salary = document.getElementById(arg5).value;
+	var salary = document.getElementById(arg4).value;
+	var tags = document.getElementById(arg5).value;
+	tags = tags.replace(/#/g, '');
 	if (!title.trim() || !content.trim() || !salary.trim()) {
 		resultElem.innerHTML = "Addition of an offer failed. Please complete all fields.";
 	} else {
-		xhttp.open("GET", "offerAddingServlet?arg1=" + sessionStorage.getItem('found_id') + "&arg2=" + title + "&arg3=" + content + "&arg5=" + salary, true);
+		xhttp.open("GET", "offerAddingServlet?arg1=" + sessionStorage.getItem('found_id') + "&arg2=" + title + "&arg3=" + content + "&arg4=" + salary + "&arg5=" + tags, true);
 		xhttp.send();
 	}
 }

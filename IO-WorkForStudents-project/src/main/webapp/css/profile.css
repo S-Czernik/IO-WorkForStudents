@@ -163,6 +163,7 @@ h3 {
     border-radius: 20px;
     display:flex;
     padding:20px;
+	display: block;
 }
 
 .ratings-list {
@@ -192,17 +193,20 @@ h3 {
     height: 20px;
 }
 
-.container {
-    display: block;
-    margin-bottom: 10px;
-}
-
-.container p {
-    display: inline-block;
-    margin-right: 10px;
-}
-
 .ratingStar {
     width: 250px;
     height: 40px; 
+	margin-bottom: 20px;
+}
+
+#ratings-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+h3, h1, input {
+    display: inline;
+}
+.input_styling {
+    height: 50px; /* Możesz dostosować wysokość według swoich preferencji */
 }

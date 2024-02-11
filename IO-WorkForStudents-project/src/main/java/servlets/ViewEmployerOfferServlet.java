@@ -15,12 +15,12 @@ import model.offers.Offer;
 import servlets.helper.Helper;
 
 
-@WebServlet(name = "ViewStudentOfferServlet", urlPatterns = {"/ViewStudentOfferServlet"})
-public class ViewStudentOfferServlet extends HttpServlet {
+@WebServlet(name = "ViewEmployerOfferServlet", urlPatterns = {"/ViewEmployerOfferServlet"})
+public class ViewEmployerOfferServlet extends HttpServlet {
 
 	Model model;
 
-	public ViewStudentOfferServlet() {
+	public ViewEmployerOfferServlet() {
 		model = Model.getModel();
 	}
 
@@ -33,7 +33,7 @@ public class ViewStudentOfferServlet extends HttpServlet {
 			int arg = Helper.getIntValueOf(request.getParameter("arg1"));
 			ArrayList<Offer> offers = new ArrayList<>();
 			
-			offers = model.offerInterface.getStudentOffer(arg);
+			offers = model.offerInterface.getEmployerOffer(arg);
 
 			StringBuilder jsonOffers = new StringBuilder("[");
 			if (!offers.isEmpty()) {
@@ -41,14 +41,15 @@ public class ViewStudentOfferServlet extends HttpServlet {
 					Offer offer = offers.get(i);
 
 					jsonOffers.append("{")
+							.append("\"id_offer\": \"").append(offer.getIdOffer()).append("\",")
 							.append("\"id_person\": \"").append(offer.getIdPerson()).append("\",")
 							.append("\"title\": \"").append(offer.getTitle()).append("\",")
 							.append("\"content\": \"").append(offer.getContent()).append("\",")
-							.append("\"rating\": \"").append(offer.getRating()).append("\"")
+							.append("\"salary\": \"").append(offer.getSalary()).append("\"")
 							.append("}");
 					if (i < offers.size() - 1) {
 						jsonOffers.append(",");
-                                        }
+					}
 				}
                         }
 			jsonOffers.append("]");

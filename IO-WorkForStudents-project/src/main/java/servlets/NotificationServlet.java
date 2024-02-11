@@ -1,4 +1,3 @@
-
 package servlets;
 
 import java.io.IOException;
@@ -37,9 +36,9 @@ public class NotificationServlet extends HttpServlet {
 						.append("\"ID\": \"").append(notification.getID()).append("\",")
 						.append("\"messageType\": \"").append(notification.getMessageType()).append("\",")
 						.append("\"userLogin\": \"").append(notification.getUserLogin()).append("\",")
-                                                .append("\"offerID\": \"").append(notification.getOfferID()).append("\",")
-                                                .append("\"userID\": \"").append(notification.getUserID()).append("\",")
-                                                .append("\"studentID\": \"").append(notification.getStudentID()).append("\",")
+						.append("\"offerID\": \"").append(notification.getOfferID()).append("\",")
+						.append("\"userID\": \"").append(notification.getUserID()).append("\",")
+						.append("\"studentID\": \"").append(notification.getStudentID()).append("\",")
 						.append("\"offerTitle\": \"").append(notification.getOfferTitle()).append("\"")
 						.append("}");
 				if (i < notifications.size() - 1) {
@@ -52,4 +51,3 @@ public class NotificationServlet extends HttpServlet {
 		}
 	}
 }
-

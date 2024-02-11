@@ -6,7 +6,7 @@ public class Notification {
 	private int ID;
 	private String messageType;
 	private int IDUser;
-        private int IDStudent;
+    private int IDStudent;
 	private String userLogin;
 	private int IDOffer;
 	private String offerTitle;
@@ -18,7 +18,7 @@ public class Notification {
 		this.offerTitle = offerTitle;
 		this.IDUser = IDUser;
 		this.IDOffer = IDOffer;
-                this.IDStudent = IDStudent;
+        this.IDStudent = IDStudent;
 	}
 
 	public Notification(int ID, int IDUser, int IDOffer, String messageType) {

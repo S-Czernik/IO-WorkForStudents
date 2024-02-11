@@ -28,8 +28,9 @@ public class OfferEditServlet extends HttpServlet {
 		String title = request.getParameter("arg2");
 		String content = request.getParameter("arg3");
 		String salary = request.getParameter("arg5");
+		String tags = request.getParameter("arg6");
 
-		boolean edited = model.offerInterface.editOffer(id_offer, title, content, salary);
+		boolean edited = model.offerInterface.editOffer(id_offer, title, content, salary, tags);
 
 		try (PrintWriter out = response.getWriter()) {
 			out.print(edited);

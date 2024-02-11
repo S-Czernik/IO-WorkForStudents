@@ -20,17 +20,17 @@ function fetchProfileInfo() {
 
 	var arg1 = sessionStorage.getItem('showProfile_id');
 
-	xhttp.open("GET", "ProfileStudentServlet?arg1=" + arg1, true);
+	xhttp.open("GET", "ProfileEmployerServlet?arg1=" + arg1, true);
 	xhttp.send();
 }
 
 function displayProfileInfo(profileInfo) {
+	console.log(profileInfo);
 	document.getElementById('login').innerText = "Your profile, " + profileInfo[0].login;
-	document.getElementById('name').innerText = profileInfo[0].name;
-	document.getElementById('surname').innerText = profileInfo[0].surname;
+	document.getElementById('company_name').innerText = profileInfo[0].company_name;
 	document.getElementById('email').innerText = profileInfo[0].email;
 	document.getElementById('city').innerText = profileInfo[0].city;
-	document.getElementById('title').innerText = '"' + profileInfo[0].title + '"';
+	document.getElementById('NIP').innerText = profileInfo[0].NIP;
 	document.getElementById('description').innerText = profileInfo[0].description;
 	document.getElementById('picture').src = 'data:image/jpeg;base64,' + profileInfo[0].picture;
 }
@@ -52,7 +52,7 @@ function validateRating(content, stars) {
 	if (!content.trim() || !stars.trim()) {
 
 	} else {
-		xhttp.open("GET", "AddStudentRatingServlet?arg1=" + userID + "&arg2=" + comment + "&arg3=" + rating, true);
+		xhttp.open("GET", "AddEmployerRatingServlet?arg1=" + userID + "&arg2=" + comment + "&arg3=" + rating, true);
 		xhttp.send();
 	}
 }
@@ -73,7 +73,7 @@ function getRatings() {
 	};
 
 	var arg1 = sessionStorage.getItem('showProfile_id');
-	xhttp.open("GET", "GetStudentRatingsServlet?arg1=" + arg1, true);
+	xhttp.open("GET", "GetEmployerRatingsServlet?arg1=" + arg1, true);
 	xhttp.send();
 }
 
