@@ -20,7 +20,7 @@ public class NotificationInterface extends Interface {
 				String query = """
             SELECT 
                 mailbox_student.id_box_stud,
-                mailbox_employer.id_stud,
+                mailbox_student.id_stud,
                 mailbox_student.mess_type, 
                 users_login.login AS employee_login, 
                 offers.title,
@@ -182,10 +182,10 @@ public class NotificationInterface extends Interface {
 					insertStatement.setString(4, "accepted");
 					insertStatement.executeUpdate();
 				}
-				else {
-					insertStatement.setString(4, notif.getMessageType());
-					insertStatement.executeUpdate();
-				}
+                                else if (notif.getMessageType().equals("newOffer")) {
+                                        insertStatement.setString(4, "newOffer");
+                                        insertStatement.executeUpdate();
+                                }
 			}
 			else if (userType.equals("employer")) {
 				int newMax = getLastEmpNotification() + 1;
@@ -198,6 +198,10 @@ public class NotificationInterface extends Interface {
 					insertStatement.setString(4, "acceptation");
 					insertStatement.executeUpdate();
 				}
+                                else if (notif.getMessageType().equals("application")) {
+                                    insertStatement.setString(4, "application");
+                                    insertStatement.executeUpdate();
+                                }
 				else {
 					insertStatement.setString(4, notif.getMessageType());
 					insertStatement.executeUpdate();

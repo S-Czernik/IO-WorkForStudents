@@ -90,67 +90,81 @@ function filterAndSortProfiles(min, max, search, pageNumber) {
 }
 
 function displayOffers(offers) {
-	var containersContainer = document.getElementById("containersContainerID");
+    var containersContainer = document.getElementById("containersContainerID");
 
-	containersContainer.innerHTML = "";
+    containersContainer.innerHTML = "";
 
-	for (var i = 0; i < offers.length; i++) {
-		var offer = offers[i];
+    for (var i = 0; i < offers.length; i++) {
+        var offer = offers[i];
 
-		var offerDiv = document.createElement("div");
-		offerDiv.className = "container";
-		offerDiv.id = `offer_${offer.id_offer}`;
+        var offerDiv = document.createElement("div");
+        offerDiv.className = "container";
+        offerDiv.id = `offer_${offer.id_offer}`;
 
-		var titleElement = document.createElement("h2");
-		titleElement.innerText = offer.title;
-		titleElement.className = "offerTitle";
+        var titleElement = document.createElement("h2");
+        titleElement.innerText = offer.title;
+        titleElement.className = "offerTitle";
 
-		var contentElement = document.createElement("p");
-		contentElement.innerText = offer.content;
-		contentElement.className = "offerContent";
+        var contentElement = document.createElement("p");
+        contentElement.innerText = offer.content;
+        contentElement.className = "offerContent";
 
-		var showMoreElement = document.createElement("button");
+        var showMoreElement = document.createElement("button");
         showMoreElement.innerText = "Show more";
         showMoreElement.value = "Show more";
         showMoreElement.className = "showMore";
-		
-		var applyElement = document.createElement("button");
-        applyElement.innerText = "Apply";
-        applyElement.value = "Apply";
-        applyElement.className = "apply";
-		applyElement.style.marginLeft = '10px';
-		
-		applyElement.addEventListener('click', applyForOffer(offer.id_person));
-		
-		var hideElement = document.createElement("button");
+
+        var applyElement = document.createElement("button");
+        applyElement.innerText = "Hire";
+        applyElement.value = "Hire";
+        applyElement.className = "hire";
+        applyElement.style.marginLeft = '10px';
+
+        // Add event listener to the "Hire" button
+        applyElement.addEventListener('click', function(offerIdPerson) {
+            return function() {
+                // Send GET request to the servlet endpoint
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        // Assuming the response is a number, parse it and set sessionStorage
+                        var userId = parseInt(this.responseText);
+                        sessionStorage.setItem('found_stud_id', userId);
+
+                        // Redirect to chooseOffer.html
+                        window.location.href = "chooseOffer.html";
+                    }
+                };
+                xhttp.open("GET", "ProfileIdToStudentIdServlet?arg1=" + offerIdPerson, true);
+                xhttp.send();
+            };
+        }(offer.id_person));
+
+        
+        var hideElement = document.createElement("button");
         hideElement.innerText = "Hide";
         hideElement.value = "Hide";
         hideElement.className = "hide";
-		hideElement.style.marginLeft = '10px';
+        hideElement.style.marginLeft = '10px';
 
-		hideElement.addEventListener('click', hide(offer.id_offer));
+        hideElement.addEventListener('click', hide(offer.id_offer));
 
-		var calendarDiv = document.createElement("div");
-		calendarDiv.id = "calendar" + offer.id_person;
+        var calendarDiv = document.createElement("div");
+        calendarDiv.id = "calendar" + offer.id_person;
 
-		offerDiv.appendChild(titleElement);
+        offerDiv.appendChild(titleElement);
         offerDiv.appendChild(contentElement);
-		offerDiv.appendChild(calendarDiv);
+        offerDiv.appendChild(calendarDiv);
         offerDiv.appendChild(showMoreElement);
-		offerDiv.appendChild(applyElement);
-		offerDiv.appendChild(hideElement);
+        offerDiv.appendChild(applyElement);
+        offerDiv.appendChild(hideElement);
 
-		containersContainer.appendChild(offerDiv);
-		getStudentCalendarHtml(offer.id_person);
-	}
-	reveal();
+        containersContainer.appendChild(offerDiv);
+        getStudentCalendarHtml(offer.id_person);
+    }
+    reveal();
 }
 
-function applyForOffer(id_person) {
-	return function () {
-		
-	};
-}
 
 function hide(selected_offer) {
 	return function () {
