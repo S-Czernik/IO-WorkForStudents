@@ -53,9 +53,8 @@ function fillTextFieldsData(offer) {
 
 		// Fill the text fields with offer details
 		document.getElementById('titleInput').value = offerDetails.title;
-		document.getElementById('contentInput').value = offerDetails.content;
-		document.getElementById('infoInput').value = offerDetails.info;
-		document.getElementById('salaryInput').value = offerDetails.salary;
+        document.getElementById('contentInput').value = offerDetails.content;
+        document.getElementById('salaryInput').value = offerDetails.salary;
 	} else {
 		console.error('Error: Empty or invalid offer array');
 	}

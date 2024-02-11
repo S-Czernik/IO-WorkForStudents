@@ -55,17 +55,14 @@ function displayOffers(offers) {
 		editOffer.style.marginRight = '10px'; // Optional: Add some styling to separate the buttons
 
 		// Use a closure to capture the current value of i
-		editOffer.addEventListener('click', createEditClickListener(i, offer.id_offer));
+		editOffer.addEventListener('click', createEditClickListener(offer.id_offer, 1));
 
 		var deleteOffer = document.createElement("button");
 		deleteOffer.innerText = "Delete";
 		deleteOffer.value = "Delete";
 		deleteOffer.className = "Delete";
 
-		deleteOffer.addEventListener('click', function () {
-			sessionStorage.setItem('found_id_offer', offer.id_offer);
-			confirmDeletion();
-		});
+		deleteOffer.addEventListener('click', createEditClickListener(offer.id_offer, 2));
 
 		offerDiv.appendChild(titleElement);
 		offerDiv.appendChild(contentElement);
@@ -77,13 +74,14 @@ function displayOffers(offers) {
 }
 
 // Function to create a closure for the click event listener
-function createEditClickListener(index, id_offer) {
+function createEditClickListener(id_offer, type) {
 	return function () {
 		selected_offer = id_offer;
 		sessionStorage.setItem('found_id_offer', id_offer);
+		if(type === 2)
+			confirmDeletion();
 	};
 }
-
 function confirmDeletion() {
 	var confirmationModal = document.getElementById('confirmationModal');
 	confirmationModal.style.display = 'block';

@@ -97,6 +97,7 @@ function displayOffers(offers) {
 
 		var offerDiv = document.createElement("div");
 		offerDiv.className = "container";
+		offerDiv.id = `offer_${offer.id_offer}`;
 
 		var titleElement = document.createElement("h2");
 		titleElement.innerText = offer.title;
@@ -107,31 +108,57 @@ function displayOffers(offers) {
 		contentElement.className = "offerContent";
 
 		var showMoreElement = document.createElement("button");
-		showMoreElement.innerText = "show more";
-		showMoreElement.value = "show more";
-		showMoreElement.className = "showMore";
-		//  var showMoreElement = document.createElement("button");
-
+        showMoreElement.innerText = "Show more";
+        showMoreElement.value = "Show more";
+        showMoreElement.className = "showMore";
+		
 		var applyElement = document.createElement("button");
-		applyElement.innerText = "apply";
-		applyElement.value = "apply";
-		applyElement.className = "apply";
-		//  var showMoreElement = document.createElement("button");
+        applyElement.innerText = "Apply";
+        applyElement.value = "Apply";
+        applyElement.className = "apply";
+		applyElement.style.marginLeft = '10px';
+		
+		applyElement.addEventListener('click', function () {
+			window.location.href = 'login.html';
+		});
+		
+		var hideElement = document.createElement("button");
+        hideElement.innerText = "Hide";
+        hideElement.value = "Hide";
+        hideElement.className = "hide";
+		hideElement.style.marginLeft = '10px';
 
+		hideElement.addEventListener('click', hide(offer.id_offer));
+		
 		var calendarDiv = document.createElement("div");
 		calendarDiv.id = "calendar" + offer.id_offer;
-
-		offerDiv.appendChild(titleElement);
-		offerDiv.appendChild(contentElement);
-		offerDiv.appendChild(showMoreElement);
+		
+        offerDiv.appendChild(titleElement);
+        offerDiv.appendChild(contentElement);
 		offerDiv.appendChild(calendarDiv);
-		//offerDiv.appendChild(applyElement);
+        offerDiv.appendChild(showMoreElement);
+		offerDiv.appendChild(applyElement);
+		offerDiv.appendChild(hideElement);
 
 		containersContainer.appendChild(offerDiv);
 		getOfferCalendarHtml(offer.id_offer);
 	}
 	reveal();
 }
+
+function hide(selected_offer) {
+	return function () {
+		var containersContainer = document.getElementById("containersContainerID");
+		var offerDiv = document.getElementById(`offer_${selected_offer}`);
+		if (offerDiv) {
+			containersContainer.removeChild(offerDiv);
+		} else {
+			console.error(`Could not remove offer. Element not found for offer ID: ${selected_offer}`);
+		}
+		reveal();
+	};
+}
+
 function reveal() {
 	var reveals = document.querySelectorAll(".container");
 

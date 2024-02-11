@@ -46,7 +46,7 @@ function displayOffers(offers) {
 		titleElement.className = "offerTitle";
 
 		var contentElement = document.createElement("p");
-		contentElement.innerText = `Offer's description: \n ${offer.content} `;
+		contentElement.innerText = `\nOffer's description: \n\n ${offer.content} `;
 		contentElement.className = "offerContent";
 
 
