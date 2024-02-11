@@ -116,6 +116,10 @@ function displayOffers(offers) {
 		contentElement.innerText = offer.content;
 		contentElement.className = "offerContent";
 		offerDiv.appendChild(contentElement);
+		
+		var calendarDiv = document.createElement("div");
+		calendarDiv.id = "calendar" + offer.id_person;
+		offerDiv.appendChild(calendarDiv);
 
 		var showMoreElement = document.createElement("button");
         showMoreElement.innerText = "Show more";
@@ -141,10 +145,6 @@ function displayOffers(offers) {
 		offerDiv.appendChild(hideElement);
 
 		hideElement.addEventListener('click', hide(offer.id_offer));
-
-		var calendarDiv = document.createElement("div");
-		calendarDiv.id = "calendar" + offer.id_person;
-		offerDiv.appendChild(calendarDiv);
 
 		containersContainer.appendChild(offerDiv);
 		getStudentCalendarHtml(offer.id_person);

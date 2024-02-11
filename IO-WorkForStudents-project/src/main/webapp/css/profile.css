@@ -210,3 +210,19 @@ h3, h1, input {
 .input_styling {
     height: 50px; /* Możesz dostosować wysokość według swoich preferencji */
 }
+
+.button-styling2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px; /* Dowolna szerokość */
+    height: 50px; /* Dowolna wysokość */
+    background-color: #E66A50;
+    color: white; /* Kolor tekstu */
+    border: none; /* Usunięcie obramowania */
+    border-radius: 10px; /* Zaokrąglenie rogów */
+    font-size: 18px; /* Dowolna wielkość czcionki */
+    cursor: pointer; /* Kursor wskazujący na przycisk */
+	margin-left: 220px; 
+	margin-top: 40px; 
+}

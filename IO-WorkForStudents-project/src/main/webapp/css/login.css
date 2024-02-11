@@ -12,15 +12,16 @@
 
 }
 
-.registerLink{
+.registerLink {
     margin: 5px;
     font-size: 16px;
     position: relative;
     text-decoration: none;
     font-weight: 100;
     color: grey;
-
+	margin-left: 95px;
 }
+
 
 h1 {
     text-align: center;
@@ -33,6 +34,8 @@ h2{
 }
 
 .button-styling{
+	justify-content: center; /* Wyśrodkowanie wertykalne */
+    align-items: center; /* Wyśrodkowanie horyzontalne */
     display: flex;
     background-color: #E66A50;
     color: white;

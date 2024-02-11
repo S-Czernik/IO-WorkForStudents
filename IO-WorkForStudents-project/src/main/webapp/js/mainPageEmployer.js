@@ -116,6 +116,14 @@ function displayOffers(offers) {
 		contentElement.innerText = offer.content;
 		contentElement.className = "offerContent";
 		offerDiv.appendChild(contentElement);
+		
+		var calendarMatchingDiv = document.createElement("div");
+		calendarMatchingDiv.id = "calendarmatching" + offer.id_person;
+		offerDiv.appendChild(calendarMatchingDiv);
+		
+		var calendarDiv = document.createElement("div");
+		calendarDiv.id = "calendar" + offer.id_person;
+		offerDiv.appendChild(calendarDiv);
 
 		var showMoreElement = document.createElement("button");
         showMoreElement.innerText = "Show more";
@@ -138,14 +146,6 @@ function displayOffers(offers) {
 		hideElement.style.marginLeft = '10px';
 		hideElement.addEventListener('click', hide(offer.id_offer));
 		offerDiv.appendChild(hideElement);
-
-		var calendarDiv = document.createElement("div");
-		calendarDiv.id = "calendar" + offer.id_person;
-		offerDiv.appendChild(calendarDiv);
-		
-		var calendarMatchingDiv = document.createElement("div");
-		calendarMatchingDiv.id = "calendarmatching" + offer.id_person;
-		offerDiv.appendChild(calendarMatchingDiv);
 
 		containersContainer.appendChild(offerDiv);
 		getStudentCalendarHtml(offer.id_person);

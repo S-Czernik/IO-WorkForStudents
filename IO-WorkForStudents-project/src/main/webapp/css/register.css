@@ -85,8 +85,10 @@ h2{
     border-radius: 5px;
     color: gray;
 }
-.button-styling{
+.button-styling {
     display: flex;
+    justify-content: center; /* Wyśrodkowanie wertykalne */
+    align-items: center; /* Wyśrodkowanie horyzontalne */
     background-color: #E66A50;
     color: white;
     font-size: 20px;
