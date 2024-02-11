@@ -466,6 +466,32 @@ public class OfferInterface extends Interface {
 		}
 		return searchedoffers;
 	}
+        
+        public int getStudentId(int profileID) {
+		int stud_id = -1;
+
+		try {
+				String query = """
+            SELECT students_profile_details.id_user
+            FROM students_profile_details
+            INNER JOIN 
+            student_profiles ON students_profile_details.id_students_profile_details = student_profiles.id_stud
+            WHERE student_profiles.id_stud = ?""";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, profileID);
+
+			ResultSet results = preparedStatement.executeQuery();
+
+			while (results.next()) {
+				stud_id = results.getInt("id_user");
+			}
+		}
+		catch (SQLException exp) {
+			System.out.println(exp);
+		}
+            return stud_id;
+	}
 
 	public ArrayList<Offer> getSortedAndFilteredProfiles(int min, int max, int type, String searched, int last, int number, int type2) {
 		ArrayList<Offer> searchedoffers = new ArrayList<>();

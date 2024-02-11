@@ -118,12 +118,19 @@ function displayOffers(offers) {
         showMoreElement.className = "showMore";
 		offerDiv.appendChild(showMoreElement);
 		
-		var applyElement = document.createElement("button");
+		var applyElement = document.createElement("a");
         applyElement.innerText = "Apply";
         applyElement.value = "Apply";
         applyElement.className = "apply";
 		applyElement.style.marginLeft = '10px';
-		applyElement.addEventListener('click', applyForOffer(offer.id_person));
+		applyElement.addEventListener('click', function(id_offer) {
+            return function() {
+                // Set found_id_offer in session storage
+                sessionStorage.setItem('found_id_offer', id_offer);
+                // Call createClickListener with id_offer
+                createClickListener(id_offer);
+            };
+        }(offer.id_offer));
 		offerDiv.appendChild(applyElement);
 		
 		var hideElement = document.createElement("button");
@@ -149,10 +156,38 @@ function displayOffers(offers) {
 	reveal();
 }
 
-function applyForOffer(id_person) {
-	return function () {
-		
-	};
+function createClickListener(id_offer) {
+    selected_offer = id_offer;
+    sendNotification(id_offer); // Pass id_offer to sendNotification
+}
+
+function sendNotification(offer_id) {
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4) {
+            console.log("Status:", this.status);
+            console.log("Response:", this.responseText);
+
+            if (this.status === 200) {
+                if (this.responseText.trim() !== "") {
+                    var response = JSON.parse(this.responseText);
+                    console.log("Parsed JSON:", response);
+                    // Handle response if needed
+                    redirectToMainPage();
+                } else {
+                    console.error("Error: Empty response");
+                }
+            } else {
+                console.error("Error:", this.status);
+            }
+        }
+    };
+
+    var stud_id = sessionStorage.getItem('found_id');
+    var type = 'application';
+    xhttp.open("GET", "NotificationHandlerServlet?arg1=" + type + "&arg2=" + offer_id + "&arg3=" + stud_id, true);
+    xhttp.send();
 }
 
 function hide(selected_offer) {
