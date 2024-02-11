@@ -54,17 +54,32 @@ function getOfferCalendarHtml(id_offer, div_name = "") {
 	xhttp.open("GET", "calendar?rqtype=getofferhtml&offerid=" + id_offer);
 	xhttp.send();
 }
-function getCalendarCompatibility() {
+
+function getStudentCalendarCompatibility(id_stud) {
 	var xhttp = new XMLHttpRequest();
 	id_offer = sessionStorage.getItem('found_id_offer');
 	xhttp.onreadystatechange = function () {
 		if (this.readyState === 4) {
 			if (this.status === 200) {
-				//load number into display
+				document.getElementById("calendarmatching" + id_stud).innerHTML = this.responseText.substring(0, 4) + '%';
 			}
 		}
 	};
-	xhttp.open("GET", "calendar?rqtype=compare&userid=" + id_stud + "&offerid=" + id_offer);
+	xhttp.open("GET", "calendar?rqtype=cmpstud&userid=" + id_stud + "&offerid=" + id_offer);
+	xhttp.send();
+}
+
+function getOfferCalendarCompatibility(id_offer) {
+	var xhttp = new XMLHttpRequest();
+	id_stud = sessionStorage.getItem('found_id');
+	xhttp.onreadystatechange = function () {
+		if (this.readyState === 4) {
+			if (this.status === 200) {
+				document.getElementById("calendarmatching" + id_offer).innerHTML = this.responseText.substring(0, 4) + '%';
+			}
+		}
+	};
+	xhttp.open("GET", "calendar?rqtype=cmpoffer&userid=" + id_stud + "&offerid=" + id_offer);
 	xhttp.send();
 }
 
@@ -93,7 +108,7 @@ function updateStudentCalendar(csv) {
 			}
 		}
 	};
-	xhttp.open("POST", "calendar");
+	xhttp.open("POST", "calendar", false);
 	xhttp.setRequestHeader("Content-Type", "application/plaintext; charset=UTF-8");
 	xhttp.setRequestHeader("rqtype", "setuser");
 	xhttp.setRequestHeader("userid", id_stud);
@@ -109,7 +124,7 @@ function updateOfferCalendar(csv) {
 			}
 		}
 	};
-	xhttp.open("POST", "calendar");
+	xhttp.open("POST", "calendar", false);
 	xhttp.setRequestHeader("Content-Type", "application/plaintext; charset=UTF-8");
 	xhttp.setRequestHeader("rqtype", "setoffer");
 	xhttp.setRequestHeader("offerid", id_offer);

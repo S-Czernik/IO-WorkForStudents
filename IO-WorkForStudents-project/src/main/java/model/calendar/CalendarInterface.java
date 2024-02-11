@@ -2,6 +2,7 @@ package model.calendar;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import model.Interface;
 
 public class CalendarInterface extends Interface {
@@ -92,25 +93,73 @@ public class CalendarInterface extends Interface {
 		return CalendarHTMLBuilder.get(ret);
 	}
 
+	public float getCompareToStudent(int userID, int offerID) {
+		try {
+			ResultSet valueSet = connection.createStatement().executeQuery("SELECT value FROM offer_calendar_comparisons WHERE id_stud = '" + userID + "' AND id_offer = '" + offerID + "'");
+			if (valueSet.next()) {
+				return valueSet.getFloat("value");
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		return 0f;
+	}
+
+	public float getCompareToOffer(int userID, int offerID) {
+		try {
+			ResultSet valueSet = connection.createStatement().executeQuery("SELECT value FROM student_calendar_comparisons WHERE id_stud = '" + userID + "' AND id_offer = '" + offerID + "'");
+			if (valueSet.next()) {
+				return valueSet.getFloat("value");
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		return 0f;
+	}
+
 	public boolean saveStudentCalendarToDatabase(int userID, String csv) {
 		try {
 			Calendar k = new Calendar();
 			k.loadCSV(csv);
 
 			connection.createStatement().execute("DELETE FROM student_hours WHERE id_stud = '" + userID + "'");
+			PreparedStatement hourStatement = model.connection.prepareStatement("INSERT INTO student_hours(id_hour, id_stud, begin, end, day) VALUES (?,?,?,?,?)");
 			for (var i : k.intervals) {
-				PreparedStatement stmt = model.connection.prepareStatement("INSERT INTO student_hours(id_hour, id_stud, begin, end, day) VALUES (?,?,?,?,?)");
-				stmt.setInt(1, getLastStudHourId() + 1);
-				stmt.setInt(2, userID);
-				stmt.setInt(3, i.begin);
-				stmt.setInt(4, i.end);
-				stmt.setString(5, getDayFromIdx(i.day));
-				
-				stmt.execute();
+				hourStatement.setInt(1, getLastStudHourId() + 1);
+				hourStatement.setInt(2, userID);
+				hourStatement.setInt(3, i.begin);
+				hourStatement.setInt(4, i.end);
+				hourStatement.setString(5, getDayFromIdx(i.day));
+
+				hourStatement.execute();
 			}
+
+			connection.createStatement().execute("DELETE FROM student_calendar_comparisons WHERE id_stud = '" + userID + "'");
+			connection.createStatement().execute("DELETE FROM offer_calendar_comparisons WHERE id_stud = '" + userID + "'");
+			PreparedStatement studCCsStatement = model.connection.prepareStatement("INSERT INTO student_calendar_comparisons(id_stud, id_offer, value) VALUES (?,?,?)");
+			PreparedStatement offerCCsStatement = model.connection.prepareStatement("INSERT INTO offer_calendar_comparisons(id_stud, id_offer, value) VALUES (?,?,?)");
+			int offerCount = model.offerInterface.getLastOfferId();
+			for (var offerID = 1; offerID <= offerCount; offerID++) {
+				Calendar cmp = getOfferCalendar(offerID);
+
+				float value = k.compare(cmp);
+				studCCsStatement.setInt(1, userID);
+				studCCsStatement.setInt(2, offerID);
+				studCCsStatement.setFloat(3, value);
+				studCCsStatement.execute();
+
+				value = cmp.compare(k);
+				offerCCsStatement.setInt(1, userID);
+				offerCCsStatement.setInt(2, offerID);
+				offerCCsStatement.setFloat(3, value);
+				offerCCsStatement.execute();
+			}
+
 			return true;
 		}
-		catch (Exception e) {
+		catch (SQLException e) {
 			System.out.println(e);
 			return false;
 		}
@@ -121,33 +170,45 @@ public class CalendarInterface extends Interface {
 			Calendar k = new Calendar();
 			k.loadCSV(csv);
 
-			connection.createStatement().execute("DELETE FROM offer_hours WHERE id_stud = '" + offerID + "'");
+			connection.createStatement().execute("DELETE FROM offer_hours WHERE id_offer = '" + offerID + "'");
+			PreparedStatement hourStatement = model.connection.prepareStatement("INSERT INTO offer_hours(id_hour, id_offer, begin, end, day) VALUES (?,?,?,?,?)");
 			for (var i : k.intervals) {
-				PreparedStatement stmt = model.connection.prepareStatement("INSERT INTO offer_hours(id_hour, id_offer, begin, end, day) VALUES (?,?,?,?,?)");
-				stmt.setInt(1, getLastStudHourId() + 1);
-				stmt.setInt(2, offerID);
-				stmt.setInt(3, i.begin);
-				stmt.setInt(4, i.end);
-				stmt.setString(5, getDayFromIdx(i.day));
-				
-				stmt.execute();
+				hourStatement.setInt(1, getLastStudHourId() + 1);
+				hourStatement.setInt(2, offerID);
+				hourStatement.setInt(3, i.begin);
+				hourStatement.setInt(4, i.end);
+				hourStatement.setString(5, getDayFromIdx(i.day));
+
+				hourStatement.execute();
 			}
+
+			connection.createStatement().execute("DELETE FROM student_calendar_comparisons WHERE id_stud = '" + offerID + "'");
+			connection.createStatement().execute("DELETE FROM offer_calendar_comparisons WHERE id_stud = '" + offerID + "'");
+			PreparedStatement studCCsStatement = model.connection.prepareStatement("INSERT INTO student_calendar_comparisons(id_stud, id_offer, value) VALUES (?,?,?)");
+			PreparedStatement offerCCsStatement = model.connection.prepareStatement("INSERT INTO offer_calendar_comparisons(id_stud, id_offer, value) VALUES (?,?,?)");
+			int offerCount = model.offerInterface.getLastOfferId();
+			for (var userID = 1; userID <= offerCount; userID++) {
+				Calendar cmp = getStudentCalendar(userID);
+
+				float value = k.compare(cmp);
+				offerCCsStatement.setInt(1, userID);
+				offerCCsStatement.setInt(2, offerID);
+				offerCCsStatement.setFloat(3, value);
+				offerCCsStatement.execute();
+
+				value = cmp.compare(k);
+				studCCsStatement.setInt(1, userID);
+				studCCsStatement.setInt(2, offerID);
+				studCCsStatement.setFloat(3, value);
+				studCCsStatement.execute();
+			}
+
 			return true;
 		}
-		catch (Exception e) {
+		catch (SQLException e) {
 			System.out.println(e);
 			return false;
 		}
-	}
-
-	public float compareCalendars(int userID, int offerID) {
-		Calendar stud = getStudentCalendar(userID);
-		Calendar offer = getOfferCalendar(offerID);
-
-		if (stud != null && offer != null) {
-			return stud.compare(offer);
-		}
-		return 0.0f;
 	}
 
 	Calendar getStudentCalendar(int userID) {

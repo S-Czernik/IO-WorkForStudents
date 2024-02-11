@@ -110,44 +110,46 @@ function displayOffers(offers) {
 		var titleElement = document.createElement("h2");
 		titleElement.innerText = offer.title;
 		titleElement.className = "offerTitle";
+		offerDiv.appendChild(titleElement);
 
 		var contentElement = document.createElement("p");
 		contentElement.innerText = offer.content;
 		contentElement.className = "offerContent";
+		offerDiv.appendChild(contentElement);
 
 		var showMoreElement = document.createElement("button");
         showMoreElement.innerText = "Show more";
         showMoreElement.value = "Show more";
         showMoreElement.className = "showMore";
+        offerDiv.appendChild(showMoreElement);
 		
 		var applyElement = document.createElement("button");
         applyElement.innerText = "Apply";
         applyElement.value = "Apply";
         applyElement.className = "apply";
 		applyElement.style.marginLeft = '10px';
-		
 		applyElement.addEventListener('click', applyForOffer(offer.id_person));
+		offerDiv.appendChild(applyElement);
 		
 		var hideElement = document.createElement("button");
         hideElement.innerText = "Hide";
         hideElement.value = "Hide";
         hideElement.className = "hide";
 		hideElement.style.marginLeft = '10px';
-
 		hideElement.addEventListener('click', hide(offer.id_offer));
+		offerDiv.appendChild(hideElement);
 
 		var calendarDiv = document.createElement("div");
 		calendarDiv.id = "calendar" + offer.id_person;
-
-		offerDiv.appendChild(titleElement);
-        offerDiv.appendChild(contentElement);
 		offerDiv.appendChild(calendarDiv);
-        offerDiv.appendChild(showMoreElement);
-		offerDiv.appendChild(applyElement);
-		offerDiv.appendChild(hideElement);
+		
+		var calendarMatchingDiv = document.createElement("div");
+		calendarMatchingDiv.id = "calendarmatching" + offer.id_person;
+		offerDiv.appendChild(calendarMatchingDiv);
 
 		containersContainer.appendChild(offerDiv);
 		getStudentCalendarHtml(offer.id_person);
+		getStudentCalendarCompatibility(offer.id_person);
 	}
 	reveal();
 }

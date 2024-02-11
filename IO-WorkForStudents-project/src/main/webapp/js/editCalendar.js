@@ -117,8 +117,12 @@ function loadCsv(csv) {
 
 function save() {
 	let user_type = sessionStorage.getItem('found_type');
-	if (user_type === "student")
+	if (user_type === "student") {
 		updateStudentCalendar(getCsv());
-	else if (user_type === "employer")
+		window.location.href = "/IO-WorkForStudents-project/profileStudent.html";
+	} else if (user_type === "employer") {
 		updateOfferCalendar(getCsv());
+		window.location.href = "/IO-WorkForStudents-project/profileEmployer.html";
+	}
+
 }
