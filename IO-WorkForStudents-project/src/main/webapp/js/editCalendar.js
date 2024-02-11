@@ -16,15 +16,16 @@ function editCalendar() {
 	let lastRow = table.rows[table.rows.length - 1];
 	if (lastRow.cells[0].childNodes[0].value.length !== 0 && lastRow.cells[1].childNodes[0].value.length !== 0 && lastRow.cells[2].childNodes[0].value !== "none") {
 		addRow();
-		getHtmlFromCsv(getCsv());
 	}
+
+	getHtmlFromCsv(getCsv());
 }
 
 function addRow() {
 	let table = document.getElementById("outputTable");
 
 	if (table.rows.length !== 1)
-		var sdf = table.rows[table.rows.length - 1].cells[3].childNodes[0].textContent = "Delete";
+		table.rows[table.rows.length - 1].cells[3].childNodes[0].textContent = "Delete";
 
 	let newRow = table.insertRow(table.rows.length);
 	newRow.insertCell(0).innerHTML = '<input type="time" step="60"onchange="editCalendar()">';
