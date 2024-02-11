@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.stream.Collectors;
-import model.*;
+import model.Model;
 import servlets.helper.Helper;
 
 @WebServlet(name = "CalendarServlet", urlPatterns = {"/calendar"})
@@ -52,12 +52,12 @@ public class CalendarServlet extends HttpServlet {
 				}
 				case "cmpstud" -> {
 					response.setContentType("text/plaintext;charset=UTF-8");
-					float result = model.calendarInterface.compareToStudent(userID, offerID);
+					float result = model.calendarInterface.getCompareToStudent(userID, offerID);
 					out.print(result != Float.NEGATIVE_INFINITY ? String.valueOf(result * 100) : "no");
 				}
 				case "cmpoffer" -> {
 					response.setContentType("text/plaintext;charset=UTF-8");
-					float result = model.calendarInterface.compareToOffer(userID, offerID);
+					float result = model.calendarInterface.getCompareToOffer(userID, offerID);
 					out.print(result != Float.NEGATIVE_INFINITY ? String.valueOf(result * 100) : "no");
 				}
 			}

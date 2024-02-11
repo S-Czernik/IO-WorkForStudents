@@ -67,12 +67,28 @@ function displayOffers(offers) {
 			confirmDeletion();
 		});
 
+		var calendarDiv = document.createElement("div");
+		calendarDiv.id = "calendar" + offer.id_offer;
+
+		var editOfferCalendar = document.createElement("button");
+		editOfferCalendar.innerText = "Edit";
+		editOfferCalendar.value = "Edit";
+		editOfferCalendar.className = "Edit";
+		
+		editOfferCalendar.addEventListener('click', function () {
+			sessionStorage.setItem('found_id_offer', offer.id_offer);
+			window.location.href = "editCalendar.html";
+		});
+		
 		offerDiv.appendChild(titleElement);
 		offerDiv.appendChild(contentElement);
 		offerDiv.appendChild(editOffer);
 		offerDiv.appendChild(deleteOffer);
+		offerDiv.appendChild(calendarDiv);
+		offerDiv.appendChild(editOfferCalendar);
 
 		containersContainer.appendChild(offerDiv);
+		getOfferCalendarHtml(offer.id_offer);
 	}
 }
 

@@ -52,6 +52,9 @@ public class Calendar {
 		for (var i : intervals) {
 			totalArea += i.getLength();
 		}
+		if (totalArea == 0) {
+			return 0.0f;
+		}
 
 		int subArea = 0;
 		for (var i : intervals) {
