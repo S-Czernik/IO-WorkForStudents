@@ -45,5 +45,9 @@ public class ProfileStudentServlet extends HttpServlet {
 			jsonProfileInfo.append("]");
 			out.println(jsonProfileInfo.toString());
 		}
+                catch(Exception e)
+                {
+                    System.out.println(e.getMessage());
+                }
 	}
 }

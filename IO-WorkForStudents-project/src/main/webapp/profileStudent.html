@@ -6,6 +6,7 @@
         <title>Profile</title>
         <script type="text/javascript" src="js/notificationJS.js"></script>
         <script type="text/javascript" src="js/profileStudent.js"></script>
+        <script type="text/javascript" src="js/files.js"></script>
         <script type="text/javascript" src="js/calendar.js"></script>
         <link rel="stylesheet" href="css/calendar.css" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="css/profileStudent.css">
@@ -17,7 +18,7 @@
             <a class="logo" href = "mainPage.html">Work 4 Students</a>
             <div class="button-container">
                 <button class="side-menu-trigger">Notifications</button>
-				<a class = "topBarButton" href ="login.html"  >Log out</a>
+                <a class = "topBarButton" href ="login.html"  >Log out</a>
 
             </div>
         </div>
@@ -30,7 +31,6 @@
                 </li>
             </ul>
         </aside>
-
         <div class="content">
             <div class="title-basicInfo-pic-files">
                 <h1 id="login"></h1>
@@ -45,17 +45,12 @@
                         </div>
                     </div>
                     <div class="image-container">
-                        <img id="picture" class='profile-pic-img'>
+                        <img id="picture" class='profile-pic-img' src="../java/model/accounts/defaultProfilePicture.jpg">
                     </div>
                     <div class='uploaded-files'>
                         <h3> My uploaded files:</h3>
-                        <div class='uploaded-files-containter'>
-                            <div class="uploaded-files-list">
-                                <div class='uploaded-file'>cv.pdf</div>
-                                <div class='uploaded-file'>references.pdf</div>
-                                <div class='uploaded-file'>diploma.pdf</div>
-                                <div class='uploaded-file'>diploma2.pdf</div>
-                                <div class='uploaded-file'>certificate.pdf</div>
+                        <div class="uploaded-files-containter">
+                             <div class="uploaded-files-list" id="uploaded-files-list">
                             </div>
                         </div>
                     </div>
@@ -87,18 +82,18 @@
             <div class="calendar-ccontainer">
                 <h3>My calendar:</h3>
                 <div id="calendar"></div>
-				<div class="editButton">
-					<a href="editCalendar.html">Edit</a>
-				</div>
+                <div class="editButton">
+                    <a href="editCalendar.html">Edit</a>
+                </div>
             </div>
         </div>
-		<div class="confirmation-modal" id="confirmationModal">
-			<p>Are you sure you want to perform this action?</p>
-			<p>Action: <span id="modalAction"></span></p>
-			<button onclick="confirmAction(true, '')">Yes</button>
-			<button onclick="confirmAction(false)">No</button>
-		</div>
-		<div id="calendar">
-		</div>
+        <div class="confirmation-modal" id="confirmationModal">
+            <p>Are you sure you want to perform this action?</p>
+            <p>Action: <span id="modalAction"></span></p>
+            <button onclick="confirmAction(true, '')">Yes</button>
+            <button onclick="confirmAction(false)">No</button>
+        </div>
+        <div id="calendar">
+        </div>
     </body>
 </html>

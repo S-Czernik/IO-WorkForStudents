@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import model.accounts.AccountInterface;
 import model.calendar.CalendarInterface;
+import model.files.FilesInterface;
 import model.notifications.NotificationInterface;
 import model.offers.OfferInterface;
 
@@ -17,6 +18,7 @@ public class Model {
 	public OfferInterface offerInterface;
 	public NotificationInterface notificationInterface;
 	public AccountInterface accountInterface;
+        public FilesInterface filesInterface;
 
     public static Model getModel() {
         if (singleton == null) {
@@ -26,6 +28,7 @@ public class Model {
             singleton.offerInterface = new OfferInterface();
             singleton.notificationInterface = new NotificationInterface();
             singleton.accountInterface = new AccountInterface();
+            singleton.filesInterface= new FilesInterface();
         }
 
         return singleton;
@@ -43,7 +46,7 @@ public class Model {
 
 	public void connect() {
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ioio?useSSL=false", "root", "1234");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ioio?useSSL=false", "root", "szyman");
 		}
 		catch (SQLException e) {
 			System.out.println(e);
