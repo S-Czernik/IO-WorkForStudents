@@ -30,6 +30,7 @@ public class CalendarServlet extends HttpServlet {
 
 		int userID = Helper.getIntValueOf(request.getParameter("userid"));
 		int offerID = Helper.getIntValueOf(request.getParameter("offerid"));
+		int employerID = Helper.getIntValueOf(request.getParameter("emplid"));
 		PrintWriter out = response.getWriter();
 
 		if (requestType != null) {
@@ -52,8 +53,8 @@ public class CalendarServlet extends HttpServlet {
 				}
 				case "cmpstud" -> {
 					response.setContentType("text/plaintext;charset=UTF-8");
-					float result = model.calendarInterface.getCompareToStudent(userID, offerID);
-					out.print(result != Float.NEGATIVE_INFINITY ? String.valueOf(result * 100) : "no");
+					float result = model.calendarInterface.getCompareToStudent(userID, employerID);
+					out.print(String.valueOf(result * 100));
 				}
 				case "cmpoffer" -> {
 					response.setContentType("text/plaintext;charset=UTF-8");
@@ -81,18 +82,19 @@ public class CalendarServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		switch (requestType) {
 			case "setuser" -> {
+				out.close();
 				model.calendarInterface.saveStudentCalendarToDatabase(userID, csv);
 			}
 			case "setoffer" -> {
+				out.close();
 				model.calendarInterface.saveOfferCalendarToDatabase(offerID, csv);
 			}
 			case "gethtml" -> {
 				Calendar k = new Calendar();
 				k.loadCSV(csv);
 				out.print(CalendarHTMLBuilder.get(k));
+				out.close();
 			}
-
 		}
-		out.close();
 	}
 }

@@ -93,11 +93,11 @@ public class CalendarInterface extends Interface {
 		return CalendarHTMLBuilder.get(ret);
 	}
 
-	public float getCompareToStudent(int userID, int offerID) {
+	public float getCompareToStudent(int userID, int employerID) {
 		try {
-			ResultSet valueSet = connection.createStatement().executeQuery("SELECT value FROM offer_calendar_comparisons WHERE id_stud = '" + userID + "' AND id_offer = '" + offerID + "'");
+			ResultSet valueSet = connection.createStatement().executeQuery("SELECT MAX(value) as max FROM offer_calendar_comparisons AS occ JOIN offers AS off ON off.id_offer = occ.id_offer WHERE occ.id_stud = '" + userID + "' AND off.id_empl = '" + employerID + "'");
 			if (valueSet.next()) {
-				return valueSet.getFloat("value");
+				return valueSet.getFloat("max");
 			}
 		}
 		catch (Exception e) {
@@ -173,7 +173,7 @@ public class CalendarInterface extends Interface {
 			connection.createStatement().execute("DELETE FROM offer_hours WHERE id_offer = '" + offerID + "'");
 			PreparedStatement hourStatement = model.connection.prepareStatement("INSERT INTO offer_hours(id_hour, id_offer, begin, end, day) VALUES (?,?,?,?,?)");
 			for (var i : k.intervals) {
-				hourStatement.setInt(1, getLastStudHourId() + 1);
+				hourStatement.setInt(1, getLastOfferHourId() + 1);
 				hourStatement.setInt(2, offerID);
 				hourStatement.setInt(3, i.begin);
 				hourStatement.setInt(4, i.end);
@@ -187,7 +187,7 @@ public class CalendarInterface extends Interface {
 			PreparedStatement studCCsStatement = model.connection.prepareStatement("INSERT INTO student_calendar_comparisons(id_stud, id_offer, value) VALUES (?,?,?)");
 			PreparedStatement offerCCsStatement = model.connection.prepareStatement("INSERT INTO offer_calendar_comparisons(id_stud, id_offer, value) VALUES (?,?,?)");
 			int offerCount = model.offerInterface.getLastOfferId();
-			for (var userID = 1; userID <= offerCount; userID++) {
+			for (var userID = 0; userID <= offerCount; userID++) {
 				Calendar cmp = getStudentCalendar(userID);
 
 				float value = k.compare(cmp);

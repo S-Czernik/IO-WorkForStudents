@@ -88,7 +88,9 @@ function convertTimeToMinute(time) {
 }
 
 function convertMinuteToTime(minute) {
-	return  Math.floor(minute / 60) + ":" + (minute % 60);
+	let h = ("00" + Math.floor(minute / 60)).slice(-2);
+	let m = ((minute % 60) + "00").substring(0, 2);
+	return h + ":" + m;
 }
 
 function onLoad() {

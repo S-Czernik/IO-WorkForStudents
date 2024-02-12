@@ -56,7 +56,7 @@ function searchForProfiles(title, pageNumber) {
 	else {
 		if (arg1.charAt(0) === '#')
 			arg1 = arg1.replace(/#/g, '_');
-		
+
 		xhttp.open("GET", "searchprof?arg1=" + arg1 + "&arg2=" + pageNumber, true);
 		xhttp.send();
 	}
@@ -96,16 +96,16 @@ function filterAndSortProfiles(min, max, search, pageNumber) {
 }
 
 function displayOffers(offers) {
-    var containersContainer = document.getElementById("containersContainerID");
+	var containersContainer = document.getElementById("containersContainerID");
 
-    containersContainer.innerHTML = "";
+	containersContainer.innerHTML = "";
 
-    for (var i = 0; i < offers.length; i++) {
-        var offer = offers[i];
+	for (var i = 0; i < offers.length; i++) {
+		var offer = offers[i];
 
-        var offerDiv = document.createElement("div");
-        offerDiv.className = "container";
-        offerDiv.id = `offer_${offer.id_offer}`;
+		var offerDiv = document.createElement("div");
+		offerDiv.className = "container";
+		offerDiv.id = `offer_${offer.id_offer}`;
 
 		var titleElement = document.createElement("h2");
 		titleElement.innerText = offer.title;
@@ -117,49 +117,62 @@ function displayOffers(offers) {
 		contentElement.className = "offerContent";
 		offerDiv.appendChild(contentElement);
 
-        var showMoreElement = document.createElement("button");
-        showMoreElement.innerText = "Show more";
-        showMoreElement.value = "Show more";
-        showMoreElement.className = "showMore";
-        offerDiv.appendChild(showMoreElement);
-		
-		var applyElement = document.createElement("button");
-        applyElement.innerText = "Hire";
-        applyElement.value = "Hire";
-        applyElement.className = "hire";
-        applyElement.style.marginLeft = '10px';
-        applyElement.addEventListener('click', function(offerIdPerson) {
-            return function() {
-                // Send GET request to the servlet endpoint
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState === 4 && this.status === 200) {
-                        // Assuming the response is a number, parse it and set sessionStorage
-                        var userId = parseInt(this.responseText);
-                        sessionStorage.setItem('found_stud_id', userId);
+		var showMoreElement = document.createElement("button");
+		showMoreElement.innerText = "Show calendar";
+		showMoreElement.value = "Show more";
+		showMoreElement.className = "showMore";
+		showMoreElement.addEventListener('click', function (offerIdPerson, buttonSelf) {
+			return function () {
+				var calendarDiv = document.getElementById("calendar" + offerIdPerson);
+				if (calendarDiv.style.display === 'none') {
+					calendarDiv.style.display = 'block';
+					buttonSelf.innerText = "Hide calendar";
+				} else {
+					calendarDiv.style.display = 'none';
+					buttonSelf.innerText = "Show calendar";
+				}
+			};
+		}(offer.id_person, showMoreElement));
+		offerDiv.appendChild(showMoreElement);
 
-                        // Redirect to chooseOffer.html
-                        window.location.href = "chooseOffer.html";
-                    }
-                };
-                xhttp.open("GET", "ProfileIdToStudentIdServlet?arg1=" + offerIdPerson, true);
-                xhttp.send();
-            };
-        }(offer.id_person));
+		var applyElement = document.createElement("button");
+		applyElement.innerText = "Hire";
+		applyElement.value = "Hire";
+		applyElement.className = "hire";
+		applyElement.style.marginLeft = '10px';
+		applyElement.addEventListener('click', function (offerIdPerson) {
+			return function () {
+				// Send GET request to the servlet endpoint
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function () {
+					if (this.readyState === 4 && this.status === 200) {
+						// Assuming the response is a number, parse it and set sessionStorage
+						var userId = parseInt(this.responseText);
+						sessionStorage.setItem('found_stud_id', userId);
+
+						// Redirect to chooseOffer.html
+						window.location.href = "chooseOffer.html";
+					}
+				};
+				xhttp.open("GET", "ProfileIdToStudentIdServlet?arg1=" + offerIdPerson, true);
+				xhttp.send();
+			};
+		}(offer.id_person));
 		offerDiv.appendChild(applyElement);
-		
+
 		var hideElement = document.createElement("button");
-        hideElement.innerText = "Hide";
-        hideElement.value = "Hide";
-        hideElement.className = "hide";
+		hideElement.innerText = "Hide";
+		hideElement.value = "Hide";
+		hideElement.className = "hide";
 		hideElement.style.marginLeft = '10px';
 		hideElement.addEventListener('click', hide(offer.id_offer));
 		offerDiv.appendChild(hideElement);
 
 		var calendarDiv = document.createElement("div");
 		calendarDiv.id = "calendar" + offer.id_person;
+		calendarDiv.style.display = 'none';
 		offerDiv.appendChild(calendarDiv);
-		
+
 		var calendarMatchingDiv = document.createElement("div");
 		calendarMatchingDiv.id = "calendarmatching" + offer.id_person;
 		offerDiv.appendChild(calendarMatchingDiv);

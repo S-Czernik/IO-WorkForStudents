@@ -56,7 +56,7 @@ function searchForProfiles(title, pageNumber) {
 	else {
 		if (arg1.charAt(0) === '#')
 			arg1 = arg1.replace(/#/g, '_');
-		
+
 		xhttp.open("GET", "searchprof?arg1=" + arg1 + "&arg2=" + pageNumber, true);
 		xhttp.send();
 	}
@@ -85,7 +85,7 @@ function filterAndSortProfiles(min, max, search, pageNumber) {
 	else {
 		if (arg1 === '' || arg2 === '' || (arg1 === '0' && arg2 === '0'))
 			arg1 = arg2 = -1;
-		
+
 		if (arg4.charAt(0) === '#')
 			arg4 = arg4.replace(/#/g, '_');
 
@@ -118,25 +118,37 @@ function displayOffers(offers) {
 		offerDiv.appendChild(contentElement);
 
 		var showMoreElement = document.createElement("button");
-        showMoreElement.innerText = "Show more";
-        showMoreElement.value = "Show more";
-        showMoreElement.className = "showMore";
+		showMoreElement.innerText = "Show calendar";
+		showMoreElement.value = "Show more";
+		showMoreElement.className = "showMore";
+		showMoreElement.addEventListener('click', function (offerIdPerson, buttonSelf) {
+			return function () {
+				var calendarDiv = document.getElementById("calendar" + offerIdPerson);
+				if (calendarDiv.style.display === 'none') {
+					calendarDiv.style.display = 'block';
+					buttonSelf.innerText = "Hide calendar";
+				} else {
+					calendarDiv.style.display = 'none';
+					buttonSelf.innerText = "Show calendar";
+				}
+			};
+		}(offer.id_person, showMoreElement));
 		offerDiv.appendChild(showMoreElement);
-		
+
 		var applyElement = document.createElement("button");
-        applyElement.innerText = "Apply";
-        applyElement.value = "Apply";
-        applyElement.className = "apply";
+		applyElement.innerText = "Apply";
+		applyElement.value = "Apply";
+		applyElement.className = "apply";
 		applyElement.style.marginLeft = '10px';
 		applyElement.addEventListener('click', function () {
 			window.location.href = 'login.html';
 		});
 		offerDiv.appendChild(applyElement);
-		
+
 		var hideElement = document.createElement("button");
-        hideElement.innerText = "Hide";
-        hideElement.value = "Hide";
-        hideElement.className = "hide";
+		hideElement.innerText = "Hide";
+		hideElement.value = "Hide";
+		hideElement.className = "hide";
 		hideElement.style.marginLeft = '10px';
 		offerDiv.appendChild(hideElement);
 
@@ -144,6 +156,7 @@ function displayOffers(offers) {
 
 		var calendarDiv = document.createElement("div");
 		calendarDiv.id = "calendar" + offer.id_person;
+		calendarDiv.style.display = 'none';
 		offerDiv.appendChild(calendarDiv);
 
 		containersContainer.appendChild(offerDiv);

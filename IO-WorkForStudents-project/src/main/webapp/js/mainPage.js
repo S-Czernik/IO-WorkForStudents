@@ -53,7 +53,7 @@ function searchForOffers(title, pageNumber) {
 	else {
 		if (arg1.charAt(0) === '#')
 			arg1 = arg1.replace(/#/g, '_');
-		
+
 		xhttp.open("GET", "searchoff?arg1=" + arg1 + "&arg2=" + pageNumber, true);
 		xhttp.send();
 	}
@@ -113,36 +113,49 @@ function displayOffers(offers) {
 		offerDiv.appendChild(contentElement);
 
 		var showMoreElement = document.createElement("button");
-        showMoreElement.innerText = "Show more";
-        showMoreElement.value = "Show more";
-        showMoreElement.className = "showMore";
+		showMoreElement.innerText = "Show calendar";
+		showMoreElement.value = "Show more";
+		showMoreElement.className = "showMore";
+		showMoreElement.addEventListener('click', function (id_offer, buttonSelf) {
+			return function () {
+				var calendarDiv = document.getElementById("calendar" + id_offer);
+				if (calendarDiv.style.display === 'none') {
+					calendarDiv.style.display = 'block';
+					buttonSelf.innerText = "Hide calendar";
+				} else {
+					calendarDiv.style.display = 'none';
+					buttonSelf.innerText = "Show calendar";
+				}
+			};
+		}(offer.id_offer, showMoreElement));
 		offerDiv.appendChild(showMoreElement);
-		
+
 		var applyElement = document.createElement("a");
-        applyElement.innerText = "Apply";
-        applyElement.value = "Apply";
-        applyElement.className = "apply";
+		applyElement.innerText = "Apply";
+		applyElement.value = "Apply";
+		applyElement.className = "apply";
 		applyElement.style.marginLeft = '10px';
-		applyElement.addEventListener('click', function(id_offer) {
-            return function() {
-                // Set found_id_offer in session storage
-                sessionStorage.setItem('found_id_offer', id_offer);
-                // Call createClickListener with id_offer
-                createClickListener(id_offer);
-            };
-        }(offer.id_offer));
+		applyElement.addEventListener('click', function (id_offer) {
+			return function () {
+				// Set found_id_offer in session storage
+				sessionStorage.setItem('found_id_offer', id_offer);
+				// Call createClickListener with id_offer
+				createClickListener(id_offer);
+			};
+		}(offer.id_offer));
 		offerDiv.appendChild(applyElement);
-		
+
 		var hideElement = document.createElement("button");
-        hideElement.innerText = "Hide";
-        hideElement.value = "Hide";
-        hideElement.className = "hide";
+		hideElement.innerText = "Hide";
+		hideElement.value = "Hide";
+		hideElement.className = "hide";
 		hideElement.style.marginLeft = '10px';
 		hideElement.addEventListener('click', hide(offer.id_offer));
 		offerDiv.appendChild(hideElement);
 
 		var calendarDiv = document.createElement("div");
 		calendarDiv.id = "calendar" + offer.id_offer;
+		calendarDiv.style.display = 'none';
 		offerDiv.appendChild(calendarDiv);
 
 		var calendarMatchingDiv = document.createElement("div");
@@ -157,37 +170,37 @@ function displayOffers(offers) {
 }
 
 function createClickListener(id_offer) {
-    selected_offer = id_offer;
-    sendNotification(id_offer); // Pass id_offer to sendNotification
+	selected_offer = id_offer;
+	sendNotification(id_offer); // Pass id_offer to sendNotification
 }
 
 function sendNotification(offer_id) {
-    var xhttp = new XMLHttpRequest();
+	var xhttp = new XMLHttpRequest();
 
-    xhttp.onreadystatechange = function() {
-        if (this.readyState === 4) {
-            console.log("Status:", this.status);
-            console.log("Response:", this.responseText);
+	xhttp.onreadystatechange = function () {
+		if (this.readyState === 4) {
+			console.log("Status:", this.status);
+			console.log("Response:", this.responseText);
 
-            if (this.status === 200) {
-                if (this.responseText.trim() !== "") {
-                    var response = JSON.parse(this.responseText);
-                    console.log("Parsed JSON:", response);
-                    // Handle response if needed
-                    redirectToMainPage();
-                } else {
-                    console.error("Error: Empty response");
-                }
-            } else {
-                console.error("Error:", this.status);
-            }
-        }
-    };
+			if (this.status === 200) {
+				if (this.responseText.trim() !== "") {
+					var response = JSON.parse(this.responseText);
+					console.log("Parsed JSON:", response);
+					// Handle response if needed
+					redirectToMainPage();
+				} else {
+					console.error("Error: Empty response");
+				}
+			} else {
+				console.error("Error:", this.status);
+			}
+		}
+	};
 
-    var stud_id = sessionStorage.getItem('found_id');
-    var type = 'application';
-    xhttp.open("GET", "NotificationHandlerServlet?arg1=" + type + "&arg2=" + offer_id + "&arg3=" + stud_id, true);
-    xhttp.send();
+	var stud_id = sessionStorage.getItem('found_id');
+	var type = 'application';
+	xhttp.open("GET", "NotificationHandlerServlet?arg1=" + type + "&arg2=" + offer_id + "&arg3=" + stud_id, true);
+	xhttp.send();
 }
 
 function hide(selected_offer) {
