@@ -33,7 +33,7 @@
 
 .side-menu ul li {
     display: flex;
-    flex-direction: column; /* Updated to column layout */
+    flex-direction: column;
     padding: 5px;
     background: #A14A38;
     flex-basis: 100%;
@@ -66,7 +66,6 @@
     font-family: 'Verdana', cursive;
 }
 
-/* Add styles for the button */
 .side-menu ul li button {
     padding: 10px;
     background: #E66A50;
@@ -84,7 +83,7 @@
 .side-menu ul li .button-container {
     display: flex;
     width: 100%;
-    margin-top: 10px; /* Add margin to separate button from text */
+    margin-top: 10px;
 }
 
 .side-menu-trigger:focus ~ .side-menu, .side-menu:hover {

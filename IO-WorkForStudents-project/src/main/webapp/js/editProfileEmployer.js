@@ -81,7 +81,6 @@ function saveProfileChanges() {
             } else {
                 console.error("Błąd podczas zapisywania zmian.");
             }
-            // Przekierowanie po zapisaniu zmian
             window.location.href = "profileEmployer.html";
         }
     };

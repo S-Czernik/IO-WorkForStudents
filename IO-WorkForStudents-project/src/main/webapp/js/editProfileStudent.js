@@ -54,7 +54,6 @@ function handleFileSelect(event) {
         };
         reader.readAsDataURL(file);
     } else {
-        // Wczytaj poprzednie zdjęcie, jeśli żadne nowe nie zostało wybrane
         const picture = document.getElementById('picture');
     }
 }
@@ -86,7 +85,6 @@ function saveProfileChanges() {
             } else {
                 console.error("Błąd podczas zapisywania zmian.");
             }
-            // Przekierowanie po zapisaniu zmian
             window.location.href = "profileStudent.html";
         }
     };
