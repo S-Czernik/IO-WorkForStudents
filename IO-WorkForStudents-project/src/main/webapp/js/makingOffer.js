@@ -26,6 +26,7 @@ function startPage(pageNumber) {
 	var id = sessionStorage.getItem('found_id');
 	xhttp.open("GET", "offersWithId?arg1=" + id + "&arg2=" + pageNumber, true);
 	xhttp.send();
+	reveal();
 }
 
 function displayOffers(offers) {
@@ -48,47 +49,76 @@ function displayOffers(offers) {
 		contentElement.innerText = `Offer's description: \n ${offer.content} `;
 		contentElement.className = "offerContent";
 
-		var editOffer = document.createElement("a");
-		editOffer.innerText = "Edit";
-		editOffer.className = "Edit";
-		editOffer.href = 'offerEditor.html';
+		var editOffer = document.createElement("button");
+		editOffer.innerText = "Edit offer";
+		editOffer.className = "apply";
+		editOffer.style.marginLeft = '20px';
 		editOffer.style.marginRight = '10px'; // Optional: Add some styling to separate the buttons
 
 		// Use a closure to capture the current value of i
 		editOffer.addEventListener('click', createEditClickListener(offer.id_offer, 1));
 
 		var deleteOffer = document.createElement("button");
-		deleteOffer.innerText = "Delete";
+		deleteOffer.innerText = "Delete offer";
 		deleteOffer.value = "Delete";
-		deleteOffer.className = "Delete";
+		deleteOffer.className = "apply";
+		deleteOffer.style.marginBottom = '15px';
+		deleteOffer.style.marginRight = '10px';
 
 		deleteOffer.addEventListener('click', createEditClickListener(offer.id_offer, 2));
 
 		var calendarDiv = document.createElement("div");
 		calendarDiv.id = "calendar" + offer.id_offer;
-
+		calendarDiv.style.display = 'none';
+		
 		var editOfferCalendar = document.createElement("button");
-		editOfferCalendar.innerText = "Edit";
+		editOfferCalendar.innerText = "Edit calendar";
 		editOfferCalendar.value = "Edit";
-		editOfferCalendar.className = "Edit";
+		editOfferCalendar.className = "apply";
+		editOfferCalendar.style.marginLeft = '10px';
+		editOfferCalendar.style.display = "inline";
+
+		var showMoreElement = document.createElement("button");
+		showMoreElement.innerText = "Show calendar";
+		showMoreElement.value = "Show more";
+		showMoreElement.className = "apply";
+		showMoreElement.style.marginLeft = '20px';
+		showMoreElement.addEventListener('click', function (id_offer, buttonSelf) {
+			return function () {
+				var calendarDiv = document.getElementById("calendar" + id_offer);
+				if (calendarDiv.style.display === 'none') {
+					calendarDiv.style.display = 'block';
+					editOfferCalendar.style.display = "inline";
+					editOfferCalendar.style.display = "inline";
+					buttonSelf.innerText = "Hide calendar";
+				} else {
+					calendarDiv.style.display = 'none';
+					editOfferCalendar.style.display = 'none';
+					editOfferCalendar.style.display = "none";
+					buttonSelf.innerText = "Show calendar";
+				}
+			};
+		}(offer.id_offer, showMoreElement));
  
 		editOfferCalendar.addEventListener('click', function (offerIdPerson) {
-			return function () {
-				sessionStorage.setItem('found_id_offer', offerIdPerson);
-				window.location.href = "editCalendar.html";
-			};
-		}(offer.id_offer));
+            return function () {
+                sessionStorage.setItem('found_id_offer', offerIdPerson);
+                window.location.href = "editCalendar.html";
+            };
+        }(offer.id_offer));
 
 		offerDiv.appendChild(titleElement);
 		offerDiv.appendChild(contentElement);
 		offerDiv.appendChild(editOffer);
 		offerDiv.appendChild(deleteOffer);
 		offerDiv.appendChild(calendarDiv);
+		offerDiv.appendChild(showMoreElement);
 		offerDiv.appendChild(editOfferCalendar);
 
 		containersContainer.appendChild(offerDiv);
 		getOfferCalendarHtml(offer.id_offer);
 	}
+	reveal();
 }
 
 // Function to create a closure for the click event listener
@@ -98,8 +128,12 @@ function createEditClickListener(id_offer, type) {
 		sessionStorage.setItem('found_id_offer', id_offer);
 		if (type === 2)
 			confirmDeletion();
+		else {
+			window.location.href = 'offerEditor.html';
+		}
 	};
 }
+
 function confirmDeletion() {
 	var confirmationModal = document.getElementById('confirmationModal');
 	confirmationModal.style.display = 'block';
@@ -139,12 +173,14 @@ function confirmAction(confirmation) {
 		}
 	};
 
-	removeOffer(); // Remove the offer visually
 	if (confirmation) {
+		removeOffer(); // Remove the offer visually
+		reveal();
 		var encodedSelectedOffer = sessionStorage.getItem('found_id_offer');
 		xhttp.open("GET", "OfferDeletionServlet?arg1=" + encodedSelectedOffer, true);
 		xhttp.send();
 	}
+	reveal();
 }
 
 function validateOffer(arg2, arg3, arg4, arg5, result) {
@@ -181,3 +217,22 @@ function validateOffer(arg2, arg3, arg4, arg5, result) {
 		xhttp.send();
 	}
 }
+
+
+function reveal() {
+	var reveals = document.querySelectorAll(".container");
+
+	for (var i = 0; i < reveals.length; i++) {
+		var windowHeight = window.innerHeight;
+		var elementTop = reveals[i].getBoundingClientRect().top;
+		var elementVisible = 50;
+
+		if (elementTop < windowHeight - elementVisible) {
+			reveals[i].classList.add("active");
+		} else {
+			reveals[i].classList.remove("active");
+		}
+	}
+}
+
+window.addEventListener("scroll", reveal);

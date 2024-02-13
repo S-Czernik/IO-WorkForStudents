@@ -113,18 +113,24 @@ function displayOffers(offers) {
 		offerDiv.appendChild(titleElement);
 
 		if (offer.title !== "Profile not found!") {
+			var calendarMatchingDiv = document.createElement("div");
+			calendarMatchingDiv.id = "calendarmatching" + offer.id_person;
+			calendarMatchingDiv.style.textAlign = "right";
+			calendarMatchingDiv.style.width = "fit-content"; // Dostosowuje szerokość do zawartości
+			calendarMatchingDiv.style.display = "inline-block"; // Powoduje, że ramka obejmuje tylko zawartość
+			calendarMatchingDiv.style.border = "2px solid orange";
+			calendarMatchingDiv.style.padding = "5px 10px"; // Dostosowuje padding do preferencji (góra/dół lewo/prawo)
+			calendarMatchingDiv.style.marginLeft = "350px"; // Przesuwa element do prawej strony
+			offerDiv.appendChild(calendarMatchingDiv);
+			
 			var contentElement = document.createElement("p");
 			contentElement.innerText = offer.content;
 			contentElement.className = "offerContent";
 			offerDiv.appendChild(contentElement);
 
-			var calendarMatchingDiv = document.createElement("div");
-			calendarMatchingDiv.id = "calendarmatching" + offer.id_person;
-			offerDiv.appendChild(calendarMatchingDiv);
-
 			var applyElement = document.createElement("button");
-			applyElement.innerText = "Apply";
-			applyElement.value = "Apply";
+			applyElement.innerText = "Hire";
+			applyElement.value = "Hire";
 			applyElement.className = "apply";
 			applyElement.style.marginLeft = '10px';
 			applyElement.addEventListener('click', function (offerIdPerson) {
@@ -145,7 +151,6 @@ function displayOffers(offers) {
 					xhttp.send();
 				};
 			}(offer.id_person));
-			offerDiv.appendChild(applyElement);
 
 			var hideElement = document.createElement("button");
 			hideElement.innerText = "Hide";
@@ -153,17 +158,18 @@ function displayOffers(offers) {
 			hideElement.className = "hide";
 			hideElement.style.marginLeft = '10px';
 			hideElement.addEventListener('click', hide(offer.id_offer));
-			offerDiv.appendChild(hideElement);
 
 			var calendarDiv = document.createElement("div");
 			calendarDiv.id = "calendar" + offer.id_person;
 			calendarDiv.style.display = 'none';
 			offerDiv.appendChild(calendarDiv);
 
+			offerDiv.appendChild(applyElement);
 			var showMoreElement = document.createElement("button");
 			showMoreElement.innerText = "Show calendar";
 			showMoreElement.value = "Show more";
 			showMoreElement.className = "showMore";
+			showMoreElement.style.marginLeft = '10px';
 			showMoreElement.addEventListener('click', function (offerIdPerson, buttonSelf) {
 				return function () {
 					var calendarDiv = document.getElementById("calendar" + offerIdPerson);
@@ -177,6 +183,8 @@ function displayOffers(offers) {
 				};
 			}(offer.id_person, showMoreElement));
 			offerDiv.appendChild(showMoreElement);
+			
+			offerDiv.appendChild(hideElement);
 		}
 
 		containersContainer.appendChild(offerDiv);

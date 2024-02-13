@@ -12,7 +12,7 @@
 .uploaded-files-containter{
     margin-top:10px;
     margin-bottom:10px;
-    width: 140px;
+    width: 180px;
     height: 200px;
     overflow: hidden;
     background-color: white;
@@ -55,7 +55,7 @@
     height: 120%;
     width: 360px;
     overflow-y: auto;
-    top: 64px;
+    top: 45px;
     right: -400px;
     padding: 0;
     background: #A14A38;
@@ -119,8 +119,8 @@
 }
 
 .side-menu ul li button {
+	background-color: #808080; /* Szary kolor tła */
     padding: 10px;
-   background-color: #E66A50;
     color: white;
     align-items: center;
     margin: 10px;

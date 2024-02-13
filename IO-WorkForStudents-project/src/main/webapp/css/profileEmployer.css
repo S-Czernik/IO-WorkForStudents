@@ -9,7 +9,7 @@
     height: 120%;
     width: 360px;
     overflow-y: auto;
-    top: 64px;
+    top: 45px;
     right: -400px;
     padding: 0;
     background: #A14A38;
@@ -74,12 +74,12 @@
 
 .side-menu ul li button {
     padding: 10px;
-   background-color: #E66A50;
+    background-color: #808080; /* Szary kolor tła */
     color: white;
     align-items: center;
     margin: 10px;
     border: #A14A38 2px solid;
-     border-radius: 4px;
+    border-radius: 4px;
     transition: background-color 0.3s;
     cursor: pointer;
 }

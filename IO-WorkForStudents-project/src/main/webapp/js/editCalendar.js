@@ -129,3 +129,12 @@ function save() {
 	}
 
 }
+
+function returnWhere() {
+	let user_type = sessionStorage.getItem('found_type');
+	if (user_type === "student") {
+		window.location.href = "/IO-WorkForStudents-project/profileStudent.html";
+	} else if (user_type === "employer") {
+		window.location.href = "/IO-WorkForStudents-project/offers.html";
+	}
+}

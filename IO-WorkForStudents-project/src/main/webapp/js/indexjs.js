@@ -123,25 +123,25 @@ function displayOffers(offers) {
 			applyElement.addEventListener('click', function () {
 				window.location.href = 'login.html';
 			});
-			offerDiv.appendChild(applyElement);
 
 			var hideElement = document.createElement("button");
 			hideElement.innerText = "Hide";
 			hideElement.value = "Hide";
-			hideElement.className = "showMore";
+			hideElement.className = "hide";
 			hideElement.style.marginLeft = '10px';
 			hideElement.addEventListener('click', hide(offer.id_offer));
-			offerDiv.appendChild(hideElement);
 
 			var calendarDiv = document.createElement("div");
 			calendarDiv.id = "calendar" + offer.id_offer;
 			calendarDiv.style.display = 'none';
 			offerDiv.appendChild(calendarDiv);
 
+			offerDiv.appendChild(applyElement);
 			var showMoreElement = document.createElement("button");
 			showMoreElement.innerText = "Show calendar";
 			showMoreElement.value = "Show more";
 			showMoreElement.className = "showMore";
+			showMoreElement.style.marginLeft = '10px';
 			showMoreElement.addEventListener('click', function (id_offer, buttonSelf) {
 				return function () {
 					var calendarDiv = document.getElementById("calendar" + id_offer);
@@ -155,6 +155,7 @@ function displayOffers(offers) {
 				};
 			}(offer.id_offer, showMoreElement));
 			offerDiv.appendChild(showMoreElement);
+			offerDiv.appendChild(hideElement);
 		}
 
 		containersContainer.appendChild(offerDiv);

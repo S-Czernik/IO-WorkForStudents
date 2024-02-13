@@ -121,7 +121,7 @@ function displayNotifications(notifications) {
             buttonContainer.appendChild(deleteButt);
             
         } else if (notification.messageType === 'contactEmployer') {
-            contactEmployerButt.innerText = "Conact Employer Here";
+            contactEmployerButt.innerText = "Contact Employer Here";
 
             contactEmployerButt.addEventListener('click', function () {
                 actionn = 'viewProfile';
@@ -140,10 +140,10 @@ function displayNotifications(notifications) {
             viewOfferButt.innerText = "View Offer";
             
             // Add event listeners to accept and reject buttons
-            acceptButt.addEventListener('click', function() {
-                actionn = 'accept';
-                showConfirmationModal('accept', notification);
-            });
+			acceptButt.addEventListener('click', function () {
+				actionn = 'accept';
+				showConfirmationModal('accept', notification);
+			});
 
             rejectButt.addEventListener('click', function () {
                 actionn = 'reject';

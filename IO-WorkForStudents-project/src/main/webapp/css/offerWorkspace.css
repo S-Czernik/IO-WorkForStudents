@@ -56,17 +56,19 @@ h2{
 }
 
 .button-styling{
+	justify-content: center; /* Wyśrodkowanie wertykalne */
+    align-items: center; /* Wyśrodkowanie horyzontalne */
     display: flex;
     background-color: #E66A50;
     color: white;
     font-size: 20px;
-    border-radius: 5px;
+    border-radius: 5px;	
     height: 40px;
     width: 60%;
     margin: auto;
     border: #E66A50 1px solid;
     transition: background-color 0.3s;
-
+	margin-top: 50px;
 }
 
 .button-styling:hover{

@@ -526,7 +526,7 @@ public class OfferInterface extends Interface {
 
 			switch (type) {
 				case 0, 1 ->
-					sortBy = "id_offer";
+					sortBy = "id_stud";
 				case 2, 3 ->
 					sortBy = "percentage";
 				case 4, 5 ->
@@ -534,7 +534,7 @@ public class OfferInterface extends Interface {
 				case 6, 7 ->
 					sortBy = "salary";
 				case 8, 9 ->
-					sortBy = "id_offer";
+					sortBy = "id_stud";
 			}
 			switch (type) {
 				case 0, 2, 4, 6, 8 ->
