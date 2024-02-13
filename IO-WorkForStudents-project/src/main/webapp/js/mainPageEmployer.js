@@ -122,16 +122,6 @@ function displayOffers(offers) {
 			calendarMatchingDiv.id = "calendarmatching" + offer.id_person;
 			offerDiv.appendChild(calendarMatchingDiv);
 
-			var calendarDiv = document.createElement("div");
-			calendarDiv.id = "calendar" + offer.id_person;
-			offerDiv.appendChild(calendarDiv);
-
-			var showMoreElement = document.createElement("button");
-			showMoreElement.innerText = "Show more";
-			showMoreElement.value = "Show more";
-			showMoreElement.className = "showMore";
-			offerDiv.appendChild(showMoreElement);
-
 			var applyElement = document.createElement("button");
 			applyElement.innerText = "Apply";
 			applyElement.value = "Apply";
@@ -147,6 +137,29 @@ function displayOffers(offers) {
 			hideElement.style.marginLeft = '10px';
 			hideElement.addEventListener('click', hide(offer.id_offer));
 			offerDiv.appendChild(hideElement);
+
+			var calendarDiv = document.createElement("div");
+			calendarDiv.id = "calendar" + offer.id_person;
+			calendarDiv.style.display = 'none';
+			offerDiv.appendChild(calendarDiv);
+
+			var showMoreElement = document.createElement("button");
+			showMoreElement.innerText = "Show calendar";
+			showMoreElement.value = "Show more";
+			showMoreElement.className = "showMore";
+			showMoreElement.addEventListener('click', function (offerIdPerson, buttonSelf) {
+				return function () {
+					var calendarDiv = document.getElementById("calendar" + offerIdPerson);
+					if (calendarDiv.style.display === 'none') {
+						calendarDiv.style.display = 'block';
+						buttonSelf.innerText = "Hide calendar";
+					} else {
+						calendarDiv.style.display = 'none';
+						buttonSelf.innerText = "Show calendar";
+					}
+				};
+			}(offer.id_person, showMoreElement));
+			offerDiv.appendChild(showMoreElement);
 		}
 
 		containersContainer.appendChild(offerDiv);
@@ -158,7 +171,6 @@ function displayOffers(offers) {
 	}
 	reveal();
 }
-
 
 function hide(selected_offer) {
 	return function () {

@@ -15,11 +15,12 @@ public class OfferInterface extends Interface {
 			String query;
 			PreparedStatement preparedStatement;
 			ResultSet results;
-	
+
 			if (!offerTitle.startsWith("_")) {
 				if (type == 0) {
 					query = "SELECT * FROM OFFERS WHERE id_offer <= ? AND title = ? ORDER BY id_offer DESC LIMIT 10";
-				} else {
+				}
+				else {
 					query = "SELECT * FROM (SELECT * FROM OFFERS WHERE id_offer > ? AND title = ? LIMIT 10) AS subquery ORDER BY id_offer DESC";
 				}
 
@@ -29,13 +30,15 @@ public class OfferInterface extends Interface {
 
 				results = preparedStatement.executeQuery();
 
-			} else {
+			}
+			else {
 				offerTitle = offerTitle.substring(1);
 				String[] parts = offerTitle.split(",");
 
 				if (type == 0) {
 					query = "SELECT * FROM OFFERS WHERE id_offer <= ? AND (";
-				} else {
+				}
+				else {
 					query = "SELECT * FROM (SELECT * FROM OFFERS WHERE id_offer > ? AND (";
 				}
 
@@ -81,32 +84,42 @@ public class OfferInterface extends Interface {
 		ArrayList<Offer> searchedoffers = new ArrayList<>();
 
 		try {
-			String sortBy = "id_offer";
-			String sortOrder = "ASC";
+			String sortBy = "";
+			String sortOrder = "";
 
 			switch (type) {
-				case 2 ->
+				case 0, 1 ->
+					sortBy = "id_offer";
+				case 2, 3 ->
 					sortBy = "percentage";
-				case 4 ->
+				case 4, 5 ->
 					sortBy = "title";
-				case 6 ->
+				case 6, 7 ->
 					sortBy = "salary";
 			}
-			if (type % 2 == 1) {
-				sortOrder = "DESC";
+			switch (type) {
+				case 0, 2, 4, 6 ->
+					sortOrder = "ASC";
+				case 1, 3, 5, 7 ->
+					sortOrder = "DESC";
 			}
 
 			String query = "SELECT * FROM OFFERS";
+
+			if (sortBy.equals("percentage")) {
+				query += " JOIN student_calendar_comparisons AS scc ON OFFERS.id_offer = scc.id_offer";
+			}
 
 			boolean was = false;
 			String[] parts = new String[0];
 			if (!searched.equals("")) {
 				if (!searched.startsWith("_")) {
 					query += " WHERE title = ?";
-				} else {
+				}
+				else {
 					searched = searched.substring(1);
 					parts = searched.split(",");
-					
+
 					query += " WHERE ";
 
 					for (int i = 0; i < parts.length; i++) {
@@ -128,7 +141,12 @@ public class OfferInterface extends Interface {
 				}
 			}
 
-			query += " ORDER BY " + sortBy + " " + sortOrder;
+			if (sortBy.equals("percentage")) {
+				query += " ORDER BY scc.value " + sortOrder;
+			}
+			else {
+				query += " ORDER BY " + sortBy + " " + sortOrder;
+			}
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
@@ -136,7 +154,8 @@ public class OfferInterface extends Interface {
 			if (was) {
 				if (!searched.startsWith("_")) {
 					preparedStatement.setString(parameterIndex++, searched);
-				} else {
+				}
+				else {
 					for (int i = 0; i < parts.length; i++) {
 						preparedStatement.setString(i + 2, "%" + parts[i] + "%");
 						parameterIndex++;
@@ -354,7 +373,8 @@ public class OfferInterface extends Interface {
 			if (!offerTitle.startsWith("_")) {
 				if (type == 0) {
 					query = "SELECT * FROM STUDENT_PROFILES WHERE id_stud <= ? AND title = ? ORDER BY id_stud DESC LIMIT 10";
-				} else {
+				}
+				else {
 					query = "SELECT * FROM (SELECT * FROM STUDENT_PROFILES WHERE id_stud > ? AND title = ? LIMIT 10) AS subquery ORDER BY id_stud DESC";
 				}
 
@@ -363,13 +383,15 @@ public class OfferInterface extends Interface {
 				preparedStatement.setString(2, offerTitle);
 
 				results = preparedStatement.executeQuery();
-			} else {
+			}
+			else {
 				offerTitle = offerTitle.substring(1);
 				String[] parts = offerTitle.split(",");
 
 				if (type == 0) {
 					query = "SELECT * FROM STUDENT_PROFILES WHERE id_stud <= ? AND (";
-				} else {
+				}
+				else {
 					query = "SELECT * FROM (SELECT * FROM STUDENT_PROFILES WHERE id_stud > ? AND (";
 				}
 
@@ -407,14 +429,14 @@ public class OfferInterface extends Interface {
 		}
 		return searchedoffers;
 	}
-        
-        public ArrayList<Offer> getStudentOffer(int userID) {
+
+	public ArrayList<Offer> getStudentOffer(int userID) {
 		ArrayList<Offer> searchedoffers = new ArrayList<>();
 
 		try {
 			String query;
 
-				query = "SELECT * FROM  STUDENT_PROFILES WHERE id_stud = ?";
+			query = "SELECT * FROM  STUDENT_PROFILES WHERE id_stud = ?";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, userID);
@@ -436,20 +458,20 @@ public class OfferInterface extends Interface {
 		}
 		return searchedoffers;
 	}
-		
+
 	public ArrayList<Offer> getEmployerOffer(int userID) {
 		ArrayList<Offer> searchedoffers = new ArrayList<>();
 
 		try {
 			String query;
 
-				query = "SELECT * FROM  OFFERS WHERE id_offer = ?";
+			query = "SELECT * FROM  OFFERS WHERE id_offer = ?";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, userID);
 
 			ResultSet results = preparedStatement.executeQuery();
-			
+
 			while (results.next()) {
 				int id_offer = results.getInt("id_offer");
 				int id_empl = results.getInt("id_empl");
@@ -466,12 +488,12 @@ public class OfferInterface extends Interface {
 		}
 		return searchedoffers;
 	}
-        
-        public int getStudentId(int profileID) {
+
+	public int getStudentId(int profileID) {
 		int stud_id = -1;
 
 		try {
-				String query = """
+			String query = """
             SELECT students_profile_details.id_user
             FROM students_profile_details
             INNER JOIN 
@@ -490,45 +512,49 @@ public class OfferInterface extends Interface {
 		catch (SQLException exp) {
 			System.out.println(exp);
 		}
-            return stud_id;
+		return stud_id;
 	}
 
 	public ArrayList<Offer> getSortedAndFilteredProfiles(int min, int max, int type, String searched, int last, int number, int type2) {
 		ArrayList<Offer> searchedoffers = new ArrayList<>();
 
 		try {
-			String sortBy = "id_stud";
-			String sortOrder = "ASC";
+			String sortBy = "";
+			String sortOrder = "";
 
 			switch (type) {
-				case 2 ->
+				case 0, 1 ->
+					sortBy = "id_offer";
+				case 2, 3 ->
 					sortBy = "percentage";
-				case 3 ->
-					sortBy = "percentage";
-				case 4 ->
+				case 4, 5 ->
 					sortBy = "title";
-				case 5 ->
-					sortBy = "title";
-				case 6 ->
-					sortBy = "rating";
-				case 7 ->
-					sortBy = "rating";
+				case 6, 7 ->
+					sortBy = "salary";
 			}
-			if (type % 2 == 1) {
-				sortOrder = "DESC";
+			switch (type) {
+				case 0, 2, 4, 6 ->
+					sortOrder = "ASC";
+				case 1, 3, 5, 7 ->
+					sortOrder = "DESC";
 			}
 
 			String query = "SELECT * FROM STUDENT_PROFILES";
-			
+
+			if (sortBy.equals("percentage")) {
+				query += " JOIN offer_calendar_comparisons AS occ ON STUDENT_PROFILES.id_stud = occ.id_stud";
+			}
+
 			boolean was = false;
 			String[] parts = new String[0];
 			if (!searched.equals("")) {
 				if (!searched.startsWith("_")) {
 					query += " WHERE title = ?";
-				} else {
+				}
+				else {
 					searched = searched.substring(1);
 					parts = searched.split(",");
-					
+
 					query += " WHERE ";
 
 					for (int i = 0; i < parts.length; i++) {
@@ -550,7 +576,12 @@ public class OfferInterface extends Interface {
 				}
 			}
 
-			query += " ORDER BY " + sortBy + " " + sortOrder;
+			if (sortBy.equals("percentage")) {
+				query += " ORDER BY occ.value " + sortOrder;
+			}
+			else {
+				query += " ORDER BY " + sortBy + " " + sortOrder;
+			}
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
@@ -558,7 +589,8 @@ public class OfferInterface extends Interface {
 			if (was) {
 				if (!searched.startsWith("_")) {
 					preparedStatement.setString(parameterIndex++, searched);
-				} else {
+				}
+				else {
 					for (int i = 0; i < parts.length; i++) {
 						preparedStatement.setString(i + 2, "%" + parts[i] + "%");
 					}

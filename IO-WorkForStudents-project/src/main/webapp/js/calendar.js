@@ -1,6 +1,6 @@
 function getStudentCalendarCsv() {
 	var xhttp = new XMLHttpRequest();
-	id_stud = sessionStorage.getItem('found_id');
+	var id_stud = sessionStorage.getItem('found_id');
 	xhttp.onreadystatechange = function () {
 		if (this.readyState === 4) {
 			if (this.status === 200) {
@@ -13,7 +13,7 @@ function getStudentCalendarCsv() {
 }
 function getOfferCalendarCsv() {
 	var xhttp = new XMLHttpRequest();
-	id_offer = sessionStorage.getItem('found_id_offer');
+	var id_offer = sessionStorage.getItem('found_id_offer');
 	xhttp.onreadystatechange = function () {
 		if (this.readyState === 4) {
 			if (this.status === 200) {
@@ -57,7 +57,7 @@ function getOfferCalendarHtml(id_offer, div_name = "") {
 
 function getStudentCalendarCompatibility(id_stud) {
 	var xhttp = new XMLHttpRequest();
-	id_offer = sessionStorage.getItem('found_id_offer');
+	var id_empl = sessionStorage.getItem('found_id');
 	xhttp.onreadystatechange = function () {
 		if (this.readyState === 4) {
 			if (this.status === 200) {
@@ -65,13 +65,13 @@ function getStudentCalendarCompatibility(id_stud) {
 			}
 		}
 	};
-	xhttp.open("GET", "calendar?rqtype=cmpstud&userid=" + id_stud + "&offerid=" + id_offer);
+	xhttp.open("GET", "calendar?rqtype=cmpstud&userid=" + id_stud + "&emplid=" + id_empl);
 	xhttp.send();
 }
 
 function getOfferCalendarCompatibility(id_offer) {
 	var xhttp = new XMLHttpRequest();
-	id_stud = sessionStorage.getItem('found_id');
+	var id_stud = sessionStorage.getItem('found_id');
 	xhttp.onreadystatechange = function () {
 		if (this.readyState === 4) {
 			if (this.status === 200) {
@@ -100,7 +100,7 @@ function getHtmlFromCsv(csv) {
 
 function updateStudentCalendar(csv) {
 	var xhttp = new XMLHttpRequest();
-	id_stud = sessionStorage.getItem('found_id');
+	var id_stud = sessionStorage.getItem('found_id');
 	xhttp.onreadystatechange = function () {
 		if (this.readyState === 4) {
 			if (this.status === 200) {
@@ -116,7 +116,7 @@ function updateStudentCalendar(csv) {
 }
 function updateOfferCalendar(csv) {
 	var xhttp = new XMLHttpRequest();
-	id_offer = sessionStorage.getItem('found_id_offer');
+	var id_offer = sessionStorage.getItem('found_id_offer');
 	xhttp.onreadystatechange = function () {
 		if (this.readyState === 4) {
 			if (this.status === 200) {
