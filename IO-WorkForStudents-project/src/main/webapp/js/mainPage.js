@@ -107,7 +107,7 @@ function displayOffers(offers) {
 		titleElement.className = "offerTitle";
 		offerDiv.appendChild(titleElement);
 
-		if (offers.length > 1 && offer.title !== "Offer not found!") {
+		if (offer.title !== "Offer not found!") {
 			var contentElement = document.createElement("p");
 			contentElement.innerText = offer.content;
 			contentElement.className = "offerContent";
@@ -166,7 +166,7 @@ function displayOffers(offers) {
 
 		containersContainer.appendChild(offerDiv);
 
-		if (offers.length > 1 && offer.title !== "Offer not found!") {
+		if (offer.title !== "Offer not found!") {
 			getOfferCalendarHtml(offer.id_offer);
 			getOfferCalendarCompatibility(offer.id_offer);
 		}

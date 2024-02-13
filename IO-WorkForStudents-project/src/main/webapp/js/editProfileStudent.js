@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function fetchProfileInfo() {
     var xhr = new XMLHttpRequest();
     var arg1 = sessionStorage.getItem('found_id');
-    xhr.open("GET", "editProfileStudentServlet?arg1=" + arg1, true);
+    xhr.open("GET", "EditProfileStudentServlet?arg1=" + arg1, true);
 
     xhr.onreadystatechange = function () {
         if (this.readyState === 4) {
@@ -77,7 +77,7 @@ function saveProfileChanges() {
     formData.append('picture', fileInput.files[0]);
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "editProfileStudentServlet", true);
+    xhr.open("POST", "EditProfileStudentServlet", true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {

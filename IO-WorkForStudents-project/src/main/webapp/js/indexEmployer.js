@@ -112,7 +112,7 @@ function displayOffers(offers) {
 		titleElement.className = "offerTitle";
 		offerDiv.appendChild(titleElement);
 
-		if (offers.length > 1 && offer.title !== "Profile not found!") {
+		if (offer.title !== "Profile not found!") {
 			var contentElement = document.createElement("p");
 			contentElement.innerText = offer.content;
 			contentElement.className = "offerContent";
@@ -162,7 +162,7 @@ function displayOffers(offers) {
 
 		containersContainer.appendChild(offerDiv);
 
-		if (offers.length > 1 && offer.title !== "Profile not found!") {
+		if (offer.title !== "Profile not found!") {
 			getStudentCalendarHtml(offer.id_person);
 		}
 	}
