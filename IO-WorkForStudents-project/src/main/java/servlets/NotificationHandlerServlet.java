@@ -60,6 +60,15 @@ public class NotificationHandlerServlet extends HttpServlet {
 				case "accept" -> {
 					model.notificationInterface.createNotification(notif, recieverType, action);
 					model.notificationInterface.deleteNotification(notif_id, userType);
+                                        if(userType.equals("student")){
+                                            model.notificationInterface.createNotification(notif, userType, "contactEmployer");
+                                        }
+                                        else if(userType.equals("employer")){
+                                            model.notificationInterface.createNotification(notif, userType, "contactStudent");
+                                        }
+                                        else {
+                                            // unnknown type
+                                        }
 				}
 				case "reject" ->
 					model.notificationInterface.deleteNotification(notif_id, userType);

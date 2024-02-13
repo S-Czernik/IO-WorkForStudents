@@ -183,10 +183,14 @@ public class NotificationInterface extends Interface {
 					insertStatement.setString(4, "accepted");
 					insertStatement.executeUpdate();
 				}
-                                else if (notif.getMessageType().equals("newOffer")) {
-                                        insertStatement.setString(4, "newOffer");
+                                else if (action.equals("newOffer")) {
+                                        insertStatement.setString(4, action);
                                         insertStatement.executeUpdate();
                                 }
+				else if (action.equals("contactEmployer")) {
+					insertStatement.setString(4, action);
+					insertStatement.executeUpdate();
+				}
 			}
 			else if (userType.equals("employer")) {
 				int newMax = getLastEmpNotification() + 1;
@@ -199,12 +203,12 @@ public class NotificationInterface extends Interface {
 					insertStatement.setString(4, "acceptation");
 					insertStatement.executeUpdate();
 				}
-                                else if (notif.getMessageType().equals("application")) {
-                                    insertStatement.setString(4, "application");
+                                else if (action.equals("application")) {
+                                    insertStatement.setString(4, action);
                                     insertStatement.executeUpdate();
                                 }
-				else {
-					insertStatement.setString(4, notif.getMessageType());
+                                else if (action.equals("contactStudent")) {
+					insertStatement.setString(4, action);
 					insertStatement.executeUpdate();
 				}
 			}

@@ -51,6 +51,10 @@ function displayNotifications(notifications) {
             anchor.innerHTML = `Student: ${notification.userLogin}!<br>Has applied to job: ${notification.offerTitle}!<br>`;
         } else if (notification.messageType === 'acceptation') {
             anchor.innerHTML = `Student: ${notification.userLogin}!<br>Accepted your offer: ${notification.offerTitle}!<br>`;
+        } else if (notification.messageType === 'contactEmployer') {
+            anchor.innerHTML = `You have accepted offer from: ${notification.userLogin}!<br> your job will be ${notification.offerTitle}<br>`;
+        } else if (notification.messageType === 'contactStudent') {
+            anchor.innerHTML = `You have accepted student: ${notification.userLogin}!<br> Their job will be: ${notification.offerTitle}!<br>`;
         } else {
             // handle other message types if needed
             anchor.textContent = 'Unknown message type';
@@ -69,6 +73,8 @@ function displayNotifications(notifications) {
         const viewOfferButt = document.createElement("button");
         const viewProfileButt = document.createElement("button");
         const deleteButt = document.createElement("button");
+        const contactEmployerButt = document.createElement("button");
+        const contactStudentButt = document.createElement("button");
 
         //Student
         if (notification.messageType === 'newOffer') {
@@ -95,6 +101,7 @@ function displayNotifications(notifications) {
             buttonContainer.appendChild(viewOfferButt);
             buttonContainer.appendChild(acceptButt);
             buttonContainer.appendChild(rejectButt);
+            
         } else if (notification.messageType === 'accepted') {
             deleteButt.innerText = "Delete Notification";
             viewProfileButt.innerText = "View Profile";
@@ -112,6 +119,18 @@ function displayNotifications(notifications) {
             
             buttonContainer.appendChild(viewProfileButt);
             buttonContainer.appendChild(deleteButt);
+            
+        } else if (notification.messageType === 'contactEmployer') {
+            contactEmployerButt.innerText = "Conact Employer Here";
+
+            contactEmployerButt.addEventListener('click', function () {
+                actionn = 'viewProfile';
+                sessionStorage.setItem('showProfile_id', notification.studentID);
+                window.location.href = 'viewEmployerProfile.html';
+            });
+             
+            buttonContainer.appendChild(contactEmployerButt);
+            
             
         // Employer
         
@@ -155,6 +174,18 @@ function displayNotifications(notifications) {
             
             buttonContainer.appendChild(viewProfileButt);
             buttonContainer.appendChild(deleteButt);
+            
+        } else if (notification.messageType === 'contactStudent') {
+            contactStudentButt.innerText = "Conact Student Here";
+
+            contactStudentButt.addEventListener('click', function () {
+                actionn = 'viewProfile';
+                sessionStorage.setItem('showProfile_id', notification.studentID);
+                window.location.href = 'viewStudentProfile.html';
+            });
+             
+            buttonContainer.appendChild(contactStudentButt);
+            
         } else {
             // handle other message types if needed
             anchor.textContent = 'Unknown message type';

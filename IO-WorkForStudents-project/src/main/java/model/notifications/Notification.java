@@ -57,5 +57,8 @@ public class Notification {
 		return this.IDStudent;
 	}
 
+        public void setMessageType(String message) {
+            this.messageType = message;
+        }
 }
 
