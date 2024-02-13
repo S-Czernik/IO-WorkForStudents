@@ -165,19 +165,6 @@ h2{
 }
 
 
-.typeButton, .filterButton{
-    margin: 4px;
-    padding: 8px 15px;
-    font-size: 12;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #fff;
-    background-color: #007bff;
-    transition: background-color 0.3s ease;
-    font-family: 'Verdana', cursive;
-}
-
 .side-panel {
     position: fixed;
     margin-top: 60px;
@@ -219,11 +206,11 @@ h2{
     width: 50%;
 }
 
-.sidePanelButton {
-    width: 35%;
+.sidePanelButton, .typeButton, .filterButton {
+    width: 120px;
     margin: auto;
     padding: 10px 20px;
-    font-size: 1em;
+    font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -256,7 +243,7 @@ h2{
 
     background-color: #E66A50;
     color: white;
-    font-size: 20px;
+    font-size: 16px;
     width: 10%;
     border-radius: 5px;
     border: #E66A50 1px solid;
@@ -277,7 +264,7 @@ h2{
 
 .showMore{
     padding: 8px 15px;
-    font-size: 1em;
+    font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -340,7 +327,7 @@ h2{
     margin: 10px;
     margin: auto;
     padding: 10px 5px;
-    font-size: 1em;
+    font-size: 12px;
     border: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;

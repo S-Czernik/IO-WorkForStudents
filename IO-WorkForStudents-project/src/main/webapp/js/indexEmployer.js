@@ -126,7 +126,7 @@ function displayOffers(offers) {
 		var applyElement = document.createElement("button");
         applyElement.innerText = "Apply";
         applyElement.value = "Apply";
-        applyElement.className = "apply";
+        applyElement.className = "showMore";
 		applyElement.style.marginLeft = '10px';
 		applyElement.addEventListener('click', function () {
 			window.location.href = 'login.html';
@@ -136,7 +136,7 @@ function displayOffers(offers) {
 		var hideElement = document.createElement("button");
         hideElement.innerText = "Hide";
         hideElement.value = "Hide";
-        hideElement.className = "hide";
+        hideElement.className = "showMore";
 		hideElement.style.marginLeft = '10px';
 		offerDiv.appendChild(hideElement);
 

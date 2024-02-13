@@ -229,8 +229,9 @@ h2{
     transition: background-color 0.3s ease;
 }
 .sidePanelSearch{
+    width: 300px;
+    padding: 5px;
     margin: auto;
-    padding: 10px 5px;
     font-size: 1em;
     border: none;
     border-radius: 5px;
