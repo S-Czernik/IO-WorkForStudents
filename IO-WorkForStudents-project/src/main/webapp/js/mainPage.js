@@ -107,7 +107,7 @@ function displayOffers(offers) {
 		titleElement.className = "offerTitle";
 		offerDiv.appendChild(titleElement);
 
-		if (i === 0 && offer.title !== "Offer not found!") {
+		if (offers.length > 1 && offer.title !== "Offer not found!") {
 			var contentElement = document.createElement("p");
 			contentElement.innerText = offer.content;
 			contentElement.className = "offerContent";

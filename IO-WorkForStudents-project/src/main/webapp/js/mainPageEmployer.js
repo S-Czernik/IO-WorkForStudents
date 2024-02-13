@@ -112,7 +112,7 @@ function displayOffers(offers) {
 		titleElement.className = "offerTitle";
 		offerDiv.appendChild(titleElement);
 
-		if (i === 0 && offer.title !== "Profile not found!") {
+		if (offers.length > 1 && offer.title !== "Profile not found!") {
 			var contentElement = document.createElement("p");
 			contentElement.innerText = offer.content;
 			contentElement.className = "offerContent";
