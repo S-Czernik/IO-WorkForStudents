@@ -98,3 +98,16 @@ function validateLogin(arg1, arg2, result) {
 	xhttp.open("GET", "loginServlet?arg1=" + argument1 + "&arg2=" + argument2, true);
 	xhttp.send();
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("arg2").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            validateLogin('arg1', 'arg2', 'result');
+        }
+    });
+	document.getElementById("passwordRepeatInput").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            validateRegister('loginInput', 'emailInput', 'passwordInput', 'passwordRepeatInput', 'result');
+        }
+    });
+});

@@ -96,7 +96,7 @@ function displayOffers(offers) {
 	var containersContainer = document.getElementById("containersContainerID");
 
 	containersContainer.innerHTML = "";
-
+	
 	for (var i = 0; i < offers.length; i++) {
 		var offer = offers[i];
 
@@ -109,38 +109,40 @@ function displayOffers(offers) {
 		titleElement.className = "offerTitle";
 		offerDiv.appendChild(titleElement);
 
-		var contentElement = document.createElement("p");
-		contentElement.innerText = offer.content;
-		contentElement.className = "offerContent";
-		offerDiv.appendChild(contentElement);
-		
-		var calendarDiv = document.createElement("div");
-		calendarDiv.id = "calendar" + offer.id_offer;
-		offerDiv.appendChild(calendarDiv);
+		if (i === 0 && offer.title !== "Offer not found!") {
+			var contentElement = document.createElement("p");
+			contentElement.innerText = offer.content;
+			contentElement.className = "offerContent";
+			offerDiv.appendChild(contentElement);
 
-		var showMoreElement = document.createElement("button");
-        showMoreElement.innerText = "Show more";
-        showMoreElement.value = "Show more";
-        showMoreElement.className = "showMore";
-		offerDiv.appendChild(showMoreElement);
-		
-		var applyElement = document.createElement("button");
-        applyElement.innerText = "Apply";
-        applyElement.value = "Apply";
-        applyElement.className = "apply";
-		applyElement.style.marginLeft = '10px';
-		applyElement.addEventListener('click', function () {
-			window.location.href = 'login.html';
-		});
-		offerDiv.appendChild(applyElement);
-		
-		var hideElement = document.createElement("button");
-        hideElement.innerText = "Hide";
-        hideElement.value = "Hide";
-        hideElement.className = "hide";
-		hideElement.style.marginLeft = '10px';
-		hideElement.addEventListener('click', hide(offer.id_offer));
-		offerDiv.appendChild(hideElement);
+			var calendarDiv = document.createElement("div");
+			calendarDiv.id = "calendar" + offer.id_offer;
+			offerDiv.appendChild(calendarDiv);
+
+			var showMoreElement = document.createElement("button");
+			showMoreElement.innerText = "Show more";
+			showMoreElement.value = "Show more";
+			showMoreElement.className = "showMore";
+			offerDiv.appendChild(showMoreElement);
+
+			var applyElement = document.createElement("button");
+			applyElement.innerText = "Apply";
+			applyElement.value = "Apply";
+			applyElement.className = "apply";
+			applyElement.style.marginLeft = '10px';
+			applyElement.addEventListener('click', function () {
+				window.location.href = 'login.html';
+			});
+			offerDiv.appendChild(applyElement);
+
+			var hideElement = document.createElement("button");
+			hideElement.innerText = "Hide";
+			hideElement.value = "Hide";
+			hideElement.className = "hide";
+			hideElement.style.marginLeft = '10px';
+			hideElement.addEventListener('click', hide(offer.id_offer));
+			offerDiv.appendChild(hideElement);
+		}
 
 		containersContainer.appendChild(offerDiv);
 		getOfferCalendarHtml(offer.id_offer);
@@ -176,5 +178,13 @@ function reveal() {
 		}
 	}
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("sideBarSearch").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            searchForOffers('sideBarSearch', 0);
+        }
+    });
+});
 
 window.addEventListener("scroll", reveal);

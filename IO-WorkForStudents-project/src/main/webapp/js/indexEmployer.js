@@ -111,40 +111,42 @@ function displayOffers(offers) {
 		titleElement.innerText = offer.title;
 		titleElement.className = "offerTitle";
 		offerDiv.appendChild(titleElement);
-
-		var contentElement = document.createElement("p");
-		contentElement.innerText = offer.content;
-		contentElement.className = "offerContent";
-		offerDiv.appendChild(contentElement);
 		
-		var calendarDiv = document.createElement("div");
-		calendarDiv.id = "calendar" + offer.id_person;
-		offerDiv.appendChild(calendarDiv);
+		if (i === 0 && offer.title !== "Profile not found!") {
+			var contentElement = document.createElement("p");
+			contentElement.innerText = offer.content;
+			contentElement.className = "offerContent";
+			offerDiv.appendChild(contentElement);
 
-		var showMoreElement = document.createElement("button");
-        showMoreElement.innerText = "Show more";
-        showMoreElement.value = "Show more";
-        showMoreElement.className = "showMore";
-		offerDiv.appendChild(showMoreElement);
-		
-		var applyElement = document.createElement("button");
-        applyElement.innerText = "Apply";
-        applyElement.value = "Apply";
-        applyElement.className = "apply";
-		applyElement.style.marginLeft = '10px';
-		applyElement.addEventListener('click', function () {
-			window.location.href = 'login.html';
-		});
-		offerDiv.appendChild(applyElement);
-		
-		var hideElement = document.createElement("button");
-        hideElement.innerText = "Hide";
-        hideElement.value = "Hide";
-        hideElement.className = "hide";
-		hideElement.style.marginLeft = '10px';
-		offerDiv.appendChild(hideElement);
+			var calendarDiv = document.createElement("div");
+			calendarDiv.id = "calendar" + offer.id_person;
+			offerDiv.appendChild(calendarDiv);
 
-		hideElement.addEventListener('click', hide(offer.id_offer));
+			var showMoreElement = document.createElement("button");
+			showMoreElement.innerText = "Show more";
+			showMoreElement.value = "Show more";
+			showMoreElement.className = "showMore";
+			offerDiv.appendChild(showMoreElement);
+
+			var applyElement = document.createElement("button");
+			applyElement.innerText = "Apply";
+			applyElement.value = "Apply";
+			applyElement.className = "apply";
+			applyElement.style.marginLeft = '10px';
+			applyElement.addEventListener('click', function () {
+				window.location.href = 'login.html';
+			});
+			offerDiv.appendChild(applyElement);
+
+			var hideElement = document.createElement("button");
+			hideElement.innerText = "Hide";
+			hideElement.value = "Hide";
+			hideElement.className = "hide";
+			hideElement.style.marginLeft = '10px';
+			offerDiv.appendChild(hideElement);
+
+			hideElement.addEventListener('click', hide(offer.id_offer));
+		}
 
 		containersContainer.appendChild(offerDiv);
 		getStudentCalendarHtml(offer.id_person);
@@ -180,5 +182,13 @@ function reveal() {
 		}
 	}
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("sideBarSearch").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            searchForProfiles('sideBarSearch', 0);
+        }
+    });
+});
 
 window.addEventListener("scroll", reveal);
