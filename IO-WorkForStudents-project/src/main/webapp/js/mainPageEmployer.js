@@ -126,7 +126,7 @@ function displayOffers(offers) {
 		var applyElement = document.createElement("button");
         applyElement.innerText = "Hire";
         applyElement.value = "Hire";
-        applyElement.className = "hire";
+        applyElement.className = "showMore";
         applyElement.style.marginLeft = '10px';
         applyElement.addEventListener('click', function(offerIdPerson) {
             return function() {

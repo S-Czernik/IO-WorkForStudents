@@ -121,7 +121,7 @@ function displayOffers(offers) {
 		var applyElement = document.createElement("a");
         applyElement.innerText = "Apply";
         applyElement.value = "Apply";
-        applyElement.className = "apply";
+        applyElement.className = "showMore";
 		applyElement.style.marginLeft = '10px';
 		applyElement.addEventListener('click', function(id_offer) {
             return function() {
