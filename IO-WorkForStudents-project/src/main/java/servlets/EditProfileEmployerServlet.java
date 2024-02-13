@@ -10,19 +10,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import model.Model;
 import servlets.helper.Helper;
 
-@WebServlet(name = "EditProfileEmployerServlet", urlPatterns = {"/EditProfileEmployerServlet"})
+@WebServlet(name = "EditProfileStudentServlet", urlPatterns = {"/editProfileStudentServlet"})
 @MultipartConfig
 public class EditProfileEmployerServlet extends HttpServlet {
 
     Model model;
 
-    public EditProfileEmployerServlet() {
-        model = Model.getModel();
-    }
+	public EditProfileEmployerServlet() {
+		model = Model.getModel();
+	}
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,10 +38,11 @@ public class EditProfileEmployerServlet extends HttpServlet {
             StringBuilder jsonProfileInfo = new StringBuilder("[");
             jsonProfileInfo.append("{")
                     .append("\"login\": \"").append(model.accountInterface.getLogin(userID)).append("\",")
-                    .append("\"company_name\": \"").append(model.accountInterface.getCompanyName(userID)).append("\",")
-                    .append("\"NIP\": \"").append(model.accountInterface.getNIP(userID)).append("\",")
+                    .append("\"name\": \"").append(model.accountInterface.getName(userID)).append("\",")
+                    .append("\"surname\": \"").append(model.accountInterface.getSurname(userID)).append("\",")
                     .append("\"email\": \"").append(model.accountInterface.getEmail(userID)).append("\",")
                     .append("\"city\": \"").append(model.accountInterface.getCity(userID)).append("\",")
+                    .append("\"title\": \"").append(model.accountInterface.getTitle(userID)).append("\",")
                     .append("\"description\": \"").append(model.accountInterface.getDescription(userID)).append("\",")
                     .append("\"picture\": \"").append(base64Image).append("\"")
                     .append("}");
@@ -60,17 +62,18 @@ public class EditProfileEmployerServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             int userID = Helper.getIntValueOf(request.getParameter("userID"));
-            String company_name = request.getParameter("company_name");
-            String NIP = request.getParameter("NIP");
+            String name = request.getParameter("name");
+            String surname = request.getParameter("surname");
             String city = request.getParameter("city");
             String description = request.getParameter("description");
+            String title = request.getParameter("title");
             Part filePart = request.getPart("picture");
             InputStream fileInputStream = filePart.getInputStream();
             byte[] profilePicture = fileInputStream.readAllBytes();
-            System.out.println(city);
-            model.accountInterface.saveCompanyName(userID, company_name);
-            model.accountInterface.saveNIP(userID, NIP);
+            model.accountInterface.saveName(userID, name);
+            model.accountInterface.saveSurname(userID, surname);
             model.accountInterface.saveCity(userID, city);
+            model.accountInterface.saveTitle(userID, title);
             model.accountInterface.saveDescription(userID, description);
             if (profilePicture.length > 100) {
                 model.accountInterface.savePicture(userID, profilePicture);
