@@ -136,7 +136,7 @@ function displayOffers(offers) {
 		var hideElement = document.createElement("button");
         hideElement.innerText = "Hide";
         hideElement.value = "Hide";
-        hideElement.className = "showMore";
+        hideElement.className = "hide";
 		hideElement.style.marginLeft = '10px';
 		offerDiv.appendChild(hideElement);
 
