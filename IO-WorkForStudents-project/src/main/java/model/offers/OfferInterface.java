@@ -96,11 +96,13 @@ public class OfferInterface extends Interface {
 					sortBy = "title";
 				case 6, 7 ->
 					sortBy = "salary";
+				case 8, 9 ->
+					sortBy = "id_offer";
 			}
 			switch (type) {
-				case 0, 2, 4, 6 ->
+				case 0, 2, 4, 6, 8 ->
 					sortOrder = "ASC";
-				case 1, 3, 5, 7 ->
+				case 1, 3, 5, 7, 9 ->
 					sortOrder = "DESC";
 			}
 
@@ -531,11 +533,13 @@ public class OfferInterface extends Interface {
 					sortBy = "title";
 				case 6, 7 ->
 					sortBy = "salary";
+				case 8, 9 ->
+					sortBy = "id_offer";
 			}
 			switch (type) {
-				case 0, 2, 4, 6 ->
+				case 0, 2, 4, 6, 8 ->
 					sortOrder = "ASC";
-				case 1, 3, 5, 7 ->
+				case 1, 3, 5, 7, 9 ->
 					sortOrder = "DESC";
 			}
 
