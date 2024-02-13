@@ -56,7 +56,7 @@ function searchForProfiles(title, pageNumber) {
 	else {
 		if (arg1.charAt(0) === '#')
 			arg1 = arg1.replace(/#/g, '_');
-		
+
 		xhttp.open("GET", "searchprof?arg1=" + arg1 + "&arg2=" + pageNumber, true);
 		xhttp.send();
 	}
@@ -96,77 +96,65 @@ function filterAndSortProfiles(min, max, search, pageNumber) {
 }
 
 function displayOffers(offers) {
-    var containersContainer = document.getElementById("containersContainerID");
+	var containersContainer = document.getElementById("containersContainerID");
 
-    containersContainer.innerHTML = "";
+	containersContainer.innerHTML = "";
 
-    for (var i = 0; i < offers.length; i++) {
-        var offer = offers[i];
+	for (var i = 0; i < offers.length; i++) {
+		var offer = offers[i];
 
-        var offerDiv = document.createElement("div");
-        offerDiv.className = "container";
-        offerDiv.id = `offer_${offer.id_offer}`;
+		var offerDiv = document.createElement("div");
+		offerDiv.className = "container";
+		offerDiv.id = `offer_${offer.id_offer}`;
 
 		var titleElement = document.createElement("h2");
 		titleElement.innerText = offer.title;
 		titleElement.className = "offerTitle";
 		offerDiv.appendChild(titleElement);
 
-		var contentElement = document.createElement("p");
-		contentElement.innerText = offer.content;
-		contentElement.className = "offerContent";
-		offerDiv.appendChild(contentElement);
+		if (offers.length > 1 && offer.title !== "Profile not found!") {
+			var contentElement = document.createElement("p");
+			contentElement.innerText = offer.content;
+			contentElement.className = "offerContent";
+			offerDiv.appendChild(contentElement);
 
-        var showMoreElement = document.createElement("button");
-        showMoreElement.innerText = "Show more";
-        showMoreElement.value = "Show more";
-        showMoreElement.className = "showMore";
-        offerDiv.appendChild(showMoreElement);
-		
-		var applyElement = document.createElement("button");
-        applyElement.innerText = "Hire";
-        applyElement.value = "Hire";
-        applyElement.className = "showMore";
-        applyElement.style.marginLeft = '10px';
-        applyElement.addEventListener('click', function(offerIdPerson) {
-            return function() {
-                // Send GET request to the servlet endpoint
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState === 4 && this.status === 200) {
-                        // Assuming the response is a number, parse it and set sessionStorage
-                        var userId = parseInt(this.responseText);
-                        sessionStorage.setItem('found_stud_id', userId);
+			var calendarMatchingDiv = document.createElement("div");
+			calendarMatchingDiv.id = "calendarmatching" + offer.id_person;
+			offerDiv.appendChild(calendarMatchingDiv);
 
-                        // Redirect to chooseOffer.html
-                        window.location.href = "chooseOffer.html";
-                    }
-                };
-                xhttp.open("GET", "ProfileIdToStudentIdServlet?arg1=" + offerIdPerson, true);
-                xhttp.send();
-            };
-        }(offer.id_person));
-		offerDiv.appendChild(applyElement);
-		
-		var hideElement = document.createElement("button");
-        hideElement.innerText = "Hide";
-        hideElement.value = "Hide";
-        hideElement.className = "hide";
-		hideElement.style.marginLeft = '10px';
-		hideElement.addEventListener('click', hide(offer.id_offer));
-		offerDiv.appendChild(hideElement);
+			var calendarDiv = document.createElement("div");
+			calendarDiv.id = "calendar" + offer.id_person;
+			offerDiv.appendChild(calendarDiv);
 
-		var calendarDiv = document.createElement("div");
-		calendarDiv.id = "calendar" + offer.id_person;
-		offerDiv.appendChild(calendarDiv);
-		
-		var calendarMatchingDiv = document.createElement("div");
-		calendarMatchingDiv.id = "calendarmatching" + offer.id_person;
-		offerDiv.appendChild(calendarMatchingDiv);
+			var showMoreElement = document.createElement("button");
+			showMoreElement.innerText = "Show more";
+			showMoreElement.value = "Show more";
+			showMoreElement.className = "showMore";
+			offerDiv.appendChild(showMoreElement);
+
+			var applyElement = document.createElement("button");
+			applyElement.innerText = "Apply";
+			applyElement.value = "Apply";
+			applyElement.className = "apply";
+			applyElement.style.marginLeft = '10px';
+			applyElement.addEventListener('click', applyForOffer(offer.id_person));
+			offerDiv.appendChild(applyElement);
+
+			var hideElement = document.createElement("button");
+			hideElement.innerText = "Hide";
+			hideElement.value = "Hide";
+			hideElement.className = "hide";
+			hideElement.style.marginLeft = '10px';
+			hideElement.addEventListener('click', hide(offer.id_offer));
+			offerDiv.appendChild(hideElement);
+		}
 
 		containersContainer.appendChild(offerDiv);
-		getStudentCalendarHtml(offer.id_person);
-		getStudentCalendarCompatibility(offer.id_person);
+
+		if (offers.length > 1 && offer.title !== "Profile not found!") {
+			getStudentCalendarHtml(offer.id_person);
+			getStudentCalendarCompatibility(offer.id_person);
+		}
 	}
 	reveal();
 }
@@ -200,5 +188,13 @@ function reveal() {
 		}
 	}
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+	document.getElementById("sideBarSearch").addEventListener("keypress", function (event) {
+		if (event.key === "Enter") {
+			searchForProfiles('sideBarSearch', 0);
+		}
+	});
+});
 
 window.addEventListener("scroll", reveal);

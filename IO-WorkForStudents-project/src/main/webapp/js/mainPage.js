@@ -53,7 +53,7 @@ function searchForOffers(title, pageNumber) {
 	else {
 		if (arg1.charAt(0) === '#')
 			arg1 = arg1.replace(/#/g, '_');
-		
+
 		xhttp.open("GET", "searchoff?arg1=" + arg1 + "&arg2=" + pageNumber, true);
 		xhttp.send();
 	}
@@ -107,87 +107,85 @@ function displayOffers(offers) {
 		titleElement.className = "offerTitle";
 		offerDiv.appendChild(titleElement);
 
-		var contentElement = document.createElement("p");
-		contentElement.innerText = offer.content;
-		contentElement.className = "offerContent";
-		offerDiv.appendChild(contentElement);
+		if (offers.length > 1 && offer.title !== "Offer not found!") {
+			var contentElement = document.createElement("p");
+			contentElement.innerText = offer.content;
+			contentElement.className = "offerContent";
+			offerDiv.appendChild(contentElement);
 
-		var showMoreElement = document.createElement("button");
-        showMoreElement.innerText = "Show more";
-        showMoreElement.value = "Show more";
-        showMoreElement.className = "showMore";
-		offerDiv.appendChild(showMoreElement);
-		
-		var applyElement = document.createElement("a");
-        applyElement.innerText = "Apply";
-        applyElement.value = "Apply";
-        applyElement.className = "showMore";
-		applyElement.style.marginLeft = '10px';
-		applyElement.addEventListener('click', function(id_offer) {
-            return function() {
-                // Set found_id_offer in session storage
-                sessionStorage.setItem('found_id_offer', id_offer);
-                // Call createClickListener with id_offer
-                createClickListener(id_offer);
-            };
-        }(offer.id_offer));
-		offerDiv.appendChild(applyElement);
-		
-		var hideElement = document.createElement("button");
-        hideElement.innerText = "Hide";
-        hideElement.value = "Hide";
-        hideElement.className = "hide";
-		hideElement.style.marginLeft = '10px';
-		hideElement.addEventListener('click', hide(offer.id_offer));
-		offerDiv.appendChild(hideElement);
+			var calendarMatchingDiv = document.createElement("div");
+			calendarMatchingDiv.id = "calendarmatching" + offer.id_offer;
+			offerDiv.appendChild(calendarMatchingDiv);
 
-		var calendarDiv = document.createElement("div");
-		calendarDiv.id = "calendar" + offer.id_offer;
-		offerDiv.appendChild(calendarDiv);
+			var calendarDiv = document.createElement("div");
+			calendarDiv.id = "calendar" + offer.id_offer;
+			offerDiv.appendChild(calendarDiv);
 
-		var calendarMatchingDiv = document.createElement("div");
-		calendarMatchingDiv.id = "calendarmatching" + offer.id_offer;
-		offerDiv.appendChild(calendarMatchingDiv);
+			var showMoreElement = document.createElement("button");
+			showMoreElement.innerText = "Show more";
+			showMoreElement.value = "Show more";
+			showMoreElement.className = "showMore";
+			offerDiv.appendChild(showMoreElement);
+
+			var applyElement = document.createElement("button");
+			applyElement.innerText = "Apply";
+			applyElement.value = "Apply";
+			applyElement.className = "apply";
+			applyElement.style.marginLeft = '10px';
+			applyElement.addEventListener('click', applyForOffer(offer.id_person));
+			offerDiv.appendChild(applyElement);
+
+			var hideElement = document.createElement("button");
+			hideElement.innerText = "Hide";
+			hideElement.value = "Hide";
+			hideElement.className = "hide";
+			hideElement.style.marginLeft = '10px';
+			hideElement.addEventListener('click', hide(offer.id_offer));
+			offerDiv.appendChild(hideElement);
+		}
 
 		containersContainer.appendChild(offerDiv);
-		getOfferCalendarHtml(offer.id_offer);
-		getOfferCalendarCompatibility(offer.id_offer);
+
+		if (offers.length > 1 && offer.title !== "Offer not found!") {
+			getOfferCalendarHtml(offer.id_offer);
+			getOfferCalendarCompatibility(offer.id_offer);
+		}
 	}
 	reveal();
 }
 
 function createClickListener(id_offer) {
-    selected_offer = id_offer;
-    sendNotification(id_offer); // Pass id_offer to sendNotification
+	selected_offer = id_offer;
+	sendNotification(id_offer); // Pass id_offer to sendNotification
 }
 
 function sendNotification(offer_id) {
-    var xhttp = new XMLHttpRequest();
+	var xhttp = new XMLHttpRequest();
 
-    xhttp.onreadystatechange = function() {
-        if (this.readyState === 4) {
-            console.log("Status:", this.status);
-            console.log("Response:", this.responseText);
+	xhttp.onreadystatechange = function () {
+		if (this.readyState === 4) {
+			console.log("Status:", this.status);
+			console.log("Response:", this.responseText);
 
-            if (this.status === 200) {
-                if (this.responseText.trim() !== "") {
-                    var response = JSON.parse(this.responseText);
-                    console.log("Parsed JSON:", response);
-                    // Handle response if needed
-                    redirectToMainPage();
-                } else {
-                    console.error("Error: Empty response");
-                }
-            } else {
-                console.error("Error:", this.status);
-            }
-        }
-    };
+			if (this.status === 200) {
+				if (this.responseText.trim() !== "") {
+					var response = JSON.parse(this.responseText);
+					console.log("Parsed JSON:", response);
+					// Handle response if needed
+					redirectToMainPage();
+				} else {
+					console.error("Error: Empty response");
+				}
+			} else {
+				console.error("Error:", this.status);
+			}
+		}
+	};
 
-    var stud_id = sessionStorage.getItem('found_id');
-    var type = 'application';
-    xhttp.open("GET", "NotificationHandlerServlet?arg1=" + type + "&arg2=" + offer_id + "&arg3=" + stud_id, true);
-    xhttp.send();
+	var stud_id = sessionStorage.getItem('found_id');
+	var type = 'application';
+	xhttp.open("GET", "NotificationHandlerServlet?arg1=" + type + "&arg2=" + offer_id + "&arg3=" + stud_id, true);
+	xhttp.send();
 }
 
 function hide(selected_offer) {
@@ -218,5 +216,13 @@ function reveal() {
 		}
 	}
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+	document.getElementById("sideBarSearch").addEventListener("keypress", function (event) {
+		if (event.key === "Enter") {
+			searchForOffers('sideBarSearch', 0);
+		}
+	});
+});
 
 window.addEventListener("scroll", reveal);
