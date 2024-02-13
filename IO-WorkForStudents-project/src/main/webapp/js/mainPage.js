@@ -122,7 +122,14 @@ function displayOffers(offers) {
 			applyElement.value = "Apply";
 			applyElement.className = "apply";
 			applyElement.style.marginLeft = '10px';
-			applyElement.addEventListener('click', applyForOffer(offer.id_person));
+			applyElement.addEventListener('click', function (id_offer) {
+				return function () {
+					// Set found_id_offer in session storage
+					sessionStorage.setItem('found_id_offer', id_offer);
+					// Call createClickListener with id_offer
+					createClickListener(id_offer);
+				};
+			}(offer.id_offer));
 			offerDiv.appendChild(applyElement);
 
 			var hideElement = document.createElement("button");
