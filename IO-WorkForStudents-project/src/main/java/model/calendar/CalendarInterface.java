@@ -136,10 +136,8 @@ public class CalendarInterface extends Interface {
 				hourStatement.execute();
 			}
 
-			connection.createStatement().execute("DELETE FROM student_calendar_comparisons WHERE id_stud = '" + userID + "'");
-			connection.createStatement().execute("DELETE FROM offer_calendar_comparisons WHERE id_stud = '" + userID + "'");
-			PreparedStatement studCCsStatement = model.connection.prepareStatement("INSERT INTO student_calendar_comparisons(id_stud, id_offer, value) VALUES (?,?,?)");
-			PreparedStatement offerCCsStatement = model.connection.prepareStatement("INSERT INTO offer_calendar_comparisons(id_stud, id_offer, value) VALUES (?,?,?)");
+			PreparedStatement studCCsStatement = model.connection.prepareStatement("REPLACE INTO student_calendar_comparisons(id_stud, id_offer, value) VALUES (?,?,?)");
+			PreparedStatement offerCCsStatement = model.connection.prepareStatement("REPLACE INTO offer_calendar_comparisons(id_stud, id_offer, value) VALUES (?,?,?)");
 			int offerCount = model.offerInterface.getLastOfferId();
 			for (var offerID = 1; offerID <= offerCount; offerID++) {
 				Calendar cmp = getOfferCalendar(offerID);
@@ -182,10 +180,8 @@ public class CalendarInterface extends Interface {
 				hourStatement.execute();
 			}
 
-			connection.createStatement().execute("DELETE FROM student_calendar_comparisons WHERE id_stud = '" + offerID + "'");
-			connection.createStatement().execute("DELETE FROM offer_calendar_comparisons WHERE id_stud = '" + offerID + "'");
-			PreparedStatement studCCsStatement = model.connection.prepareStatement("INSERT INTO student_calendar_comparisons(id_stud, id_offer, value) VALUES (?,?,?)");
-			PreparedStatement offerCCsStatement = model.connection.prepareStatement("INSERT INTO offer_calendar_comparisons(id_stud, id_offer, value) VALUES (?,?,?)");
+			PreparedStatement studCCsStatement = model.connection.prepareStatement("REPLACE INTO student_calendar_comparisons(id_stud, id_offer, value) VALUES (?,?,?)");
+			PreparedStatement offerCCsStatement = model.connection.prepareStatement("REPLACE INTO offer_calendar_comparisons(id_stud, id_offer, value) VALUES (?,?,?)");
 			int offerCount = model.offerInterface.getLastOfferId();
 			for (var userID = 0; userID <= offerCount; userID++) {
 				Calendar cmp = getStudentCalendar(userID);

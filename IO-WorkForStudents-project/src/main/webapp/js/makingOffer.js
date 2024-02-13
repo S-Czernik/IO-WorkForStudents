@@ -71,12 +71,14 @@ function displayOffers(offers) {
 		editOfferCalendar.innerText = "Edit";
 		editOfferCalendar.value = "Edit";
 		editOfferCalendar.className = "Edit";
-		
-		editOfferCalendar.addEventListener('click', function () {
-			sessionStorage.setItem('found_id_offer', offer.id_offer);
-			window.location.href = "editCalendar.html";
-		});
-		
+ 
+		editOfferCalendar.addEventListener('click', function (offerIdPerson) {
+			return function () {
+				sessionStorage.setItem('found_id_offer', offerIdPerson);
+				window.location.href = "editCalendar.html";
+			};
+		}(offer.id_offer));
+
 		offerDiv.appendChild(titleElement);
 		offerDiv.appendChild(contentElement);
 		offerDiv.appendChild(editOffer);
@@ -94,7 +96,7 @@ function createEditClickListener(id_offer, type) {
 	return function () {
 		selected_offer = id_offer;
 		sessionStorage.setItem('found_id_offer', id_offer);
-		if(type === 2)
+		if (type === 2)
 			confirmDeletion();
 	};
 }
