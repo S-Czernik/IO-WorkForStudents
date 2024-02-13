@@ -40,8 +40,11 @@ public class ProfileEmployerServlet extends HttpServlet {
 					.append("\"picture\": \"").append(base64Image).append("\"")
 					.append("}");
 			jsonProfileInfo.append("]");
-			System.out.println(model.accountInterface.getCity(userID));
 			out.println(jsonProfileInfo.toString());
 		}
+                catch (Exception e)
+                {
+                    System.out.println(e.getMessage());
+                }
 	}
 }

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import model.accounts.AccountInterface;
 import model.calendar.CalendarInterface;
+import model.files.FilesInterface;
 import model.notifications.NotificationInterface;
 import model.offers.OfferInterface;
 import model.rating.RatingInterface;
@@ -18,26 +19,29 @@ public class Model {
 	public OfferInterface offerInterface;
 	public NotificationInterface notificationInterface;
 	public AccountInterface accountInterface;
-        public RatingInterface ratingInterface;
+	public RatingInterface ratingInterface;
+	public FilesInterface filesInterface;
 
-    public static Model getModel() {
-        if (singleton == null) {
-            singleton = new Model();
-            Interface.model = singleton;
-            singleton.calendarInterface = new CalendarInterface();
-            singleton.offerInterface = new OfferInterface();
-            singleton.notificationInterface = new NotificationInterface();
-            singleton.accountInterface = new AccountInterface();
-            singleton.ratingInterface = new RatingInterface();
-        }
+	public static Model getModel() {
+		if (singleton == null) {
+			singleton = new Model();
+			Interface.model = singleton;
+			singleton.calendarInterface = new CalendarInterface();
+			singleton.offerInterface = new OfferInterface();
+			singleton.notificationInterface = new NotificationInterface();
+			singleton.accountInterface = new AccountInterface();
+			singleton.ratingInterface = new RatingInterface();
+			singleton.filesInterface = new FilesInterface();
+		}
 
-        return singleton;
-    }
+		return singleton;
+	}
 
 	public Model() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			System.out.println(e);
 		}
 		connect();
@@ -46,7 +50,7 @@ public class Model {
 
 	public void connect() {
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ioio?useSSL=false", "root", "1234");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ioio?useSSL=false", "root", "szyman");
 		}
 		catch (SQLException e) {
 			System.out.println(e);

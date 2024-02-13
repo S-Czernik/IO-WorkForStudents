@@ -5,8 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Profile</title>
         <script type="text/javascript" src="js/notificationJS.js"></script>
-        <script type="text/javascript" src="js/files.js"></script>
-        <script type="text/javascript" src="js/editProfileStudent.js"></script>
+        <script type="text/javascript" src="js/editProfileEmployer.js"></script>
         <script type="text/javascript" src="js/calendar.js"></script>
         <link rel="stylesheet" href="css/calendar.css" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="css/editProfile.css">
@@ -33,14 +32,12 @@
             <h1>Edit Your Profile</h1>
             <form id="profileForm" enctype="multipart/form-data">
                 <div class="basicInfo">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" class="input_styling"><br>
-                    <label for="surname">Surname:</label>
-                    <input type="text" id="surname" name="surname" class="input_styling"><br>
+                    <label for="company_name">Company Name:</label>
+                    <input type="text" id="company_name" name="company_name" class="input_styling"><br>
+                    <label for="NIP">NIP:</label>
+                    <input type="text" id="NIP" name="NIP" class="input_styling"><br>
                     <label for="city">City:</label>
                     <input type="text" id="city" name="city" class="input_styling"><br>
-                    <label for="title">Title:</label>
-                    <input type="text" id="title" name="title" class="input_styling"><br>
                 </div>
                 <div class="image-and-files">
                     <div class="fileEditor">
@@ -50,14 +47,6 @@
                         <div class="editButton">
                             <input type="file" id="fileInput" name="fileInput" accept=".jpg, .jpeg, .png">
                             <label for="fileInput">Edit Picture</label>
-                        </div>
-                    </div>
-                    <div class="uploaded-files-containter">
-                        <div class="filesSelectionButton">
-                            <input type="file" id="filesInput" name="filesInput" accept=".pdf" multiple>
-                            <label for="filesInput">Add Files</label>
-                        </div>
-                        <div class="uploaded-files-list" id="uploaded-files-list-edit">
                         </div>
                     </div>
                 </div>

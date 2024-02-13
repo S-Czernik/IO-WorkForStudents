@@ -4,24 +4,25 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function fetchProfileInfo() {
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function () {
-		if (this.readyState === 4 && this.status === 200) {
-			try {
-				var profileInfo = JSON.parse(this.responseText);
-				displayProfileInfo(profileInfo);
-			} catch (error) {
-				console.error('Błąd parsowania JSON:', error);
+	var xhr = new XMLHttpRequest();
+	var arg1 = sessionStorage.getItem('found_id');
+	xhr.open("GET", "ProfileStudentServlet?arg1=" + arg1, true);
+	xhr.onreadystatechange = function () {
+		if (this.readyState === 4) {
+			if (this.status === 200) {
+				try {
+					var profileInfo = JSON.parse(this.responseText);
+					displayProfileInfo(profileInfo);
+				} catch (error) {
+					console.error('Błąd parsowania JSON:', error);
+				}
 			}
 		} else {
 			console.error('Błąd HTTP:', this.status);
 		}
 	};
 
-	var arg1 = sessionStorage.getItem('found_id');
-
-	xhttp.open("GET", "ProfileStudentServlet?arg1=" + arg1, true);
-	xhttp.send();
+	xhr.send();
 
 	getStudentCalendarHtml(arg1, "calendar");
 }
