@@ -29,6 +29,8 @@ function startPage(pageNumber) {
     var id = sessionStorage.getItem('found_id');
     xhttp.open("GET", "offersWithId?arg1=" + id + "&arg2=" + pageNumber, true);
     xhttp.send();
+	
+	reveal();
 }
 
 function displayOffers(offers) {
@@ -48,20 +50,23 @@ function displayOffers(offers) {
         titleElement.className = "offerTitle";
 
         var contentElement = document.createElement("p");
-        contentElement.innerText = `Offer's description: \n ${offer.content} `;
-        contentElement.className = "offerContent";
+			contentElement.innerText = offer.content; // Dodajemy treść i odpowiednią etykietę
+			contentElement.className = "offerContent";
+			contentElement.innerText += "\n Salary: $" + offer.salary + "."; // Dodajemy informację o wynagrodzeniu
+			offerDiv.appendChild(contentElement);
 
         var sendOffer = document.createElement("button");
         sendOffer.innerText = "Send Job Offer";
         sendOffer.value = "Send Job Offer";
-        sendOffer.className = "sendJobOffer"; // Changed class name to avoid spaces
-
+        sendOffer.className = "apply"; // Changed class name to avoid spaces
         sendOffer.addEventListener('click', function(id_offer) {
             return function() {
+				alert("Your job offer has been sent!");
                 // Set found_id_offer in session storage
                 sessionStorage.setItem('found_id_offer', id_offer);
                 // Call createClickListener with id_offer
                 createClickListener(id_offer);
+				window.location.href = 'mainPageEmployer.html';
             };
         }(offer.id_offer));
 
@@ -71,11 +76,13 @@ function displayOffers(offers) {
 
         containersContainer.appendChild(offerDiv);
     }
+	reveal();
 }
 
 function createClickListener(id_offer) {
     selected_offer = id_offer;
     sendNotification(id_offer); // Pass id_offer to sendNotification
+	reveal();
 }
 
 function sendNotification(offer_id) {
@@ -106,8 +113,27 @@ function sendNotification(offer_id) {
     var type = 'newOffer';
     xhttp.open("GET", "NotificationHandlerServlet?arg1=" + type + "&arg2=" + offer_id + "&arg3=" + stud_id, true);
     xhttp.send();
+	reveal();
 }
 
 function redirectToMainPage() {
     window.location.href = "mainPageEmployer.html";
 }
+
+function reveal() {
+	var reveals = document.querySelectorAll(".container");
+
+	for (var i = 0; i < reveals.length; i++) {
+		var windowHeight = window.innerHeight;
+		var elementTop = reveals[i].getBoundingClientRect().top;
+		var elementVisible = 50;
+
+		if (elementTop < windowHeight - elementVisible) {
+			reveals[i].classList.add("active");
+		} else {
+			reveals[i].classList.remove("active");
+		}
+	}
+}
+
+window.addEventListener("scroll", reveal);

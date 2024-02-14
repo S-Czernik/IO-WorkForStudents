@@ -374,12 +374,31 @@ public class OfferInterface extends Interface {
 
 			if (!offerTitle.startsWith("_")) {
 				if (type == 0) {
-					query = "SELECT * FROM STUDENT_PROFILES WHERE id_stud <= ? AND title = ? ORDER BY id_stud DESC LIMIT 10";
+					query = """
+						SELECT sp.*, u.description, AVG(sr.number) AS average_rating
+						FROM STUDENT_PROFILES sp
+						JOIN users u ON sp.id_stud = u.id_user
+						LEFT JOIN student_ratings sr ON sp.id_stud = sr.stud_id
+						WHERE sp.id_stud <= ? AND sp.title = ?
+						GROUP BY sp.id_stud
+						ORDER BY sp.id_stud DESC
+						LIMIT 10;""";
 				}
 				else {
-					query = "SELECT * FROM (SELECT * FROM STUDENT_PROFILES WHERE id_stud > ? AND title = ? LIMIT 10) AS subquery ORDER BY id_stud DESC";
+					query = """
+						SELECT subquery.*, u.description, AVG(sr.number) AS average_rating
+						FROM (
+						    SELECT *
+						    FROM STUDENT_PROFILES
+						    WHERE id_stud > ? AND sp.title = ?
+						    ORDER BY id_stud DESC
+						    LIMIT 10
+						) AS subquery
+						JOIN users u ON subquery.id_stud = u.id_user
+						LEFT JOIN student_ratings sr ON subquery.id_stud = sr.stud_id
+                        GROUP BY subquery.id_stud;""";
 				}
-
+				
 				preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setInt(1, last);
 				preparedStatement.setString(2, offerTitle);
@@ -391,10 +410,15 @@ public class OfferInterface extends Interface {
 				String[] parts = offerTitle.split(",");
 
 				if (type == 0) {
-					query = "SELECT * FROM STUDENT_PROFILES WHERE id_stud <= ? AND (";
+					query = "SELECT sp.*, u.description, AVG(sr.number) AS average_rating "
+							+ "FROM STUDENT_PROFILES sp "
+							+ "JOIN users u ON sp.id_stud = u.id_user "
+							+ "LEFT JOIN student_ratings sr ON sp.id_stud = sr.stud_id "
+							+ "WHERE id_stud <= ? AND (";
 				}
 				else {
-					query = "SELECT * FROM (SELECT * FROM STUDENT_PROFILES WHERE id_stud > ? AND (";
+					query = "SELECT subquery.*, u.description, AVG(sr.number) AS average_rating "
+							+ "FROM (SELECT * FROM STUDENT_PROFILES WHERE id_stud > ? AND (";
 				}
 
 				for (int i = 0; i < parts.length; i++) {
@@ -403,8 +427,16 @@ public class OfferInterface extends Interface {
 					}
 					query += "tags LIKE ?";
 				}
-
-				query += ") ORDER BY id_stud DESC LIMIT 10";
+				
+				if (type == 0) {
+					query += ") GROUP BY sp.id_stud ORDER BY id_stud DESC LIMIT 10";
+				}
+				else {
+					query += ") AS subquery JOIN users u ON subquery.id_stud = u.id_user "
+							+ "LEFT JOIN student_ratings sr ON subquery.id_stud = sr.stud_id "
+							+ "GROUP BY subquery.id_stud "
+							+ "ORDER BY id_stud DESC LIMIT 10";
+				}
 
 				preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setInt(1, last);
@@ -419,7 +451,7 @@ public class OfferInterface extends Interface {
 			while (results.next()) {
 				int id_person = results.getInt("id_stud");
 				String title = results.getString("title");
-				String content = results.getString("content");
+				String content = results.getString("description");
 				int rating = results.getInt("rating");
 				String tags = results.getString("tags");
 				Offer offer = new Offer(id_person, title, content, rating, tags);
@@ -438,7 +470,10 @@ public class OfferInterface extends Interface {
 		try {
 			String query;
 
-			query = "SELECT * FROM  STUDENT_PROFILES WHERE id_stud = ?";
+			query = "SELECT sp.*, u.description" +
+"						FROM STUDENT_PROFILES sp" +
+"						JOIN users u ON sp.id_stud = u.id_user" +
+"						WHERE sp.id_stud = ?";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, userID);
@@ -448,7 +483,7 @@ public class OfferInterface extends Interface {
 			while (results.next()) {
 				int id_person = results.getInt("id_stud");
 				String title = results.getString("title");
-				String content = results.getString("content");
+				String content = results.getString("description");
 				int rating = results.getInt("rating");
 				String tags = results.getString("tags");
 				Offer offer = new Offer(id_person, title, content, rating, tags);
@@ -543,10 +578,10 @@ public class OfferInterface extends Interface {
 					sortOrder = "DESC";
 			}
 
-			String query = "SELECT * FROM STUDENT_PROFILES";
+			String query = "SELECT sp.*, u.description, AVG(sr.number) AS average_rating FROM STUDENT_PROFILES sp JOIN users u ON sp.id_stud = u.id_user LEFT JOIN student_ratings sr ON sp.id_stud = sr.stud_id";
 
 			if (sortBy.equals("percentage")) {
-				query += " JOIN offer_calendar_comparisons AS occ ON STUDENT_PROFILES.id_stud = occ.id_stud";
+				query += " JOIN offer_calendar_comparisons AS occ ON sp.id_stud = occ.id_stud";
 			}
 
 			boolean was = false;
@@ -565,7 +600,7 @@ public class OfferInterface extends Interface {
 						if (i > 0) {
 							query += " OR ";
 						}
-						query += "tags LIKE ?";
+						query += "sp.tags LIKE ?";
 					}
 				}
 				was = true;
@@ -573,18 +608,18 @@ public class OfferInterface extends Interface {
 
 			if (max >= min && max >= 0 && min >= 0) {
 				if (was) {
-					query += " AND rating BETWEEN ? AND ?";
+					query += " AND sp.rating BETWEEN ? AND ?";
 				}
 				else {
-					query += " WHERE rating BETWEEN ? AND ?";
+					query += " WHERE sp.rating BETWEEN ? AND ?";
 				}
 			}
 
 			if (sortBy.equals("percentage")) {
-				query += " ORDER BY occ.value " + sortOrder;
+				query += " GROUP BY sp.id_stud ORDER BY occ.value " + sortOrder;
 			}
 			else {
-				query += " ORDER BY " + sortBy + " " + sortOrder;
+				query += " GROUP BY sp.id_stud ORDER BY " + sortBy + " " + sortOrder;
 			}
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -611,8 +646,8 @@ public class OfferInterface extends Interface {
 			while (results.next()) {
 				int id_person = results.getInt("id_stud");
 				String title = results.getString("title");
-				String content = results.getString("content");
-				int rating = results.getInt("rating");
+				String content = results.getString("description");
+				int rating = results.getInt("average_rating");
 				String tags = results.getString("tags");
 				Offer offer = new Offer(id_person, title, content, rating, tags);
 				searchedoffers.add(offer);
@@ -625,8 +660,8 @@ public class OfferInterface extends Interface {
 					while (results.next() && count < 10) {
 						int id_person = results.getInt("id_stud");
 						String title = results.getString("title");
-						String content = results.getString("content");
-						int rating = results.getInt("rating");
+						String content = results.getString("description");
+						int rating = results.getInt("average_rating");
 						String tags = results.getString("tags");
 						Offer offer = new Offer(id_person, title, content, rating, tags);
 						searchedoffers.add(offer);
@@ -642,8 +677,8 @@ public class OfferInterface extends Interface {
 							}
 							else if (wasNum) {
 								String title = results.getString("title");
-								String content = results.getString("content");
-								int rating = results.getInt("rating");
+								String content = results.getString("description");
+								int rating = results.getInt("average_rating");
 								String tags = results.getString("tags");
 								Offer offer = new Offer(id_person, title, content, rating, tags);
 								searchedoffers.add(offer);
@@ -656,8 +691,8 @@ public class OfferInterface extends Interface {
 						while (results.previous() && count < number) {
 							int id_person = results.getInt("id_stud");
 							String title = results.getString("title");
-							String content = results.getString("content");
-							int rating = results.getInt("rating");
+							String content = results.getString("description");
+							int rating = results.getInt("average_rating");
 							String tags = results.getString("tags");
 							Offer offer = new Offer(id_person, title, content, rating, tags);
 							searchedoffers.add(0, offer);
@@ -674,8 +709,8 @@ public class OfferInterface extends Interface {
 						}
 						else if (wasNum) {
 							String title = results.getString("title");
-							String content = results.getString("content");
-							int rating = results.getInt("rating");
+							String content = results.getString("description");
+							int rating = results.getInt("average_rating");
 							String tags = results.getString("tags");
 							Offer offer = new Offer(id_person, title, content, rating, tags);
 							searchedoffers.add(0, offer);
@@ -686,8 +721,8 @@ public class OfferInterface extends Interface {
 						while (results.next() && count < 10) {
 							int id_person = results.getInt("id_stud");
 							String title = results.getString("title");
-							String content = results.getString("content");
-							int rating = results.getInt("rating");
+							String content = results.getString("description");
+							int rating = results.getInt("average_rating");
 							String tags = results.getString("tags");
 							Offer offer = new Offer(id_person, title, content, rating, tags);
 							searchedoffers.add(offer);
@@ -745,10 +780,29 @@ public class OfferInterface extends Interface {
 			String query;
 
 			if (type == 0) {
-				query = "SELECT * FROM STUDENT_PROFILES WHERE id_stud <= ? ORDER BY id_stud DESC LIMIT 10";
+				query = """
+						SELECT sp.*, u.description, AVG(sr.number) AS average_rating
+                        FROM STUDENT_PROFILES sp
+                        JOIN users u ON sp.id_stud = u.id_user
+                        LEFT JOIN student_ratings sr ON sp.id_stud = sr.stud_id
+                        WHERE sp.id_stud <= ?
+                        GROUP BY sp.id_stud
+                        ORDER BY sp.id_stud DESC
+                        LIMIT 10;""";
 			}
 			else {
-				query = "SELECT * FROM (SELECT * FROM STUDENT_PROFILES WHERE id_stud > ? LIMIT 10) AS subquery ORDER BY id_stud DESC";
+				query = """
+						SELECT subquery.*, u.description, AVG(sr.number) AS average_rating
+                        FROM (
+                            SELECT *
+                            FROM STUDENT_PROFILES
+                            WHERE id_stud > ?
+                            ORDER BY id_stud DESC
+                            LIMIT 10
+                        ) AS subquery
+                        JOIN users u ON subquery.id_stud = u.id_user
+                        LEFT JOIN student_ratings sr ON subquery.id_stud = sr.stud_id
+                        GROUP BY subquery.id_stud;""";
 			}
 
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -759,8 +813,8 @@ public class OfferInterface extends Interface {
 			while (results.next()) {
 				int id_person = results.getInt("id_stud");
 				String title = results.getString("title");
-				String content = results.getString("content");
-				int rating = results.getInt("rating");
+				String content = results.getString("description");
+				int rating = results.getInt("average_rating");
 				String tags = results.getString("tags");
 				Offer offer = new Offer(id_person, title, content, rating, tags);
 				offers.add(offer);

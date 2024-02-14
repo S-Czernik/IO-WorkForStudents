@@ -46,8 +46,10 @@ function displayOffers(offers) {
 		titleElement.className = "offerTitle";
 
 		var contentElement = document.createElement("p");
-		contentElement.innerText = `\nOffer's description: \n\n ${offer.content} `;
-		contentElement.className = "offerContent";
+			contentElement.innerText = offer.content; // Dodajemy treść i odpowiednią etykietę
+			contentElement.className = "offerContent";
+			contentElement.innerText += "\n Average rating: " + offer.rating + " stars."; // Dodajemy informację o wynagrodzeniu
+			offerDiv.appendChild(contentElement);
 
 
 		offerDiv.appendChild(titleElement);

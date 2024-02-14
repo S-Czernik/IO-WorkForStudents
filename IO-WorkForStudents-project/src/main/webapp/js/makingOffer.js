@@ -46,8 +46,10 @@ function displayOffers(offers) {
 		titleElement.className = "offerTitle";
 
 		var contentElement = document.createElement("p");
-		contentElement.innerText = `Offer's description: \n ${offer.content} `;
-		contentElement.className = "offerContent";
+			contentElement.innerText = offer.content; // Dodajemy treść i odpowiednią etykietę
+			contentElement.className = "offerContent";
+			contentElement.innerText += "\n Salary: $" + offer.salary + "."; // Dodajemy informację o wynagrodzeniu
+			offerDiv.appendChild(contentElement);
 
 		var editOffer = document.createElement("button");
 		editOffer.innerText = "Edit offer";

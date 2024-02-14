@@ -114,8 +114,9 @@ function displayOffers(offers) {
 
 		if (offer.title !== "Profile not found!") {
 			var contentElement = document.createElement("p");
-			contentElement.innerText = offer.content;
+			contentElement.innerText = offer.content; // Dodajemy treść i odpowiednią etykietę
 			contentElement.className = "offerContent";
+			contentElement.innerText += "\n Average rating: " + offer.rating + " stars."; // Dodajemy informację o wynagrodzeniu
 			offerDiv.appendChild(contentElement);
 
 			var applyElement = document.createElement("button");
